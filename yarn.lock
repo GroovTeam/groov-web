@@ -10747,11 +10747,6 @@ tough-cookie@^3.0.1:
     psl "^1.1.28"
     punycode "^2.1.1"
 
-tpc-utils@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/tpc-utils/-/tpc-utils-1.0.0.tgz#f2bc77ec04fa5ec58788182ed413eafc6be2a59b"
-  integrity sha512-5eooSPrmzaHYejQ8Oiqh4Bn5czrfyOEn39265bJTvQgMfFr7w3RAh64pxnmej1AycmRiEyG5skNO9VvCqQTPYw==
-
 tr46@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-2.0.2.tgz#03273586def1595ae08fedb38d7733cee91d2479"
