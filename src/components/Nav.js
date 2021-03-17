@@ -1,10 +1,15 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme, createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as 
+  Router, 
+  Route, 
+  Switch, 
+  Link 
+} from "react-router-dom";
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -20,19 +25,20 @@ import Post from '../pages/Post';
 import RandoSug from '../pages/RandoSug';
 import Explore from '../pages/Explore';
 import DashBoard from '../pages/DashBoard';
+import PersonIcon from '@material-ui/icons/Person';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ExploreIcon from '@material-ui/icons/Explore';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import TelegramIcon from '@material-ui/icons/Telegram';
 
-
-
-
+const navItems = [
+  {name: 'DashBoard', icon: <DashboardIcon />, path: '/'},
+  {name: 'Explore', icon: <ExploreIcon />, path: '/explore'},
+  {name: 'Random Suggestion', icon: <TelegramIcon />, path: '/randoSug'},
+  {name: 'Post', icon: <PostAddIcon />, path: '/post'},
+  {name: 'Profile', icon: <PersonIcon />, path: '/profile'}
+]
 const drawerWidth = 240;
-
-// const theme = createMuiTheme({
-//   palette: {
-//     primary: ''
-//   }
-// });
-
-const active = '';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,11 +98,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Nav({items, active}) {
+export default function Nav() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [currPage, setCurrPage] = React.useState('DashBoard');
   const navRoutes = [
     {pathName: 'DashBoard', route: <DashBoard />},
     {pathName: 'Explore', route: <Explore />},
@@ -113,20 +118,15 @@ export default function Nav({items, active}) {
     setOpen(false);
   };
 
-  const currentPage = (el) => {
-    console.log(el.name);
-    setCurrPage(el.name);
-  }
-
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar 
-        style={{ background: '#2b2929' }}
-        position="sticky"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
+          style={{ background: '#2b2929' }}
+          position="sticky"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
       >
         <Toolbar>
           <IconButton
@@ -145,96 +145,41 @@ export default function Nav({items, active}) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
+        <Drawer
+          variant="permanent"
+          className={clsx(classes.drawer, {
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
-          }),
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleNavClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </div>
-        {items.map(({name, icon}) => (
-        <List>
-          <ListItem button key={name}
-            onClick={() => {setCurrPage(name)}}
-          >
-              <ListItemIcon>{icon}</ListItemIcon>
-              <ListItemText primary={name}/>
-          <Router>
-            <Route />
-            {navRoutes.map(({path, routes}) => {
-              if (path == currPage)
-                return routes;
-            })}
-          </Router>
-          </ListItem>
-        </List>
-        ))}
-        {/* <List>
-          <ListItem button key={'DashBoard'}
-            onClick = {() => props.active = 'DashBoard'}
-          >
-              <ListItemIcon><DashboardIcon /></ListItemIcon>
-              <ListItemText primary={'DashBoard'} />
-          </ListItem>
-        </List>
-        <List>
-          <ListItem button key={'Explore'}
-            onClick = {() => props.active = 'Explore'}
-          >
-              <ListItemIcon><ExploreIcon /></ListItemIcon>
-              <ListItemText primary={'Explore'} />
-          </ListItem>
-        </List>
-        <List>
-          <ListItem 
-            button key={'Random Suggestion'}
-            onClick = {() => props.active = 'Random Suggestion'}
-          >
-              <ListItemIcon><TelegramIcon /></ListItemIcon>
-              <ListItemText primary={'Random Suggestion'} />
-          </ListItem>
-        </List>
-        <List>
-          <ListItem 
-            button key={'Post'}
-            onClick = {() => props.active = 'Post'}  
-          >
-              <ListItemIcon><PostAddIcon /></ListItemIcon>
-              <ListItemText primary={'Post'} />
-          </ListItem>
-        </List>
-        <List>
-          <ListItem 
-            button key={'profile'}
-            onClick = {() => props.active = 'Profile'}
-          >
-              <ListItemIcon><PersonIcon /></ListItemIcon>
-              <ListItemText primary={'Profile'} />
-          </ListItem>
-        </List> */}
+          })}
+          classes={{
+            paper: clsx({
+              [classes.drawerOpen]: open,
+              [classes.drawerClose]: !open,
+            }),
+          }}
+        >
+          <div className={classes.toolbar}>
+            <IconButton onClick={handleNavClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </div>
+          <List>
+            {navItems.map(({name, icon, path}) => (
+              <Link style={{textDecoration: 'none', color: 'black'}} to={path}>
+                <ListItem button key={name} >
+                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemText primary={name}/>
+                </ListItem>
+              </Link>
+            ))}
+          </List>
+          
       </Drawer>
+
+        {/* sets up the router switch paths */}
+        
+      
     </div>
   );
 
-  activeTabs();
-}
-
-function activeTabs() {
-  return (
-    <div>
-      <h1>adsaasdfasdfasdfsadfasdsdsdfsad</h1>
-      {console.log(active)}
-    </div>
-  )
 }

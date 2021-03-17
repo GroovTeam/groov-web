@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Nav from '../components/Nav';
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -26,16 +27,12 @@ function Profile() {
   const classes = useStyles();
   const theme = useTheme();
   return (
-    <div className={classes.root}>
-      <main className={classes.content}>
-        <div className={classes.toolbar}/>
-        <Typography > 
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. In modi ratione facilis itaque eum, asperiores veniam et veritatis saepe dolores quod aspernatur atque, voluptate explicabo eos consectetur suscipit beatae iure. 
-        </Typography>
-        <h4>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. In modi ratione facilis itaque eum, asperiores veniam et veritatis saepe dolores quod aspernatur atque, voluptate explicabo eos consectetur suscipit beatae iure.
-        </h4>
-      </main>
+    
+    <div>
+      <Nav />
+      <div style={{marginLeft: 80}}>
+            <h2>Profile</h2>
+      </div>
       
     </div>
   );
