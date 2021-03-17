@@ -1,10 +1,10 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as 
-  Router, 
-  Route, 
-  Switch, 
-} from "react-router-dom";
+Router, 
+Route, 
+Switch, 
+} from 'react-router-dom';
 import Profile from './pages/Profile';
 import Post from './pages/Post';
 import RandoSug from './pages/RandoSug';

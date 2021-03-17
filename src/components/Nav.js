@@ -1,15 +1,12 @@
+/* eslint-disable react/jsx-key */
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { BrowserRouter as 
-  Router, 
-  Route, 
-  Switch, 
-  Link 
-} from "react-router-dom";
+import { Link 
+} from 'react-router-dom';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -20,11 +17,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Profile from '../pages/Profile';
-import Post from '../pages/Post';
-import RandoSug from '../pages/RandoSug';
-import Explore from '../pages/Explore';
-import DashBoard from '../pages/DashBoard';
 import PersonIcon from '@material-ui/icons/Person';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExploreIcon from '@material-ui/icons/Explore';
@@ -37,7 +29,7 @@ const navItems = [
   {name: 'Random Suggestion', icon: <TelegramIcon />, path: '/randoSug'},
   {name: 'Post', icon: <PostAddIcon />, path: '/post'},
   {name: 'Profile', icon: <PersonIcon />, path: '/profile'}
-]
+];
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -102,13 +94,6 @@ export default function Nav() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const navRoutes = [
-    {pathName: 'DashBoard', route: <DashBoard />},
-    {pathName: 'Explore', route: <Explore />},
-    {pathName: 'Random Suggestion', route: <RandoSug />},
-    {pathName: 'Post', route: <Post />},
-    {pathName: 'Profile', route: <Profile />}
-  ]
 
   const handleNavOpen = () => {
     setOpen(true);
@@ -122,11 +107,11 @@ export default function Nav() {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar 
-          style={{ background: '#2b2929' }}
-          position="sticky"
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: open,
-          })}
+        style={{ background: '#2b2929' }}
+        position="sticky"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
       >
         <Toolbar>
           <IconButton
@@ -145,38 +130,38 @@ export default function Nav() {
           </Typography>
         </Toolbar>
       </AppBar>
-        <Drawer
-          variant="permanent"
-          className={clsx(classes.drawer, {
+      <Drawer
+        variant="permanent"
+        className={clsx(classes.drawer, {
+          [classes.drawerOpen]: open,
+          [classes.drawerClose]: !open,
+        })}
+        classes={{
+          paper: clsx({
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
-          })}
-          classes={{
-            paper: clsx({
-              [classes.drawerOpen]: open,
-              [classes.drawerClose]: !open,
-            }),
-          }}
-        >
-          <div className={classes.toolbar}>
-            <IconButton onClick={handleNavClose}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-            </IconButton>
-          </div>
-          <List>
-            {navItems.map(({name, icon, path}) => (
-              <Link style={{textDecoration: 'none', color: 'black'}} to={path}>
-                <ListItem button key={name} >
-                  <ListItemIcon>{icon}</ListItemIcon>
-                  <ListItemText primary={name}/>
-                </ListItem>
-              </Link>
-            ))}
-          </List>
+          }),
+        }}
+      >
+        <div className={classes.toolbar}>
+          <IconButton onClick={handleNavClose}>
+            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+        </div>
+        <List>
+          {navItems.map(({name, icon, path}) => (
+            <Link style={{textDecoration: 'none', color: 'black'}} to={path}>
+              <ListItem button key={name} >
+                <ListItemIcon>{icon}</ListItemIcon>
+                <ListItemText primary={name}/>
+              </ListItem>
+            </Link>
+          ))}
+        </List>
           
       </Drawer>
 
-        {/* sets up the router switch paths */}
+      {/* sets up the router switch paths */}
         
       
     </div>
