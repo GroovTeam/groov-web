@@ -5,9 +5,8 @@ import Avatar from '@material-ui/core/Avatar';
 function Posts( { post } ) {
   return (
     <div>
-      <Box border={3} borderColor="primary.main" style={{ margin: 'auto', width: '50%', paddingLeft: '30px', paddingBottom: '5px', display: 'flex', flexDirection: 'column'}} >
-        
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+      <Box border={3} borderColor='primary.main' style={{paddingLeft: '30px', paddingBottom: '10px', display: 'flex', flexDirection: 'column'}} >
+        <div style={{display: 'flex', flexDirection: 'row'}}>
           <Avatar style= {{alignSelf: 'center', marginRight: '1%'}}>
            H
           </Avatar>
@@ -17,13 +16,14 @@ function Posts( { post } ) {
         <p >{post.text}
         </p>
 
-        <div>
-          <Button variant="outlined" color="primary" style={{ marginRight: '31%' }}>Like</Button>
-          <Button variant="outlined" style={{ marginRight: '35%' }}>Comment</Button>
-          <Button variant="outlined" color="secondary">Dislike</Button>
+        <div style={{display: 'flex', flexDirection: 'row'}}>
+          <Button variant='outlined' color='primary' style={{marginRight: '31%'}}>Like</Button>
+          <Button variant='outlined' style={{marginRight: '25%'}}>Comment</Button>
+          <Button variant='outlined' color='secondary'>Dislike</Button>
         </div>
       </Box>
-      <div style={{ paddingBottom: '5px'  }}></div>
+
+      <div style={{paddingBottom: '5px'}}/>
     </div>
   );
 }

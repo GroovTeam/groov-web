@@ -1,7 +1,7 @@
 import React from 'react';
 import Nav from '../components/Nav';
 import DashboardPosts from '../components/DashboardPosts';
-import PostBtn from '../components/MakePost';
+import SuggestionList from '../components/SuggestionList';
 
 function DashBoard() {
   return (
@@ -9,15 +9,21 @@ function DashBoard() {
       <Nav  />
       <div style={{marginLeft: 80}}>
         <h2>DashBoard</h2>
-        <div>
-          <DashboardPosts>
+        
+        <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+          <div style={{width: '20%'}}/>
+          <div style={{width: '50%'}}>
+            <DashboardPosts>
+            </DashboardPosts>
+          </div>
 
-          </DashboardPosts>
-          <PostBtn></PostBtn>
+          <div style={{width: '18%', paddingLeft:'30px'}}>
+            <SuggestionList style={{alignSelf: 'flex-end'}}>
+            </SuggestionList>
+          </div>
 
         </div>
       </div>
-      
     </div>
   );
 }

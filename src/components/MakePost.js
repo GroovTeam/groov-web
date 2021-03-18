@@ -8,11 +8,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import IconButton from '@material-ui/core/IconButton';
 
 function PostBtn() {
   const [open, setOpen] = React.useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -20,11 +20,12 @@ function PostBtn() {
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Post
-      </Button>
+      <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
+        <AddCircleOutlineIcon></AddCircleOutlineIcon>
+      </IconButton>
       <Dialog
         open={open}
         onClose={handleClose}

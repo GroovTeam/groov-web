@@ -20,15 +20,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExploreIcon from '@material-ui/icons/Explore';
-import PostAddIcon from '@material-ui/icons/PostAdd';
-import TelegramIcon from '@material-ui/icons/Telegram';
+import Button from '@material-ui/core/Button';
+import PostBtn from '../components/MakePost';
+
 
 const navItems = [
   {name: 'DashBoard', icon: <DashboardIcon />, path: '/'},
   {name: 'Explore', icon: <ExploreIcon />, path: '/explore'},
-  {name: 'Random Suggestion', icon: <TelegramIcon />, path: '/randoSug'},
-  {name: 'Post', icon: <PostAddIcon />, path: '/post'},
-  {name: 'Profile', icon: <PersonIcon />, path: '/profile'}
+  {name: 'Profile', icon: <PersonIcon />, path: '/profile'},
+  {name: 'Make Post', icon: <PostBtn></PostBtn>, path: <PostBtn></PostBtn>}
 ];
 const drawerWidth = 240;
 
@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
@@ -111,8 +111,9 @@ export default function Nav() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
+        position="static"
       >
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -125,8 +126,11 @@ export default function Nav() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Music App
+              Music App
           </Typography>
+          <Button  style={{color: 'white'}}>
+              Regestration
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -148,16 +152,19 @@ export default function Nav() {
           </IconButton>
         </div>
         <List>
-          {navItems.map(({name, icon, path}) => (
+          {navItems.map(({name, icon, path}, index) => (
             <Link style={{textDecoration: 'none', color: 'black'}} to={path}>
-              <ListItem button key={name} >
+              <ListItem
+                button 
+                key={index} 
+              >
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={name}/>
               </ListItem>
             </Link>
           ))}
         </List>
-          
+        
       </Drawer>
 
       {/* sets up the router switch paths */}
