@@ -108,7 +108,6 @@ export default function Nav() {
       <CssBaseline />
       <AppBar 
         style={{ background: '#2b2929' }}
-        position="sticky"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}

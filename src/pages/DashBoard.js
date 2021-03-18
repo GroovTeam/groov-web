@@ -1,6 +1,8 @@
 import React from 'react';
 import Nav from '../components/Nav';
 import DashboardPosts from '../components/DashboardPosts';
+import PostBtn from '../components/MakePost';
+
 function DashBoard() {
   return (
     <div>
@@ -11,6 +13,7 @@ function DashBoard() {
           <DashboardPosts>
 
           </DashboardPosts>
+          <PostBtn></PostBtn>
 
         </div>
       </div>
