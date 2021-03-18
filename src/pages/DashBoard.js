@@ -12,7 +12,6 @@ function DashBoard() {
         
         <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
           <div style={{width: '20%'}}/>
-
           <div style={{width: '50%'}}>
             <DashboardPosts>
             </DashboardPosts>
@@ -22,6 +21,7 @@ function DashBoard() {
             <SuggestionList style={{alignSelf: 'flex-end'}}>
             </SuggestionList>
           </div>
+
         </div>
       </div>
     </div>

@@ -20,16 +20,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExploreIcon from '@material-ui/icons/Explore';
-import PostAddIcon from '@material-ui/icons/PostAdd';
-import TelegramIcon from '@material-ui/icons/Telegram';
 import Button from '@material-ui/core/Button';
+import PostBtn from '../components/MakePost';
+
 
 const navItems = [
   {name: 'DashBoard', icon: <DashboardIcon />, path: '/'},
   {name: 'Explore', icon: <ExploreIcon />, path: '/explore'},
-  {name: 'Random Suggestion', icon: <TelegramIcon />, path: '/randoSug'},
-  {name: 'Post', icon: <PostAddIcon />, path: '/post'},
-  {name: 'Profile', icon: <PersonIcon />, path: '/profile'}
+  {name: 'Profile', icon: <PersonIcon />, path: '/profile'},
+  {name: 'Make Post', icon: <PostBtn></PostBtn>, path: <PostBtn></PostBtn>}
 ];
 const drawerWidth = 240;
 
@@ -109,10 +108,10 @@ export default function Nav() {
       <CssBaseline />
       <AppBar 
         style={{ background: '#2b2929' }}
-        position="sticky"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
+        position="static"
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -155,13 +154,17 @@ export default function Nav() {
         <List>
           {navItems.map(({name, icon, path}, index) => (
             <Link style={{textDecoration: 'none', color: 'black'}} to={path}>
-              <ListItem button key={index} >
+              <ListItem
+                button 
+                key={index} 
+              >
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={name}/>
               </ListItem>
             </Link>
           ))}
         </List>
+        
       </Drawer>
 
       {/* sets up the router switch paths */}
