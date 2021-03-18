@@ -1,9 +1,9 @@
 import React, { } from 'react';
 import Post from './Post';
 
-let posts = [{ profilePic: 'lol', text: 'ay yall listen to this new track', username: 'crakatoa' }, 
-  { profilePic: 'lol', text: 'ay yall listen to this new track', username: 'crakatoa' }, 
-  { profilePic: 'lol', text: 'ay yall listen to this new track', username: 'crakatoa' }];
+let posts = [{ProfilePic: 'lol', text: 'ay yall listen to this new track', username: 'crakatoa'}, 
+  {profilePic: 'lol', text: 'ay yall listen to this new track', username: 'crakatoa'}, 
+  {profilePic: 'lol', text: 'ay yall listen to this new track', username: 'crakatoa'}];
 
 function DashboardPosts()
 {
@@ -11,12 +11,11 @@ function DashboardPosts()
     <div>
       {
         posts.map((post, index) => (
-          <Post key={index} post={post}/>
+          <Post key={index} post={post} style={{display: 'flex', flexDirection: 'column', justifyContent:'center'}}/>
         ))
       }
     </div>
   );
 }
-
 
 export default DashboardPosts;
