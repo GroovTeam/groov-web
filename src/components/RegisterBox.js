@@ -1,41 +1,72 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Register from '../utils/Register';
 
-function RegisterBox(  ) {
+
+
+const RegisterBox = () => {
+  const [userData, setUserData] = useState({});
+
+  const registerUser = (event) => {
+    console.log(userData);
+    Register(userData.email,
+      userData.password,
+      userData.username,
+      userData.firstName,
+      userData.lastName)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+    event.preventDefault();
+  };
+
+  const handleChange = (event) => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    setUserData({...userData, [name]:value});
+  };
+
   return (
     <div>
       <div className = "Header">Register</div>
       <div className="Content">
-        <div className="form">
-          <div className="form-group">
-            <label htmlFor="FirstName">FirstName</label>
-            <input type="text" name="firstname" placeholder="first name" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="LastName">LastName</label>
-            <input type="text" name="lastname" placeholder="last name" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="Email">Email</label>
-            <input type="text" name="email" placeholder="email" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="Username">Username</label>
-            <input type="text" name="username" placeholder="username"/>
-          </div>
-          <div className="form-group">
-            <label htmlFor="Password">Password</label>
-            <input type="text" name="password" placeholder="password"/>
-          </div>
-        </div>
+        <form onSubmit={registerUser}>
+          <label >
+          FirstName
+            <input type="text" name="firstName" placeholder="first name" onChange={handleChange}/>
+          </label>
+          <label >
+            LastName
+            <input type="text" name="lastName" placeholder="last name" onChange={handleChange} />
+          </label>
+          
+          <label >
+            Email
+            <input type="text" name="email" placeholder="email" onChange={handleChange} />
+          </label>
+          
+          <label >
+            Username
+            <input type="text" name="username" placeholder="username" onChange={handleChange}/>
+          </label>
+          
+          <label >
+            Password
+            <input type="text" name="password" placeholder="password" onChange={handleChange}/>
+          </label>
+
+          <input type="Submit" value="Submit" readOnly={true}/>
+        </form>
         
       </div>
-      <div className="footer">
-        <button type = "button" className="btn">
-          Register
-        </button>
-      </div>
+
     </div>
   );
-}
+};
+
+
 
 export default RegisterBox;

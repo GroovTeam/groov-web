@@ -153,10 +153,9 @@ export default function Nav() {
         </div>
         <List>
           {navItems.map(({name, icon, path}, index) => (
-            <Link style={{textDecoration: 'none', color: 'black'}} to={path}>
+            <Link style={{textDecoration: 'none', color: 'black'}} key={index} to={path}>
               <ListItem
                 button 
-                key={index} 
               >
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={name}/>

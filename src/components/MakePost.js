@@ -30,7 +30,7 @@ function PostBtn() {
         open={open}
         onClose={handleClose}
         maxWidth='lg'
-        fullWidth='true'
+        fullWidth={true}
       >
         <DialogTitle id="alert-dialog-title">Post</DialogTitle>
         <DialogContent>
@@ -43,7 +43,7 @@ function PostBtn() {
                 rows={6}
                 placeholder="Enter Post"
                 variant="outlined"
-                fullWidth="true"
+                fullWidth={true}
               />
             </form>
           </DialogContentText>
