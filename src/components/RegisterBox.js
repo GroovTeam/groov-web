@@ -1,24 +1,32 @@
 import React, { useState } from 'react';
-import Register from '../utils/Register';
+import firebase from '../utils/Firebase';
+import axios from 'axios';
+import ApiConfig from '../utils/ApiConfig';
 
 
 
 const RegisterBox = () => {
   const [userData, setUserData] = useState({});
 
+  const register = (userData) =>
+  {
+    axios.post(
+      ApiConfig.register,
+      userData
+    ).then(result => {
+      if (result.data.token)
+        firebase.auth().signInWithEmailAndPassword(
+          userData.email,
+          userData.password
+        ).then(userCred => {
+          userCred.user.sendEmailVerification();
+        }).catch(console.error);
+    }).catch(console.error);
+  };
   const registerUser = (event) => {
     console.log(userData);
-    Register(userData.email,
-      userData.password,
-      userData.username,
-      userData.firstName,
-      userData.lastName)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    setUserData({ ...userData, dateCreated: Date.now()});
+    register(userData);
     event.preventDefault();
   };
 
@@ -26,7 +34,7 @@ const RegisterBox = () => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    setUserData({...userData, [name]:value});
+    setUserData({ ...userData, [name]: value });
   };
 
   return (
