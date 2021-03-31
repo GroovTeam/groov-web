@@ -1,15 +1,19 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import React, { } from 'react';
+import React, { useEffect } from 'react';
 import Post from './Post';
 
-let posts = [{ProfilePic: 'lol', text: 'ay yall listen to this new track', username: 'crakatoa'}, 
-  {profilePic: 'lol', text: 'ay yall listen to this new track', username: 'crakatoa'}, 
-  {profilePic: 'lol', text: 'ay yall listen to this new track', username: 'crakatoa'}];
+let posts = [{ProfilePic: 'lol', content: 'ay yall listen to this new track', username: 'crakatoa'}, 
+  {profilePic: 'lol', content: 'ay yall listen to this new track', username: 'crakatoa'}, 
+  {profilePic: 'lol', content: 'ay yall listen to this new track', username: 'crakatoa'}];
 
-function DashboardPosts({postsJson})
+function DashboardPosts({feed})
 {
-  console.log(postsJson);
+  useEffect(() => {
+    if (feed !== null) 
+      return posts.push(feed);
+  }, []);
+
   return(
     <div>
       {

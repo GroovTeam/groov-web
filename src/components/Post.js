@@ -13,7 +13,8 @@ function Posts( { post } ) {
           <h1>{post.username}</h1>
         </div>
 
-        <p >{post.text}
+        <p>
+          {post.content}
         </p>
 
         <div style={{display: 'flex', flexDirection: 'row'}}>

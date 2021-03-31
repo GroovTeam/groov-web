@@ -20,7 +20,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExploreIcon from '@material-ui/icons/Explore';
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 import PostBtn from '../components/MakePost';
 
 
@@ -111,7 +111,7 @@ export default function Nav() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-        position="static"
+        position="fixed"
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -128,9 +128,9 @@ export default function Nav() {
           <Typography variant="h6" noWrap>
               Music App
           </Typography>
-          <Button  style={{color: 'white'}}>
-              Regestration
-          </Button>
+          <Link style={{textDecoration: 'none', color: 'white'}} to='/register'>
+              Registration
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -153,10 +153,9 @@ export default function Nav() {
         </div>
         <List>
           {navItems.map(({name, icon, path}, index) => (
-            <Link style={{textDecoration: 'none', color: 'black'}} to={path}>
+            <Link style={{textDecoration: 'none', color: 'black'}} key={index} to={path}>
               <ListItem
                 button 
-                key={index} 
               >
                 <ListItemIcon>{icon}</ListItemIcon>
                 <ListItemText primary={name}/>

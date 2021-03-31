@@ -11,6 +11,7 @@ import RandoSug from './pages/RandoSug';
 import Explore from './pages/Explore';
 import DashBoard from './pages/DashBoard';
 import SpongeBob from './components/mockUser.json';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
         </Route>
         <Route path="/post">
           <Post />
+        </Route>
+        <Route path="/register">
+          <Register />
         </Route>
         <Route path="/randoSug">
           <RandoSug />
