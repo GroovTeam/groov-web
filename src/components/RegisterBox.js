@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import firebase from '../utils/Firebase';
 import axios from 'axios';
 import ApiConfig from '../utils/ApiConfig';
-
+import './RegisterBox.css';
 
 
 const RegisterBox = () => {
@@ -38,33 +38,41 @@ const RegisterBox = () => {
   };
 
   return (
-    <div>
-      <div className = "Header">Register</div>
-      <div className="Content">
+    <div className='Base-Container'>
+      <div className = 'Header'>Register</div>
+      <div className='Content'>
         <form onSubmit={registerUser}>
-          <label >
-          FirstName
-            <input type="text" name="firstName" placeholder="first name" onChange={handleChange}/>
-          </label>
-          <label >
-            LastName
+          <div className='form-group'>
+            <label >
+              First Name
+            </label>
+            <input type="text" name="firstName" placeholder="first name" onChange={handleChange} />
+          </div>
+          <div className='form-group'>
+            <label >
+              Last Name
+            </label>
             <input type="text" name="lastName" placeholder="last name" onChange={handleChange} />
-          </label>
-          
-          <label >
-            Email
+          </div>
+          <div className='form-group'>
+            <label >
+              Email
+            </label>
             <input type="text" name="email" placeholder="email" onChange={handleChange} />
-          </label>
+          </div>
+          <div className='form-group'>
+            <label >
+              Username
+            </label>
+            <input type="text" name="username" placeholder="username" onChange={handleChange} />
+          </div>
           
-          <label >
-            Username
-            <input type="text" name="username" placeholder="username" onChange={handleChange}/>
-          </label>
-          
-          <label >
-            Password
-            <input type="text" name="password" placeholder="password" onChange={handleChange}/>
-          </label>
+          <div className='form-group'>
+            <label >
+              Password
+            </label>
+            <input type="text" name="password" placeholder="password" onChange={handleChange} />
+          </div>
 
           <input type="Submit" value="Submit" readOnly={true}/>
         </form>
