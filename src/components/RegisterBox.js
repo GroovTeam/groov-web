@@ -1,24 +1,32 @@
 import React, { useState } from 'react';
-import Register from '../utils/Register';
-
+import firebase from '../utils/Firebase';
+import axios from 'axios';
+import ApiConfig from '../utils/ApiConfig';
+import './RegisterBox.css';
 
 
 const RegisterBox = () => {
   const [userData, setUserData] = useState({});
 
+  const register = (userData) =>
+  {
+    axios.post(
+      ApiConfig.register,
+      userData
+    ).then(result => {
+      if (result.data.token)
+        firebase.auth().signInWithEmailAndPassword(
+          userData.email,
+          userData.password
+        ).then(userCred => {
+          userCred.user.sendEmailVerification();
+        }).catch(console.error);
+    }).catch(console.error);
+  };
   const registerUser = (event) => {
     console.log(userData);
-    Register(userData.email,
-      userData.password,
-      userData.username,
-      userData.firstName,
-      userData.lastName)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    setUserData({ ...userData, dateCreated: Date.now()});
+    register(userData);
     event.preventDefault();
   };
 
@@ -26,37 +34,45 @@ const RegisterBox = () => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    setUserData({...userData, [name]:value});
+    setUserData({ ...userData, [name]: value });
   };
 
   return (
-    <div>
-      <div className = "Header">Register</div>
-      <div className="Content">
+    <div className='Base-Container'>
+      <div className = 'Header'>Register</div>
+      <div className='Content'>
         <form onSubmit={registerUser}>
-          <label >
-          FirstName
-            <input type="text" name="firstName" placeholder="first name" onChange={handleChange}/>
-          </label>
-          <label >
-            LastName
+          <div className='form-group'>
+            <label >
+              First Name
+            </label>
+            <input type="text" name="firstName" placeholder="first name" onChange={handleChange} />
+          </div>
+          <div className='form-group'>
+            <label >
+              Last Name
+            </label>
             <input type="text" name="lastName" placeholder="last name" onChange={handleChange} />
-          </label>
-          
-          <label >
-            Email
+          </div>
+          <div className='form-group'>
+            <label >
+              Email
+            </label>
             <input type="text" name="email" placeholder="email" onChange={handleChange} />
-          </label>
+          </div>
+          <div className='form-group'>
+            <label >
+              Username
+            </label>
+            <input type="text" name="username" placeholder="username" onChange={handleChange} />
+          </div>
           
-          <label >
-            Username
-            <input type="text" name="username" placeholder="username" onChange={handleChange}/>
-          </label>
-          
-          <label >
-            Password
-            <input type="text" name="password" placeholder="password" onChange={handleChange}/>
-          </label>
+          <div className='form-group'>
+            <label >
+              Password
+            </label>
+            <input type="text" name="password" placeholder="password" onChange={handleChange} />
+          </div>
 
           <input type="Submit" value="Submit" readOnly={true}/>
         </form>
