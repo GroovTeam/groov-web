@@ -6,7 +6,7 @@ function Login() {
 
   return (
     <div>
-      {console.log('in fetchpost our passed in post is: ', post)}
+      <h1>Login </h1>
     </div>
   );
 }
