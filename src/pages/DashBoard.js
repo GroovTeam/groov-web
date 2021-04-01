@@ -1,10 +1,7 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
 import React, {useState, useEffect} from 'react';
 import Nav from '../components/Nav';
 import DashboardPosts from '../components/DashboardPosts';
 import  { Tabs, Tab, Paper, Box }  from '@material-ui/core';
-import getPosts from '../utils/getPosts';
 import getAllPosts from '../utils/getAllPosts';
 import MakePost from '../components/MakePost';
 import LikesList from '../components/LikesList';

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -161,10 +160,6 @@ export default function Nav() {
         </List>
         
       </Drawer>
-
-      {/* sets up the router switch paths */}
-        
-      
     </div>
   );
 

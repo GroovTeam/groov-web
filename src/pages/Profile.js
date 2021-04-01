@@ -1,8 +1,6 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable no-unused-vars */
 import React, {useState} from 'react';
 import Nav from '../components/Nav';
-import  { Tabs, Tab, Paper, Chip, TextField, Avatar, Box }  from '@material-ui/core';
+import  { Tabs, Tab, Paper, Avatar, Box }  from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PosseList from '../components/PosseList';
 import LikesList from '../components/LikesList';

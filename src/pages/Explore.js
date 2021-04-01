@@ -1,9 +1,5 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
 import React, {useState} from 'react';
 import Nav from '../components/Nav';
-// import Input from '@material-ui/core/Input';
-// import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
@@ -45,20 +41,13 @@ function Explore() {
   const [searchTune, setSearchTune] = useState(inputVal);
   const [tableTunes, setTableTunes] = useState(music.default);
 
-  // const handleOnPress = (e) => {
-  //   console.log(e.keyCode);
-  //   if (e.keyCode == 13) {
-  //     console.log(input);
-  //     setSearchTune(input);
-  //     setinputVal('');
-  //   }
-  // };
-
   const handleOnClick = (inputFinal) => {
     console.log(inputFinal);
     const input = inputFinal;
     setSearchTune(input);
     setinputVal('');
+    console.log(searchTune);
+    setTableTunes('');
   };
 
   return (
@@ -89,7 +78,6 @@ function Explore() {
               size='medium'
               fullWidth={true}
               value={inputVal}
-              // onKeyDown={(e) => handleOnPress(e)}
               onChange={(e) => setinputVal(e.target.value)}
             />
           </form>

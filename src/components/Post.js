@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React, {  } from 'react';
 import Button from '@material-ui/core/Button';
-import { Box, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import ListChips from './ListChips';
 

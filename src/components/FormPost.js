@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import post from '../utils/post';
 import Button from '@material-ui/core/Button';
