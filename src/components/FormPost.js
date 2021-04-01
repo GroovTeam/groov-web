@@ -18,9 +18,9 @@ function FormPost({dialogOpen}) {
     getPosses()
       .then(res => {
         if (res.data) {
-          const posses = res.data.results;
+          const tempPosses = res.data.results;
           const possesObj = {};
-          posses.forEach(posse => {
+          tempPosses.forEach(posse => {
             possesObj[posse.name] = false;
           });
           setPosses(possesObj);

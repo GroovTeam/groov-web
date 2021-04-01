@@ -10,7 +10,6 @@ import Post from './pages/Post';
 import RandoSug from './pages/RandoSug';
 import Explore from './pages/Explore';
 import DashBoard from './pages/DashBoard';
-import SpongeBob from './components/mockUser.json';
 import Register from './pages/Register';
 
 function App() {
@@ -22,7 +21,7 @@ function App() {
           <Explore />
         </Route>
         <Route path="/profile">
-          <Profile data={SpongeBob} />
+          <Profile />
         </Route>
         <Route path="/post">
           <Post />

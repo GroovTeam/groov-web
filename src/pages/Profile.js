@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import PosseList from '../components/PosseList';
 import LikesList from '../components/LikesList';
 import ListChips from '../components/ListChips';
+import SpongeBob from '../components/mockUser.json';
 // Displays full profile of current user.
 // The code in this file is JUST for visual style, as how the website is "supposed" to look.
 // Picture = profile pic lol, supposed to span from PROFILE to Picture, thinking of circular, ala IG mobile.
@@ -41,7 +42,7 @@ function TabPanel(data) {
   );
 }
 
-function Profile({data}) {
+function Profile() {
   const classes = useStyles();
   const [page, setPage] = useState(0);
 
@@ -55,13 +56,13 @@ function Profile({data}) {
       <div style={{display: 'flex', flexDirection: 'column'}}>
         <h2>Profile</h2>
         <div style={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
-          <Avatar className={classes.large} src={data.profilePic} />
-          <h1>{data.username}</h1>
-          <h2>{data.name}</h2>
-          <h3>{data.bio}</h3>
+          <Avatar className={classes.large} src={SpongeBob.profilePic} />
+          <h1>{SpongeBob.username}</h1>
+          <h2>{SpongeBob.name}</h2>
+          <h3>{SpongeBob.bio}</h3>
         </div>
         <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginLeft: '12vh', marginRight: '12vh'}}>
-          <ListChips size={'medium'} chips={data.tags} />
+          <ListChips size={'medium'} chips={SpongeBob.tags} />
         </div>
         <div>
           <Paper style={{alignItems: 'center', display: 'flex', flexDirection: 'column', marginLeft: '12vh', marginRight: '12vh'}} >
@@ -76,10 +77,10 @@ function Profile({data}) {
               <Tab centered label='Likes' />
             </Tabs>
             <TabPanel value={page} index={0}>
-              <PosseList data={data.posse} />
+              <PosseList data={SpongeBob.posse} />
             </TabPanel>
             <TabPanel value={page} index={1}>
-              <LikesList likes={data.likes}/>
+              <LikesList likes={SpongeBob.likes}/>
             </TabPanel>
           </Paper>
         </div>
