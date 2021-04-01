@@ -3,7 +3,6 @@ import Nav from '../components/Nav';
 import RegisterBox from '../components/RegisterBox';
 
 function Register() {
-
   return (
     <div >
       <Nav />
