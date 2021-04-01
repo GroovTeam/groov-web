@@ -10,8 +10,7 @@ async function getPosts() {
     const config = {
       headers: { Authorization: `Bearer ${token}`},
     };
-    console.log(token);
-    axios.get(ApiConfig.feed, config)
+    return axios.get(ApiConfig.feed, config)
       .catch(error => console.error('Error: ', error));
   }).catch(console.error);
 }

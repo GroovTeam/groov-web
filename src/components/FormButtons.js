@@ -6,10 +6,8 @@ function FormButtons({data, color, updateButtons}) {
 
   let items = [];
   const genre = Object.keys(data);
-  console.log(genre);
 
   const toggleButtons = (key) => {
-    console.log('button toggled is ', key);
     updateButtons(key);
   };
     

@@ -14,6 +14,7 @@ import SpongeBob from './components/mockUser.json';
 import Register from './pages/Register';
 
 function App() {
+
   return (
     <Router>
       <Switch>

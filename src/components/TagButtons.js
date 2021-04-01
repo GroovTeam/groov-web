@@ -11,7 +11,6 @@ function TagButtons({text, color, toggle}) {
     setSelected(!selected);
     btnColor = (selected) ? color : btnColor;
     toggle(text);
-    console.log('button selected is ',text);
   };
     
   return (

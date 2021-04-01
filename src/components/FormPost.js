@@ -12,6 +12,7 @@ function FormPost({dialogOpen}) {
   const [tags, setTags] = useState(Tags);
   const [posses, setPosses] = useState([]);
   const [postTxt, setPostTxt] = useState('');
+  let globalPosse = {};
 
   useState(() => {
     getPosses()
@@ -23,6 +24,7 @@ function FormPost({dialogOpen}) {
             possesObj[posse.name] = false;
           });
           setPosses(possesObj);
+          globalPosse = possesObj;
         }
       })
       .catch(console.error);
@@ -40,12 +42,15 @@ function FormPost({dialogOpen}) {
 
     for (const [key, value] of Object.entries(tags)) {
       if (value)
-        selectedPosses.push(key);
+        selectedTags.push(key);
     }
 
     console.log(postTxt);
     console.log(selectedPosses);
     console.log(selectedTags);
+
+    setTags(Tags);
+    setPosses(globalPosse);
 
     const postBody = {
       content: postTxt,

@@ -6,7 +6,8 @@ ApiConfig.register = baseURL + '/auth/register';
 ApiConfig.login = baseURL + '/auth/login';
 
 ApiConfig.feed = baseURL + '/posts/feed';
-ApiConfig.post = baseURL + '/posts';
+ApiConfig.post = baseURL + '/posts/';
+ApiConfig.allPosts = baseURL + '/posts/new';
 
 ApiConfig.posses = baseURL + '/posses';
 ApiConfig.joinPosse = ApiConfig.posses + '/join';

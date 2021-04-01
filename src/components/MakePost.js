@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import FormPost from './FormPost';
 
 
-function MakePost() {
+function MakePost({updateFeed}) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -17,6 +17,7 @@ function MakePost() {
   };
 
   const handleClose = () => {
+    updateFeed();
     setOpen(false);
   };
 

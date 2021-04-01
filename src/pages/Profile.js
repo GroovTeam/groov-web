@@ -6,7 +6,7 @@ import  { Tabs, Tab, Paper, Chip, TextField, Avatar, Box }  from '@material-ui/c
 import { makeStyles } from '@material-ui/core/styles';
 import PosseList from '../components/PosseList';
 import LikesList from '../components/LikesList';
-
+import ListChips from '../components/ListChips';
 // Displays full profile of current user.
 // The code in this file is JUST for visual style, as how the website is "supposed" to look.
 // Picture = profile pic lol, supposed to span from PROFILE to Picture, thinking of circular, ala IG mobile.
@@ -61,9 +61,7 @@ function Profile({data}) {
           <h3>{data.bio}</h3>
         </div>
         <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginLeft: '12vh', marginRight: '12vh'}}>
-          {data.tags.map((tag, index) => (
-            <Chip style={{margin: '1vh'}} key={index} label={tag} />
-          ))}
+          <ListChips size={'medium'} chips={data.tags} />
         </div>
         <div>
           <Paper style={{alignItems: 'center', display: 'flex', flexDirection: 'column', marginLeft: '12vh', marginRight: '12vh'}} >
