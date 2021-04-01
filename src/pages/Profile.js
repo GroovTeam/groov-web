@@ -1,50 +1,85 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Nav from '../components/Nav';
-import  { Tabs, Tab, Paper, Chip, TextField }  from '@material-ui/core';
-
+import  { Tabs, Tab, Paper, Avatar, Box }  from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import PosseList from '../components/PosseList';
+import LikesList from '../components/LikesList';
+import ListChips from '../components/ListChips';
+import SpongeBob from '../components/mockUser.json';
 // Displays full profile of current user.
 // The code in this file is JUST for visual style, as how the website is "supposed" to look.
 // Picture = profile pic lol, supposed to span from PROFILE to Picture, thinking of circular, ala IG mobile.
 // The idea is having a List to SCROLL that profile's Communities and Likes, handling the switch onClick I assume?
 // I know the Chips look cheap, I need to change it's dynamic.
 
+const useStyles = makeStyles((theme) => ({
+  large: {
+    width: theme.spacing(15),
+    height: theme.spacing(15),
+    alignItems: 'center',
+  },
+}));
+
+function TabPanel(data) {
+  const {children, value, index} = data;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+    >
+      {value === index && (
+        <Box p={3}>
+          <h4>{children}</h4>
+        </Box>
+      )}
+      
+      
+    </div>
+  );
+}
+
 function Profile() {
+  const classes = useStyles();
+  const [page, setPage] = useState(0);
+
+  const handleChange = (e, newVal) => {
+    setPage(newVal);
+  };
+
   return (
     <div>
       <Nav />
-      <div style={{marginLeft: 80}}>
+      <div style={{display: 'flex', flexDirection: 'column'}}>
         <h2>Profile</h2>
-        <TextField label='search for <user>\s tunes..' variant='outlined' style={{marginLeft: 820}} />
-        <h1 style={{marginLeft: 400}}>name LastName</h1>
-        <h2 style={{marginLeft:350}}>bio, i am a goat and I enjoy music lolo</h2>
-        <div>
-          PICTURE
-          <h1>.</h1>
+        <div style={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
+          <Avatar className={classes.large} src={SpongeBob.profilePic} />
+          <h1>{SpongeBob.username}</h1>
+          <h2>{SpongeBob.name}</h2>
+          <h3>{SpongeBob.bio}</h3>
         </div>
-
-
-        <Chip label='hip-hop' style={{marginLeft: 50}}/>
-        <Chip label='vaporwave' style={{marginLeft: 50}}/>
-        <Chip label='leaks' style={{marginLeft: 50}}/>
-        <Chip label='unreleased' style={{marginLeft: 50}}/>
-        <Chip label='twerking music (6ix9ine)' style={{marginLeft: 50}}/>
-        <Chip label='classic' style={{marginLeft: 50}}/>
-        <Chip label='reggaeton' style={{marginLeft: 50}}/>
-        <Chip label='rap' style={{marginLeft: 50}}/>
-
-        <h1>.</h1>
-        <h1>.</h1>
+        <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginLeft: '12vh', marginRight: '12vh'}}>
+          <ListChips size={'medium'} chips={SpongeBob.tags} />
+        </div>
         <div>
-          <Paper >
+          <Paper style={{alignItems: 'center', display: 'flex', flexDirection: 'column', marginLeft: '12vh', marginRight: '12vh'}} >
             <Tabs
               indicatorColor='primary'
               textColor='primary'
-              centered>
-
-              <Tab label='Jooqs' />
-              <Tab label='Communities' />
-              <Tab label='Likes' />
+              centered
+              value={page}
+              onChange={handleChange}
+            >
+              <Tab centered label='Posse' />
+              <Tab centered label='Likes' />
             </Tabs>
+            <TabPanel value={page} index={0}>
+              <PosseList data={SpongeBob.posse} />
+            </TabPanel>
+            <TabPanel value={page} index={1}>
+              <LikesList likes={SpongeBob.likes}/>
+            </TabPanel>
           </Paper>
         </div>
       </div>

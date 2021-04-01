@@ -1,20 +1,19 @@
-/* eslint-disable no-unused-vars */
-import React, { } from 'react';
+import React  from 'react';
 import Post from './Post';
+import List from '@material-ui/core/List';
 
-let posts = [{ProfilePic: 'lol', text: 'ay yall listen to this new track', username: 'crakatoa'}, 
-  {profilePic: 'lol', text: 'ay yall listen to this new track', username: 'crakatoa'}, 
-  {profilePic: 'lol', text: 'ay yall listen to this new track', username: 'crakatoa'}];
-
-function DashboardPosts()
+function DashboardPosts({feed})
 {
+
   return(
     <div>
-      {
-        posts.map((post, index) => (
-          <Post key={index} post={post} style={{display: 'flex', flexDirection: 'column', justifyContent:'center'}}/>
-        ))
-      }
+      <List>
+        {
+          feed.map((post, index) => (
+            <Post key={index} post={post} style={{display: 'flex', flexDirection: 'column', justifyContent:'center'}}/>
+          ))
+        }
+      </List>
     </div>
   );
 }

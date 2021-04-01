@@ -13,6 +13,7 @@ import DashBoard from './pages/DashBoard';
 import Register from './pages/Register';
 
 function App() {
+
   return (
     <Router>
       <Switch>

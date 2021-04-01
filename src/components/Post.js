@@ -1,29 +1,34 @@
 import React, {  } from 'react';
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
+import { Box } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
-function Posts( { post } ) {
+import ListChips from './ListChips';
+
+
+
+function Posts({post}) {
+
   return (
     <div>
-      <Box border={3} borderColor='primary.main' style={{paddingLeft: '30px', paddingBottom: '10px', display: 'flex', flexDirection: 'column'}} >
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-          <Avatar style= {{alignSelf: 'center', marginRight: '1%'}}>
-           H
-          </Avatar>
-          <h1>{post.username}</h1>
-        </div>
-
-        <p >{post.text}
-        </p>
-
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-          <Button variant='outlined' color='primary' style={{marginRight: '31%'}}>Like</Button>
-          <Button variant='outlined' style={{marginRight: '25%'}}>Comment</Button>
-          <Button variant='outlined' color='secondary'>Dislike</Button>
+      <Box  borderBottom={2}>
+        <div style={{margin: '1vh'}}>
+          <div style={{display: 'flex'}}>
+            <Box  style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+              <Avatar style={{height: '5vh', margin: '.5vh', width: '5vh'}} src={post.image}></Avatar>
+              <h3>{post.username}</h3>
+              <ListChips variant={'outlined'} size={'small'} chips={post.posses} />
+            </Box>
+          </div>
+          <div style={{display: 'flex' , flexDirection: 'column'}}>
+            <h2 style={{alignSelf: 'center', fontWeight: 'normal'}}>{post.content}</h2>
+            <Box style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+              <Button>Like</Button>
+              <Button>Comment</Button>
+              <Button>Dislike</Button>
+            </Box>
+          </div>
         </div>
       </Box>
-
-      <div style={{paddingBottom: '5px'}}/>
     </div>
   );
 }

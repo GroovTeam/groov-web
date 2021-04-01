@@ -4,7 +4,6 @@ import axios from 'axios';
 import ApiConfig from '../utils/ApiConfig';
 import './RegisterBox.css';
 
-
 const RegisterBox = () => {
   const [userData, setUserData] = useState({});
 
