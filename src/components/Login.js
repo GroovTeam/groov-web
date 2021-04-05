@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import firebase from '../utils/Firebase';
 import axios from 'axios';
 import ApiConfig from '../utils/ApiConfig';
-import './Register.css'
+import './RegisterBox.css';
 
 // Login a user with an email and password
 // ideally this would be a modal
