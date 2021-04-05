@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 import firebase from '../utils/Firebase';
 import axios from 'axios';
 import ApiConfig from '../utils/ApiConfig';
+<<<<<<< HEAD
 import './RegisterBox.css';
 
 // Login a user with an email and password
 // Ideally, this would be a modal
+=======
+
+// Login a user with an email and password
+>>>>>>> fb10e706ce71f94512b82d493cdb8cf550680891
 const Login = () => {
 
   const [userData, setUserData] = useState({});
