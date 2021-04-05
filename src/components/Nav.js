@@ -126,6 +126,9 @@ export default function Nav() {
           <Link style={{textDecoration: 'none', color: 'white'}} to='/register'>
               Registration
           </Link>
+          <Link style={{textDecoration: 'none', color: 'white'}} to='/register'>
+              Login
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer

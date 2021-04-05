@@ -11,6 +11,7 @@ import RandoSug from './pages/RandoSug';
 import Explore from './pages/Explore';
 import DashBoard from './pages/DashBoard';
 import Register from './pages/Register';
+import Login from './pages/LoginPage';
 
 function App() {
 
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route path="/register">
           <Register />
+        </Route>
+        <Route path="/login">
+          <Login />
         </Route>
         <Route path="/randoSug">
           <RandoSug />
