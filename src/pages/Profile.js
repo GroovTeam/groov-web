@@ -7,11 +7,8 @@ import PosseList from '../components/PosseList';
 import LikesList from '../components/LikesList';
 import ListChips from '../components/ListChips';
 import SpongeBob from '../components/mockUser.json';
-// Displays full profile of current user.
-// The code in this file is JUST for visual style, as how the website is "supposed" to look.
-// Picture = profile pic lol, supposed to span from PROFILE to Picture, thinking of circular, ala IG mobile.
-// The idea is having a List to SCROLL that profile's Communities and Likes, handling the switch onClick I assume?
-// I know the Chips look cheap, I need to change it's dynamic.
+import getProfile from '../utils/getProfile';
+import Loading from '../components/Loading';
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -45,15 +42,19 @@ function Profile() {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [userInfo, setUserInfo] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e, newVal) => {
     setPage(newVal);
   };
 
   const getUserInfo = async () => {
-    // getUser()
-    //   .then(res => setUserInfo(res))
-    //   .catch(console.error);
+    getProfile()
+      .then(res => {
+        setUserInfo(res.data);
+        setLoading(true);
+      })
+      .catch(console.error);
 
     await console.log(userInfo);
   };
@@ -62,42 +63,48 @@ function Profile() {
     <div>
       <Nav />
       <div style={{display: 'flex', flexDirection: 'column'}}>
-        <h2>Profile</h2>
-        <div style={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
-          <Avatar className={classes.large} src={SpongeBob.profilePic} />
-          <h1>{SpongeBob.username}</h1>
-          <h2>{SpongeBob.name}</h2>
-          <h3>{SpongeBob.bio}</h3>
-        </div>
-        <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginLeft: '12vh', marginRight: '12vh'}}>
-          <ListChips size={'medium'} chips={SpongeBob.tags} />
-        </div>
-        <div>
-          <Paper style={{alignItems: 'center', display: 'flex', flexDirection: 'column', marginLeft: '12vh', marginRight: '12vh'}} >
-            <Tabs
-              indicatorColor='primary'
-              textColor='primary'
-              centered
-              value={page}
-              onChange={handleChange}
-            >
-              <Tab centered label='Posse' />
-              <Tab centered label='Likes' />
-              <Tab centered label='Tracks' />
 
-            </Tabs>
-            <TabPanel value={page} index={0}>
-              <PosseList data={SpongeBob.posse} />
-            </TabPanel>
-            <TabPanel value={page} index={1}>
-              <LikesList likes={SpongeBob.likes}/>
-            </TabPanel>
-            <TabPanel value={page} index={2}>
-              list of tracks
-              <LikesList likes={SpongeBob.likes}/>
-            </TabPanel>
-          </Paper>
-        </div>
+        {loading ? (
+          <div>
+            <h2>Profile</h2>
+            <div style={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
+              <Avatar className={classes.large} src={SpongeBob.profilePic} />
+              <h1>{SpongeBob.username}</h1>
+              <h2>{SpongeBob.name}</h2>
+              <h3>{SpongeBob.bio}</h3>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginLeft: '12vh', marginRight: '12vh'}}>
+              <ListChips size={'medium'} chips={SpongeBob.tags} />
+            </div>
+            <div>
+              <Paper style={{alignItems: 'center', display: 'flex', flexDirection: 'column', marginLeft: '12vh', marginRight: '12vh'}} >
+                <Tabs
+                  indicatorColor='primary'
+                  textColor='primary'
+                  centered
+                  value={page}
+                  onChange={handleChange}
+                >
+                  <Tab centered label='Posse' />
+                  <Tab centered label='Likes' />
+                  <Tab centered label='Tracks' />
+
+                </Tabs>
+                <TabPanel value={page} index={0}>
+                  <PosseList data={SpongeBob.posse} />
+                </TabPanel>
+                <TabPanel value={page} index={1}>
+                  <LikesList likes={SpongeBob.likes}/>
+                </TabPanel>
+                <TabPanel value={page} index={2}>
+                  list of tracks
+                  <LikesList likes={SpongeBob.likes}/>
+                </TabPanel>
+              </Paper>
+            </div>
+          </div>
+        ): <Loading style={{alignSelf: 'center', display: 'flex', marginRight: '2vh', marginTop: '5vh'}} />}
+
       </div>
     </div>
   );
