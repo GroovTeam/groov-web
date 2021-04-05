@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {useState} from 'react';
 import Nav from '../components/Nav';
 import  { Tabs, Tab, Paper, Avatar, Box }  from '@material-ui/core';
@@ -43,9 +44,18 @@ function TabPanel(data) {
 function Profile() {
   const classes = useStyles();
   const [page, setPage] = useState(0);
+  const [userInfo, setUserInfo] = useState({});
 
   const handleChange = (e, newVal) => {
     setPage(newVal);
+  };
+
+  const getUserInfo = async () => {
+    // getUser()
+    //   .then(res => setUserInfo(res))
+    //   .catch(console.error);
+
+    await console.log(userInfo);
   };
 
   return (
@@ -73,11 +83,17 @@ function Profile() {
             >
               <Tab centered label='Posse' />
               <Tab centered label='Likes' />
+              <Tab centered label='Tracks' />
+
             </Tabs>
             <TabPanel value={page} index={0}>
               <PosseList data={SpongeBob.posse} />
             </TabPanel>
             <TabPanel value={page} index={1}>
+              <LikesList likes={SpongeBob.likes}/>
+            </TabPanel>
+            <TabPanel value={page} index={2}>
+              list of tracks
               <LikesList likes={SpongeBob.likes}/>
             </TabPanel>
           </Paper>
