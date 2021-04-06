@@ -5,8 +5,7 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import { Link 
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -131,6 +130,9 @@ export default function Nav() {
           <Button style={{textDecoration: 'none', color: 'white'}} onClick={() => Logout()}>
               Logout
           </Button>
+          <Link style={{textDecoration: 'none', color: 'white'}} to='/login'>
+              Login  
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer

@@ -56,7 +56,7 @@ function DashBoard() {
       .catch(console.error);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     if (posts.length === 0) {
       setPosts(postsMock);
     }
@@ -73,23 +73,30 @@ function DashBoard() {
               variant={'outlined'}
             >
               <Tabs
-                indicatorColor='primary'
+                indicatorColor='none'
                 textColor='primary'
                 centered
                 value={page}
                 onChange={handleChange}
               >
                 <Tab 
-                  centered 
                   label='DashBoard'
                   disableRipple={true}
                 />
+                {/* <Tab disabled /> */}
+                {/* <MakePost   
+                  updateFeed={updateFeed} 
+                /> */}
               </Tabs>
+              
               <TabPanel value={page} index={0}>
                 <DashboardPosts 
-                  feed={posts}
+                  feed={posts} 
                 >
                 </DashboardPosts>
+                <MakePost   
+                  updateFeed={updateFeed} 
+                />
               </TabPanel>
             </Paper>
           </div>
@@ -98,7 +105,7 @@ function DashBoard() {
               variant={'outlined'}
             >
               <Tabs
-                indicatorColor='primary'
+                indicatorColor='none'
                 textColor='primary'
                 centered
                 value={page}
@@ -110,7 +117,7 @@ function DashBoard() {
                   disableRipple={true}
                 />
               </Tabs>
-              <TabPanel value={page} index={0}>
+              <TabPanel>
                 <LikesList likes={likes} />
               </TabPanel>
             </Paper>
@@ -118,7 +125,7 @@ function DashBoard() {
           
         </div>
         <div style={{display: 'flex', alignItems: 'flex-end'}}>
-          <MakePost style={{alignSelf: 'flex-end'}} updateFeed={updateFeed} />
+          
         </div>
         
       </div>

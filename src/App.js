@@ -5,12 +5,14 @@ Router,
 Route, 
 Switch, 
 } from 'react-router-dom';
-import Profile from './pages/Profile';
+import ProfilePath from './pages/ProfilePath';
 import Post from './pages/Post';
 import RandoSug from './pages/RandoSug';
 import Explore from './pages/Explore';
 import DashBoard from './pages/DashBoard';
 import Register from './pages/Register';
+import Login from './pages/LoginPage';
+import EditProfile from './pages/EditProfile';
 
 function App() {
 
@@ -21,13 +23,19 @@ function App() {
           <Explore />
         </Route>
         <Route path="/profile">
-          <Profile />
+          <ProfilePath />
+        </Route>
+        <Route path="/editProfile" >
+          <EditProfile />
         </Route>
         <Route path="/post">
           <Post />
         </Route>
         <Route path="/register">
           <Register />
+        </Route>
+        <Route path="/login" >
+          <Login />
         </Route>
         <Route path="/randoSug">
           <RandoSug />
