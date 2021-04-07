@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import  { Accordion, AccordionSummary, AccordionDetails, Button, TextField } from '@material-ui/core';
 import EditTags from './EditTags';
-import EditPosses from './EditPosses';
 import UpdateProfile from '../../utils/UpdateProfile';
 
 function EditForm({userData, closeDialog}) {
@@ -67,12 +66,6 @@ function EditForm({userData, closeDialog}) {
                 currTags={user.tagLikes}
                 updateUserTags={updateTags}
               />  
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary>Update Posses</AccordionSummary>
-            <AccordionDetails>
-              <EditPosses />  
             </AccordionDetails>
           </Accordion>
         </div>

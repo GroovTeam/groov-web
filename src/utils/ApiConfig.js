@@ -10,8 +10,10 @@ ApiConfig.post = baseURL + '/posts/';
 ApiConfig.allPosts = baseURL + '/posts/new';
 
 ApiConfig.posses = baseURL + '/posses';
-ApiConfig.joinPosse = ApiConfig.posses + '/join';
+ApiConfig.joinPosse = ApiConfig.posses + '/join/';
 ApiConfig.createPosse = ApiConfig.posses + '/create';
+ApiConfig.leavePosse = ApiConfig.posses + '/leave/';
+
 
 ApiConfig.user = baseURL + '/user/profile';
 ApiConfig.likes = baseURL + '/user/likedPosts';

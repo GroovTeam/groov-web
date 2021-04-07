@@ -13,22 +13,10 @@ const LoginComponent = () => {
   const [userData, setUserData] = useState({});
   
   const login = (userData) => {
-    // axios.post(
-    //   ApiConfig.login,
-    //   userData
-    // ).then(result => {
-    //   console.log(userData);
-    //   if (result.data.token) {
-    //     firebase.auth().signInWithEmailAndPassword(
-    //       userData.email,
-    //       userData.password
-    //     ).then(userCred => {
-    //       userCred.sendEmailVerification();
-    //     }).catch(console.error);
-    //   }
-    // }).catch(console.error); 
-    console.log(userData);
-    Login(userData.email, userData.password);
+    const email = userData.email;
+    const password = userData.password;
+    Login(email, password)
+      .catch(console.error);
   };
   
   const handleChange = (event) => {
@@ -36,7 +24,6 @@ const LoginComponent = () => {
     const value = target.value;
     const name = target.name;
     setUserData({ ...userData, [name]: value });
-    console.log(userData);
   };
 
   return (
@@ -60,7 +47,10 @@ const LoginComponent = () => {
               </Link>
             </div>
             <div>
-              <input type="Submit" value="Submit"/>
+              <input type="Submit" value="Submit" readOnly={true}/>
+              <button onClick={login}>
+                Submit btn
+              </button>
             </div>
           </form>
         </div>

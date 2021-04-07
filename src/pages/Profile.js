@@ -10,12 +10,8 @@ import SpongeBob from '../components/mockUser.json';
 import getProfile from '../utils/getProfile';
 import getUserProfile from '../utils/getUserProfile';
 import firebase from '../utils/Firebase';
-import Dashboard from '../pages/DashBoard';
-import { Link } from 'react-router-dom';
 import EditForm from '../components/editProfile/EditForm';
-import Fab from '@material-ui/core/Fab';
-
-
+import UserPosses from '../components/UserPosses';
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -85,8 +81,6 @@ function Profile({username}) {
         .catch(console.error);
     }
     console.log(userInfo);
-    console.log(firebase.auth().currentUser);
-
   };
 
   useEffect(() => {
@@ -139,12 +133,7 @@ function Profile({username}) {
 
               </Tabs>
               <TabPanel value={page} index={0}>
-                <PosseList data={userInfo.posse} />
-                <Fab
-                  variant='extended'
-                >
-                  Create Posse
-                </Fab>
+                <UserPosses userPosses={userInfo.posse} />
               </TabPanel>
               <TabPanel value={page} index={1}>
                 <LikesList likes={SpongeBob.likes}/>

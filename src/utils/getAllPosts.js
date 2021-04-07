@@ -8,6 +8,7 @@ async function getAllPosts() {
     const config = {
       headers: { Authorization: `Bearer ${token}`},
     };
+    
     return axios.get(ApiConfig.allPosts, config)
       .catch(error => console.error('Error: ', error));
   }).catch(console.error);
