@@ -7,8 +7,9 @@ async function removePosses(posse) {
     const config = {
       headers: {Authorization: `Bearer ${token}`}
     };
-
-    return axios.post(ApiConfig.leavePosse, posse, config)
+    
+    const removeURL = ApiConfig.leavePosse + posse;
+    return axios.post(removeURL, {}, config)
       .catch(error => console.error('Error: ', error));
   }).catch(console.error);
 }

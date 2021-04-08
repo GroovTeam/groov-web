@@ -2,8 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import Nav from '../components/Nav';
 import  { Tabs, Tab, Paper, Avatar, Box, Button, Dialog, DialogContent, DialogTitle }  from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import PosseList from '../components/PosseList';
+import { makeStyles } from '@material-ui/core/styles';
 import LikesList from '../components/LikesList';
 import ListChips from '../components/ListChips';
 import SpongeBob from '../components/mockUser.json';
@@ -98,7 +97,9 @@ function Profile({username}) {
           <div style={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
             <Avatar className={classes.large} src={SpongeBob.profilePic} />
             <h2>{(userInfo.firstName + ' ' + userInfo.lastName)}</h2>
-            <h3>{(userInfo.bio === undefined) ? 'Add User Bio': userInfo.bio}</h3>
+            <h3 style={{maxWidth: 600}} >
+              {(userInfo.bio === undefined) ? 'Add User Bio': userInfo.bio}
+            </h3>
           </div>
           <div style={{justifyContent: 'center', display: 'flex'}}>
             {(username === undefined) ? (
@@ -115,7 +116,7 @@ function Profile({username}) {
               <div></div>
             )}
           </div>
-          <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginLeft: '12vh', marginRight: '12vh'}}>
+          <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginLeft: '12vh', marginRight: '12vh', maxWidth: 600}}>
             <ListChips size={'medium'} chips={userInfo.tagLikes} />
           </div>
           <div>
@@ -133,7 +134,7 @@ function Profile({username}) {
 
               </Tabs>
               <TabPanel value={page} index={0}>
-                <UserPosses userPosses={userInfo.posse} />
+                <UserPosses />
               </TabPanel>
               <TabPanel value={page} index={1}>
                 <LikesList likes={SpongeBob.likes}/>

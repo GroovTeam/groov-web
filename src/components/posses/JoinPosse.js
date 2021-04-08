@@ -1,33 +1,18 @@
-/* eslint-disable no-unused-vars */
-import React, {useState, useEffect} from 'react';
-import { Button,  List, ListItem, ListItemText, 
-  Paper, Dialog, DialogContent, DialogTitle, DialogActions  }  from '@material-ui/core';
+import React, {useEffect} from 'react';
+import { Button,  List, ListItem, ListItemText, Dialog, DialogContent, DialogTitle, DialogActions  }  from '@material-ui/core';
 import joinPosses from '../../utils/joinPosse';
-import getPosses from '../../utils/getPosses';
 
-function JoinPosse({visible, toggle}) {
-  const [allPosses, setAllPosses] = useState([]);
+function JoinPosse({posses ,visible, toggle, update}) {
 
-  const getAllPosses = async () => {
-    let getRes = [];
-    getPosses()
-      .then(res => {
-        console.log(res.data);
-        getRes = res.data.results;
-        setAllPosses(getRes);
-      })
-      .catch(console.error);
-  };
-
-  const addPosse = (posseObj) => {
-    console.log('we want to add this posse', posseObj.name);
-    console.log(posseObj);
+  const addPosse = async (posseObj) => {
+    
     joinPosses(posseObj)
+      .then(() => update())
       .catch(console.error);
   };
 
   useEffect(async () => {
-    getAllPosses();
+    update();
   }, []);
 
   return (
@@ -39,8 +24,8 @@ function JoinPosse({visible, toggle}) {
     >
       <DialogTitle id="alert-dialog-title">Join Posses</DialogTitle>
       <DialogContent>
-        <List style={{maxHeight: 400}}>
-          {allPosses.map(posse => (
+        <List style={{maxHeight: 400}} >
+          {posses.map(posse => (
             <ListItem key={posse.name}>
               <ListItemText primary={posse.name} />
               <Button style={{ color: 'green' }} onClick={() => addPosse(posse)}>

@@ -7,6 +7,7 @@ async function joinPosse(posse) {
     const config = {
       headers: {Authorization: `Bearer ${token}`}
     };
+    
     const joinQuery = ApiConfig.joinPosse + posse.posseID;
     return axios.post(joinQuery, {}, config)
       .catch(error => console.error('Error: ', error));

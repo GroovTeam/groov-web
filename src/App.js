@@ -12,7 +12,6 @@ import Explore from './pages/Explore';
 import DashBoard from './pages/DashBoard';
 import Register from './pages/Register';
 import Login from './pages/LoginPage';
-import EditProfile from './pages/EditProfile';
 
 function App() {
 
@@ -24,9 +23,6 @@ function App() {
         </Route>
         <Route path="/profile">
           <ProfilePath />
-        </Route>
-        <Route path="/editProfile" >
-          <EditProfile />
         </Route>
         <Route path="/post">
           <Post />

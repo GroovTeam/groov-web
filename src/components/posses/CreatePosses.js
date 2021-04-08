@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React, {useState} from 'react';
-import { Button, Dialog, DialogContent, DialogTitle, DialogActions, TextField  }  from '@material-ui/core';
+import { Button, Dialog, DialogContent, DialogTitle, DialogActions, TextField }  from '@material-ui/core';
 import createPosse from '../../utils/createPosse';
 
 export default function CreatePosses({visible, toggle}) {
@@ -8,12 +7,10 @@ export default function CreatePosses({visible, toggle}) {
 
   const handleChange = (e) => {
     const value = e.target.value;
-    const key = e.target.name;
     setPosse(value);
   };
 
   const handleCreatingPosse = () => {
-    console.log(posse);
     let possesObj = {};
     possesObj.name = posse;
     createPosse(possesObj)

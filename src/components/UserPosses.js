@@ -1,33 +1,16 @@
-/* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react';
-import { Button,  List, ListItem, ListItemText, 
-  Paper, Dialog, DialogContent, DialogTitle  }  from '@material-ui/core';
-import joinPosses from '../utils/joinPosse';
-import createPosse from '../utils/createPosse';
+import { Button,  List, ListItem, ListItemText }  from '@material-ui/core';
+import getUserProfile from '../utils/getUserProfile';
 import removePosses from '../utils/removePosses';
 import CreatePosse from './posses/CreatePosses';
 import JoinPosse from './posses/JoinPosse';
+import getPosses from '../utils/getPosses';
 
-
-export default function UserPosses({userPosses}) {
-  const [checked, setChecked] = useState([]);
-  const [posses, setPosses] = useState((userPosses === undefined) ? [] : userPosses);
+export default function UserPosses() {
+  const [posses, setPosses] = useState([]);
   const [openCreate, setOpenCreate] = useState(false);
   const [openJoin, setOpenJoin] = useState(false);
-
-
-  const updatePosses = () => {
-
-  };
-
-  const joinPosses = () => {
-
-  };
-
-  const createPosses = () => {
-
-  };
-
+  const [allPosses, setAllPosses] = useState([]);
 
   const handleClickOpenCreate = () => {
     setOpenCreate(true);
@@ -35,52 +18,72 @@ export default function UserPosses({userPosses}) {
 
   const handleCloseCreate = () => {
     setOpenCreate(false);
+    getUserPosses();
   };
 
   const handleClickOpenJoin = () => {
     setOpenJoin(true);
+    getUserPosses();
   };
 
   const handleCloseJoin = () => {
     setOpenJoin(false);
   };
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
+  const handleRemovePosses = (value) => async () => {
+    const posseIndex = posses.indexOf(value);
+    const posseList = [...posses];
+    if (posseIndex > -1) {
+      posseList.splice(posseIndex, 1);
     }
 
-    setChecked(newChecked);
-    console.log(checked);
-  };
+    let removeId = '';
 
-  const removePosses = async (posseEl) => {
-    console.log('we want to remove this posse', posseEl.id);
-    console.log('we want to remove ', posseEl.name);
-  };
-
-  useEffect( async() => {
-    let tempTags = [];
-    let userTags = (userPosses === undefined) ? [] : userPosses;
-    userTags.forEach((el) => {
-      tempTags.push(el);
+    allPosses.forEach(posse => {
+      if (posse.name.toLowerCase() === value.toLowerCase()) {
+        removeId = posse.posseID;
+      }
     });
-    setChecked(tempTags);
+
+    removePosses(removeId)
+      .then(() => {getUserPosses(); 
+        setPosses(posseList);})
+      .catch(console.error);
+  };
+
+  const getUserPosses = async () => {
+    let data = {};
+    getUserProfile()
+      .then(res => {
+        data = res.data;
+        setPosses(data.posses);
+        getAllPosses();
+      })
+      .catch(console.error);
+  };
+
+  const getAllPosses = async () => {
+    let getRes = [];
+    getPosses()
+      .then(res => {
+        getRes = res.data.results;
+        setAllPosses(getRes);
+      })
+      .catch(console.error);
+  };
+
+  useEffect( () => {
+    getUserPosses();
   }, []);
   
   return (
     <div>
       <List>
-        {(posses.length !== 0) ? (posses.map((value) => {
+        {(posses !== undefined) ? (posses.map((value) => {
           return (
-            <ListItem style={{width: '55vh'}} key={value.posseID} onClick={handleToggle(value)}>
-              <ListItemText  primary={value.name} />
-              <Button style={{ color: 'red' }} onClick={removePosses(value)}>
+            <ListItem key={value} onClick={handleRemovePosses(value)}>
+              <ListItemText  primary={value} />
+              <Button style={{ color: 'red' }} onClick={handleRemovePosses(value)}>
                       Remove
               </Button>
             </ListItem>
@@ -93,12 +96,9 @@ export default function UserPosses({userPosses}) {
       <Button onClick={() => handleClickOpenCreate()}>
             Create Posse
       </Button>
-      <Button onClick={() => updatePosses(checked)}>
-            Update Posses
-      </Button>
 
-      <CreatePosse visible={openCreate} toggle={handleCloseCreate} />
-      <JoinPosse visible={openJoin} toggle={handleCloseJoin} />
+      <CreatePosse update={getAllPosses} visible={openCreate} toggle={handleCloseCreate} />
+      <JoinPosse posses={allPosses} update={getUserPosses} visible={openJoin} toggle={handleCloseJoin} />
     </div>
   );
 }

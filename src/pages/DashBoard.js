@@ -33,7 +33,7 @@ function DashBoard() {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(0);
 
-  const handleChange = (e, newVal) => {
+  const handleChange = (newVal) => {
     setPage(newVal);
   };
 
@@ -43,13 +43,11 @@ function DashBoard() {
       .then(res => {
         if (res.data) {
           let newData = [];
-          console.log(res.data.results);
           for (const key in Object.keys(res.data.results)) {
             res.data.results[key].image = 'https://picsum.photos/200/300';
             console.log(res.data.result);
             newData.push(res.data.results[key]);
           }
-          console.log(newData);
           setPosts(newData);
         }
       })
@@ -83,10 +81,6 @@ function DashBoard() {
                   label='DashBoard'
                   disableRipple={true}
                 />
-                {/* <Tab disabled /> */}
-                {/* <MakePost   
-                  updateFeed={updateFeed} 
-                /> */}
               </Tabs>
               
               <TabPanel value={page} index={0}>
