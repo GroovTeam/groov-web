@@ -5,6 +5,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import IconButton from '@material-ui/core/IconButton';
 import FormPost from './FormPost';
+import RecordAudio from '../components/RecordAudio';
 
 
 function MakePost({updateFeed}) {
@@ -32,6 +33,7 @@ function MakePost({updateFeed}) {
       >
         <DialogTitle id="alert-dialog-title">Post</DialogTitle>
         <DialogContent>
+          <RecordAudio/>
           <FormPost dialogOpen={handleClose} />
         </DialogContent>
       </Dialog>

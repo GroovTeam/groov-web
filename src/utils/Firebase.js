@@ -7,6 +7,5 @@ import 'firebase/storage';
 import FirebaseConfig from './FirebaseConfig';
 
 firebase.initializeApp(FirebaseConfig);
-firebase.auth().useEmulator('http://localhost:9099');
 
 export default firebase;

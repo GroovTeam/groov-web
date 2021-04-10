@@ -21,9 +21,7 @@ const Register = async (email, password, username, firstName, lastName) => {
       firebase.auth().signInWithEmailAndPassword(
         email,
         password
-      ).then(userCred => {
-        userCred.user.sendEmailVerification();
-      }).catch(console.error);
+      ).catch(console.error);
   }).catch(console.error);
 };
 

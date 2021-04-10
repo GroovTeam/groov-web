@@ -6,6 +6,7 @@ import getAllPosts from '../utils/getAllPosts';
 import MakePost from '../components/MakePost';
 import LikesList from '../components/LikesList';
 
+
 let postsMock = [{image: 'https://picsum.photos/200/300', tags: ['metal', 'rock'], posses: ['noobs'], content: 'ay yall listen to this new track', username: 'crakatoa'}, 
   {image: 'https://picsum.photos/200', tags: ['metal', 'rock'], posses: ['noobs'], content: 'ay yall listen to this new track', username: 'crakatoa'}, 
   {image: 'https://picsum.photos/200/300', tags: ['metal', 'rock'], posses: ['noobs'], content: 'ay yall listen to this new track', username: 'crakatoa'}];
@@ -117,8 +118,8 @@ function DashBoard() {
           </div>
           
         </div>
-        <div style={{display: 'flex', alignItems: 'flex-end'}}>
-          <MakePost style={{alignSelf: 'flex-end'}} updateFeed={updateFeed} />
+        <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+          <MakePost updateFeed={updateFeed} />
         </div>
         
       </div>

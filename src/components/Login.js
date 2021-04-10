@@ -11,7 +11,11 @@ const Login = () => {
 
   const [userData, setUserData] = useState({});
   
-  const login = (userData) => {
+  const login = (event) => {
+    
+    event.preventDefault();
+    console.log(userData);
+    console.log(ApiConfig.login);
     axios.post(
       ApiConfig.login,
       userData
@@ -20,11 +24,10 @@ const Login = () => {
         firebase.auth().signInWithEmailAndPassword(
           userData.email,
           userData.password
-        ).then(userCred => {
-          userCred.sendEmailVerification();
-        }).catch(console.error);
+        ).catch(console.error);
       }
-    }).catch(console.error);  
+    }).catch(console.error);
+
   };
   
   const handleChange = (event) => {
