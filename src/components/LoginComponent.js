@@ -1,30 +1,22 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import firebase from '../utils/Firebase';
-import axios from 'axios';
-import ApiConfig from '../utils/ApiConfig';
+// import firebase from '../utils/Firebase';
+// import axios from 'axios';
+// import ApiConfig from '../utils/ApiConfig';
 import './RegisterBox.css';
+import Login from '../utils/Login';
 
 // Login a user with an email and password
 // ideally this would be a modal
-const Login = () => {
+const LoginComponent = () => {
 
   const [userData, setUserData] = useState({});
   
   const login = (userData) => {
-    axios.post(
-      ApiConfig.login,
-      userData
-    ).then(result => {
-      if (result.data.token) {
-        firebase.auth().signInWithEmailAndPassword(
-          userData.email,
-          userData.password
-        ).then(userCred => {
-          userCred.sendEmailVerification();
-        }).catch(console.error);
-      }
-    }).catch(console.error);  
+    const email = userData.email;
+    const password = userData.password;
+    Login(email, password)
+      .catch(console.error);
   };
   
   const handleChange = (event) => {
@@ -56,6 +48,9 @@ const Login = () => {
             </div>
             <div>
               <input type="Submit" value="Submit" readOnly={true}/>
+              <button onClick={login}>
+                Submit btn
+              </button>
             </div>
           </form>
         </div>
@@ -64,4 +59,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginComponent;

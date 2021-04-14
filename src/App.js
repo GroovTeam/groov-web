@@ -5,7 +5,7 @@ Router,
 Route, 
 Switch, 
 } from 'react-router-dom';
-import Profile from './pages/Profile';
+import ProfilePath from './pages/ProfilePath';
 import Post from './pages/Post';
 import RandoSug from './pages/RandoSug';
 import Explore from './pages/Explore';
@@ -22,7 +22,7 @@ function App() {
           <Explore />
         </Route>
         <Route path="/profile">
-          <Profile />
+          <ProfilePath />
         </Route>
         <Route path="/post">
           <Post />

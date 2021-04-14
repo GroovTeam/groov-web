@@ -4,8 +4,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Link 
-} from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -19,6 +19,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExploreIcon from '@material-ui/icons/Explore';
+import Logout from '../utils/Logout';
 
 const navItems = [
   {name: 'DashBoard', icon: <DashboardIcon />, path: '/'},
@@ -126,6 +127,9 @@ export default function Nav() {
           <Link style={{textDecoration: 'none', color: 'white'}} to='/register'>
               Registration
           </Link>
+          <Button style={{textDecoration: 'none', color: 'white'}} onClick={() => Logout()}>
+              Logout
+          </Button>
           <Link style={{textDecoration: 'none', color: 'white'}} to='/login'>
               Login  
           </Link>

@@ -5,7 +5,7 @@ function PosseList({data}) {
 
   return (
     <List>
-      {data.map((posse, index) => (
+      {(data !== undefined) ? (data.map((posse, index) => (
         <div 
           style={{display: 'flex'}} 
           key={index}
@@ -28,7 +28,7 @@ function PosseList({data}) {
             </ListItemText>
           </ListItem>
         </div>
-      ))}
+      ))) : 'add posses'}
     </List>
   );
 
