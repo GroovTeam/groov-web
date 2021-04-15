@@ -1,12 +1,36 @@
-import React, {  } from 'react';
-import Button from '@material-ui/core/Button';
-import { Box } from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
+import { Avatar, Box, Button } from '@material-ui/core';
 import ListChips from './ListChips';
-
-
+import getComments from '../utils/getComments';
+import Comments from './Comments';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 function Posts({post}) {
+  const [comments, setComments] = useState([]);
+  const [expandComments, setExpand] = useState(false);
+
+  const getPostComments = async () => {
+    const id = post.postID;
+    getComments(id)
+      .then(res => {
+        // we make sure our post has at least one comment
+        if (res.data.results.length !== 0 && res.data) {
+          setComments(res.data.results);
+          console.log('comments are: ', comments);
+        }
+      })
+      .catch(console.error);
+  };
+
+  const handleCommentToggle = () => {
+    setExpand(!expandComments);
+  };
+
+  useEffect(() => {
+    getPostComments();
+  }, []);
 
   return (
     <div>
@@ -26,6 +50,10 @@ function Posts({post}) {
               <Button>Comment</Button>
               <Button>Dislike</Button>
             </Box>
+            <div onClick={() => handleCommentToggle()}>
+              {(expandComments) ? <ExpandLessIcon /> : <ExpandMoreIcon /> } Show Comments
+            </div>
+            <Comments comments={comments} expand={expandComments} />
           </div>
         </div>
       </Box>

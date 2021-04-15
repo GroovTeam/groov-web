@@ -8,7 +8,6 @@ Switch,
 import ProfilePath from './pages/ProfilePath';
 import Post from './pages/Post';
 import RandoSug from './pages/RandoSug';
-import Explore from './pages/Explore';
 import DashBoard from './pages/DashBoard';
 import Register from './pages/Register';
 import Login from './pages/LoginPage';
@@ -18,9 +17,6 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/explore">
-          <Explore />
-        </Route>
         <Route path="/profile">
           <ProfilePath />
         </Route>
