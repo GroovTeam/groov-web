@@ -11,7 +11,7 @@ const Login = async (email, password) => {
   if (!valid)
     throw Error(JSON.stringify(errors));
 
-  const res;
+  let res;
 
   firebase.auth().signInUserWithEmailAndPassword(userData.email, userData.password)
     .then(response => { console.log(response); res = response; })

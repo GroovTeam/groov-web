@@ -34,7 +34,7 @@ function DashBoard() {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(0);
 
-  const handleChange = (e, newVal) => {
+  const handleChange = (newVal) => {
     setPage(newVal);
   };
 
@@ -44,20 +44,18 @@ function DashBoard() {
       .then(res => {
         if (res.data) {
           let newData = [];
-          console.log(res.data.results);
           for (const key in Object.keys(res.data.results)) {
             res.data.results[key].image = 'https://picsum.photos/200/300';
             console.log(res.data.result);
             newData.push(res.data.results[key]);
           }
-          console.log(newData);
           setPosts(newData);
         }
       })
       .catch(console.error);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     if (posts.length === 0) {
       setPosts(postsMock);
     }
@@ -74,23 +72,26 @@ function DashBoard() {
               variant={'outlined'}
             >
               <Tabs
-                indicatorColor='primary'
+                indicatorColor='none'
                 textColor='primary'
                 centered
                 value={page}
                 onChange={handleChange}
               >
                 <Tab 
-                  centered 
                   label='DashBoard'
                   disableRipple={true}
                 />
               </Tabs>
+              
               <TabPanel value={page} index={0}>
                 <DashboardPosts 
-                  feed={posts}
+                  feed={posts} 
                 >
                 </DashboardPosts>
+                <MakePost   
+                  updateFeed={updateFeed} 
+                />
               </TabPanel>
             </Paper>
           </div>
@@ -99,7 +100,7 @@ function DashBoard() {
               variant={'outlined'}
             >
               <Tabs
-                indicatorColor='primary'
+                indicatorColor='none'
                 textColor='primary'
                 centered
                 value={page}
@@ -111,15 +112,15 @@ function DashBoard() {
                   disableRipple={true}
                 />
               </Tabs>
-              <TabPanel value={page} index={0}>
+              <TabPanel>
                 <LikesList likes={likes} />
               </TabPanel>
             </Paper>
           </div>
           
         </div>
-        <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-          <MakePost updateFeed={updateFeed} />
+        <div style={{display: 'flex', alignItems: 'flex-end'}}>
+          
         </div>
         
       </div>

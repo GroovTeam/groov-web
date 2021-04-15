@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import FormPost from './FormPost';
 import RecordAudio from '../components/RecordAudio';
-
 
 function MakePost({updateFeed}) {
   const [open, setOpen] = useState(false);
@@ -22,9 +20,9 @@ function MakePost({updateFeed}) {
 
   return (
     <div>
-      <IconButton variant="outlined" color="primary" onClick={handleClickOpen}>
-        <AddCircleOutlineIcon></AddCircleOutlineIcon>
-      </IconButton>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        Post
+      </Button>
       <Dialog
         open={open}
         onClose={handleClose}

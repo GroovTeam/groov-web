@@ -1,13 +1,13 @@
 import React from 'react';
 import Nav from '../components/Nav';
-import Login from '../components/Login';
+import LoginComponent from '../components/LoginComponent';
 
 function LoginPage() {
   return (
     <div >
       <Nav />
       <div style={{ marginLeft: 80 }}>
-        <Login />
+        <LoginComponent />
       </div>
       
     </div>

@@ -2,16 +2,15 @@ import axios from 'axios';
 import ApiConfig from './ApiConfig';
 import firebase from './Firebase';
 
-async function getAllPosts() {
+async function UpdateProfile(userData) {
   return firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
-    
     const config = {
-      headers: { Authorization: `Bearer ${token}`},
+      headers: {Authorization: `Bearer ${token}`}
     };
-    
-    return axios.get(ApiConfig.allPosts, config)
+    console.log(userData);
+    return axios.post(ApiConfig.user, userData, config)
       .catch(error => console.error('Error: ', error));
   }).catch(console.error);
 }
 
-export default getAllPosts;
+export default UpdateProfile;

@@ -18,6 +18,7 @@ const RegisterBox = () => {
     const value = target.value;
     const name = target.name;
     setUserData({ ...userData, [name]: value });
+    console.log(userData);
   };
 
   return (

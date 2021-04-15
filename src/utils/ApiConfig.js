@@ -14,8 +14,14 @@ ApiConfig.post = baseURL + ApiConfig.posts;
 ApiConfig.feed = baseURL + ApiConfig.posts + '/feed';
 
 ApiConfig.posses = baseURL + '/posses';
-ApiConfig.joinPosse = ApiConfig.posses + '/join';
+ApiConfig.joinPosse = ApiConfig.posses + '/join/';
 ApiConfig.createPosse = ApiConfig.posses + '/create';
+ApiConfig.leavePosse = ApiConfig.posses + '/leave/';
+
+
+ApiConfig.user = baseURL + '/user/profile';
+ApiConfig.likes = baseURL + '/user/likedPosts';
+ApiConfig.userPosts = baseURL + '/user/posts';
 
 ApiConfig.beats = '/beats';
 ApiConfig.getBeats = baseURL + ApiConfig.beats;
