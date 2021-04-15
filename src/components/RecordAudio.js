@@ -4,30 +4,36 @@ import Button from '@material-ui/core/Button';
 import BeatScroller from './BeatScroller';
 
 const recorder = new MicRecorder({ bitRate: 128 });
-let audio1 = null;
-let audio2 = null;
-
-
+let beatAudio = null;
+let recordingAudio = null;
 
 const RecordAudio = () => {
- 
-  const [button, buttonUpdate] = useState({ text: 'start', recording: false });
-  const [specialButton, specialButtonUpdate] = useState({ text: 'Play Beat And Record', recording: false });
+  const [recordButton, recordUpdate] = useState({ text: 'record', recording: false });
+  const [playAndRecordButton, playAndRecordUpdate] = useState({ text: 'Play Beat And Record', recording: false });
   const [recording, setFile] = useState(null); 
   const [beat, setBeat] = useState(null);
-  const [player, setPlayer] = useState(false);
+  const [playing, setPlayer] = useState(false);
+
+  const syncTrack = (time, audioToStop) => {
+    setTimeout(() => {
+      setPlayer(false);
+      audioToStop.removeEventListener('loadedmetadata', (event) => {
+        syncTrack(event.target.duration, event.target);      
+      });
+    }, time * 1000);
+  };
 
   const stopRecording = () => {
     beat;
     recorder
       .stop()
       .getMp3().then(([buffer, blob]) => {
-        setFile(new File(buffer, 'me-at-thevoice.mp3', {
+        setFile(new File(buffer, 'myRecording.mp3', {
           type: blob.type,
           lastModified: Date.now()
         }));
       }).catch((e) => {
-        alert('We could not retrieve your message');
+        alert('We could not retrieve your recording');
         console.log(e);
       });
 
@@ -35,117 +41,112 @@ const RecordAudio = () => {
   };
 
   useEffect(() => {
-    if (!player)
+    if (!playing)
     {
-      if (audio1) {
-        audio1.pause();
-        audio1 = null;
+      if (beatAudio) {
+        beatAudio.pause();
+        beatAudio = null;
       }
-      if (audio2) {
-        audio2.pause();
-        audio2 = null;
+      if (recordingAudio) {
+        recordingAudio.pause();
+        recordingAudio = null;
       }
     }
     
-  }, [player]);
+  }, [playing]);
     
   const playbackBeatAndRecord = () => {
-    if (!beat) return;
+    if (!beat || playing) return;
 
-    audio1 = new Audio(beat);
+    beatAudio = new Audio(beat);
     setPlayer(true);
-    audio1.play();
-
-    recorder.start().then(() => {
-
-    }).catch((e) => {
+    beatAudio.play();
+    recorder.start().catch((e) => {
       console.error(e);
     });
   };
 
   const startRecording = () => {
     recorder.start().then(() => {
-
     }).catch((e) => {
       console.error(e);
     });
   };
 
   const playRecording = () => {
-
-    if (!recording)
-      return;
-
-    audio2 = new Audio(URL.createObjectURL(recording));
+    if (!recording || playing) return;
+    
+    recordingAudio = new Audio(URL.createObjectURL(recording));
+    recordingAudio.addEventListener('loadedmetadata', (event) => {
+      syncTrack(event.target.duration, event.target);
+    });
     setPlayer(true);
-    audio2.play();
+    recordingAudio.play();
+  };
+  
+  const playBeat = () => {
+    if (!beat || playing) return;
 
+    beatAudio = new Audio(beat);
+    beatAudio.addEventListener('loadedmetadata', (event) => {
+      syncTrack(event.target.duration, event.target);
+    });
+    beatAudio.play();
+
+    setPlayer(true);
   };
 
   const playBeatAndRecording = () => 
   {
-    if (!recording)
-      return;
-    if (!beat) 
-      return;
+    if (!recording || !beat ||playing) return;
 
-    audio1 = new Audio(beat);
-    audio1.play();
-    audio2 = new Audio(URL.createObjectURL(recording));
-    audio2.play();
-    setPlayer(true);
-  };
-
-  const playBeat = () => {
-
-    if (!beat)
-      return;
-
-    audio1 = new Audio(beat);
-    setPlayer(true);
-    audio1.play();
+    beatAudio = new Audio(beat);
+    beatAudio.play();
     
+    recordingAudio = new Audio(URL.createObjectURL(recording));
+    recordingAudio.addEventListener('loadedmetadata', (event) => {
+      syncTrack(event.target.duration, event.target);
+    });
+    recordingAudio.play();
+    
+    setPlayer(true);
   };
 
-
-  const pauseBeat = () => {
+  const pauseAudio = () => {
     setPlayer(false);
   };
+
   const handleClick = () => {
-    if (!button.recording) {
+    if (!recordButton.recording) {
       startRecording();
-      buttonUpdate({ text: 'stop', recording: true });
+      recordUpdate({ text: 'stop', recording: true });
     }
     else {
       stopRecording();
-      buttonUpdate({ text: 'start', recording: false });
-
+      recordUpdate({ text: 'record', recording: false });
     }
   };
 
   const handlePlayRecordClick = () => {
-    if (!specialButton.recording) {
+    if (!playAndRecordButton.recording) {
       playbackBeatAndRecord();
-      specialButtonUpdate({ text: 'stop', recording: true });
+      playAndRecordUpdate({ text: 'stop', recording: true });
     }
     else {
       stopRecording();
-      specialButtonUpdate({ text: 'Play Beat And Record', recording: false });
-
+      playAndRecordUpdate({ text: 'Play Beat And Record', recording: false });
     }
   };
 
   return (
     <div>
       <BeatScroller updateBeat={setBeat}/>
-      <Button color='primary' onClick={handleClick}>{button.text}</Button>
+      <Button color='primary' onClick={handleClick}>{recordButton.text}</Button>
+      <Button color='primary' onClick={handlePlayRecordClick}>{playAndRecordButton.text}</Button>
       <Button color='primary' onClick={playRecording}>play</Button>
-      <Button color='primary' onClick={handlePlayRecordClick}>{specialButton.text}</Button>
-      <Button color='primary' onClick={playBeatAndRecording}>play beat + recording</Button>
       <Button color='primary' onClick={playBeat}>play beat</Button>
-      <Button color='primary' onClick={pauseBeat}>pause beat</Button>
-      
-
+      <Button color='primary' onClick={playBeatAndRecording}>play beat + recording</Button>
+      <Button color='primary' onClick={pauseAudio}>pause beat</Button>
     </div>
   );
 };
