@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import firebase from '../utils/Firebase';
-// import axios from 'axios';
-// import ApiConfig from '../utils/ApiConfig';
 import './RegisterBox.css';
 import Login from '../utils/Login';
 
-// Login a user with an email and password
-// ideally this would be a modal
 const LoginComponent = () => {
 
   const [userData, setUserData] = useState({});
@@ -29,29 +24,26 @@ const LoginComponent = () => {
 
   return (
     <div style = {{display: 'flex', justifyContent: 'center'}}>
-      <div className='BaseContainer'>
-        <div className='Header'><h1> Register </h1></div>
+      <div className='Base-Container'>
         <div className='Content'>
           <form onSubmit={login}>
             <div className='form-group'>
               <div className='Header'><h1>Login</h1></div>
-              <div>
-                <label>email: </label>
-                <input type="text" className="textField" name="email" placeholder="email" onChange={handleChange}/>
-              </div>
-              <label>password: </label>
+              <label>Email </label>
+              <input type="text" className="textField" name="email" placeholder="email" onChange={handleChange}/>
+              <label>Password</label>
               <input type="password" className="textField" name="password" placeholder="password" onChange={handleChange}/>
+              <Link style={{ textDecoration: 'underlined', color: 'black'}} to='/register'>
+                  Forgot your password?
+              </Link> 
             </div>
-            <div> 
+            <label> 
               <Link style={{textDecoration: 'underlined', color: 'black'}} to='/register'>
                 Not a registered user?
               </Link>
-            </div>
+            </label>
             <div>
-              <input type="Submit" value="Submit" readOnly={true}/>
-              <button onClick={login}>
-                Submit btn
-              </button>
+              <input type="Submit" className="buttonInput" value="Submit" readOnly={true} onClick={login}/>
             </div>
           </form>
         </div>
