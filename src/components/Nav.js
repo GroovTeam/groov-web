@@ -131,10 +131,10 @@ export default function Nav() {
           <Link className={classes.toolbarItems} to='/register'>
               Registration
           </Link>
-          <Button style={{textDecoration: 'none', color: 'white'}} onClick={() => {Logout(); history.push('/');}}>
+          <Button className={classes.toolbarItems} onClick={() => {Logout(); history.push('/');}}>
               Logout
           </Button>
-          <Link style={{textDecoration: 'none', color: 'white'}} to='/'>
+          <Link className={classes.toolbarItems} to='/'>
               Login  
           </Link>
         </Toolbar>
