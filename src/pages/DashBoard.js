@@ -4,14 +4,8 @@ import DashboardPosts from '../components/DashboardPosts';
 import  { Tabs, Tab, Paper, Box }  from '@material-ui/core';
 import getAllPosts from '../utils/getAllPosts';
 import MakePost from '../components/MakePost';
-import LikesList from '../components/LikesList';
+import getUserProfile from '../utils/getUserProfile';
 
-
-let postsMock = [{image: 'https://picsum.photos/200/300', tags: ['metal', 'rock'], posses: ['noobs'], content: 'ay yall listen to this new track', username: 'crakatoa'}, 
-  {image: 'https://picsum.photos/200', tags: ['metal', 'rock'], posses: ['noobs'], content: 'ay yall listen to this new track', username: 'crakatoa'}, 
-  {image: 'https://picsum.photos/200/300', tags: ['metal', 'rock'], posses: ['noobs'], content: 'ay yall listen to this new track', username: 'crakatoa'}];
-
-let likes= ['pop', 'metal', 'Ghost Stories Dubbed not Subbed', 'Jujutsu Kaisen', 'Attack on Titan', 'ReZero', 'Jojo Bizarre Adventure'];
 function TabPanel(data) {
   const {children, value, index} = data;
   
@@ -39,35 +33,37 @@ function DashBoard() {
   };
 
   const updateFeed = () => {
-    console.log('updating feeed');
-    getAllPosts()
-      .then(res => {
-        if (res.data) {
-          let newData = [];
-          for (const key in Object.keys(res.data.results)) {
-            res.data.results[key].image = 'https://picsum.photos/200/300';
-            console.log(res.data.result);
-            newData.push(res.data.results[key]);
-          }
-          setPosts(newData);
-        }
+    getUserProfile()
+      .then(user => {
+        getAllPosts()
+          .then(res => {
+            console.log('updating feed');
+            if (res.data) {
+              let newData = [];
+              for (const key in Object.keys(res.data.results)) {
+                res.data.results[key].image = 'https://picsum.photos/200/300';
+                res.data.results[key].alreadyLiked = res.data.results[key].likes ? (res.data.results[key].likes.includes(user.data.username)) : false;
+                newData.push(res.data.results[key]);
+              }
+              setPosts(newData);
+            }
+          })
+          .catch(console.error);
       })
       .catch(console.error);
+    
   };
 
   useEffect(async () => {
-    if (posts.length === 0) {
-      setPosts(postsMock);
-    }
     updateFeed();
   }, []);
 
   return (
     <div>
       <Nav  />
-      <div style={{margin: '5vh'}}>
-        <div style={{display: 'flex', alignItems: 'center', flexDirection: 'row', justifyContent: 'center'}}>
-          <div style={{width: '50%', margin: '5vh'}}>
+      <div style={{margin: '8vh'}}>
+        <div style={{display: 'flex', alignItems: 'center', flexDirection: 'row'}}>
+          <div >
             <Paper 
               variant={'outlined'}
             >
@@ -81,6 +77,7 @@ function DashBoard() {
                 <Tab 
                   label='DashBoard'
                   disableRipple={true}
+                  disabled
                 />
               </Tabs>
               
@@ -92,28 +89,6 @@ function DashBoard() {
                 <MakePost   
                   updateFeed={updateFeed} 
                 />
-              </TabPanel>
-            </Paper>
-          </div>
-          <div style={{width: '20%', margin: '5vh', justifySelf: 'flex-end'}}>
-            <Paper 
-              variant={'outlined'}
-            >
-              <Tabs
-                indicatorColor='none'
-                textColor='primary'
-                centered
-                value={page}
-                onChange={handleChange}
-              >
-                <Tab 
-                  centered 
-                  label='Suggestions'
-                  disableRipple={true}
-                />
-              </Tabs>
-              <TabPanel>
-                <LikesList likes={likes} />
               </TabPanel>
             </Paper>
           </div>

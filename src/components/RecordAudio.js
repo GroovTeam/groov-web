@@ -98,7 +98,7 @@ const RecordAudio = () => {
 
   const playBeatAndRecording = () => 
   {
-    if (!recording || !beat ||playing) return;
+    if (!recording || !beat || playing) return;
 
     beatAudio = new Audio(beat);
     beatAudio.play();
