@@ -12,7 +12,12 @@ import DashBoard from './pages/DashBoard';
 import Register from './pages/Register';
 import Login from './pages/LoginPage';
 
+
 function App() {
+
+  
+
+
 
   return (
     <Router>

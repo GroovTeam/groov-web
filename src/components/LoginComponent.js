@@ -12,7 +12,8 @@ const LoginComponent = () => {
 
   const [userData, setUserData] = useState({});
   
-  const login = (userData) => {
+  const login = (event, userData) => {
+    event.preventDefault();
     const email = userData.email;
     const password = userData.password;
     Login(email, password)

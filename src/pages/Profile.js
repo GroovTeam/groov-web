@@ -51,6 +51,7 @@ function Profile({username}) {
   const [userInfo, setUserInfo] = useState({});
   const [open, setOpen] = useState(false);
 
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -164,5 +165,6 @@ function Profile({username}) {
     </div>
   );
 }
-  
+
+
 export default Profile;

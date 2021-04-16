@@ -4,6 +4,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import FormPost from './FormPost';
+import RecordAudio from '../components/RecordAudio';
 
 function MakePost({updateFeed}) {
   const [open, setOpen] = useState(false);
@@ -30,6 +31,7 @@ function MakePost({updateFeed}) {
       >
         <DialogTitle id="alert-dialog-title">Post</DialogTitle>
         <DialogContent>
+          <RecordAudio/>
           <FormPost dialogOpen={handleClose} />
         </DialogContent>
       </Dialog>

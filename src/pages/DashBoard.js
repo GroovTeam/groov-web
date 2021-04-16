@@ -4,11 +4,7 @@ import DashboardPosts from '../components/DashboardPosts';
 import  { Tabs, Tab, Paper, Box }  from '@material-ui/core';
 import getAllPosts from '../utils/getAllPosts';
 import MakePost from '../components/MakePost';
-// import LikesList from '../components/LikesList';
-
-let postsMock = [{image: 'https://picsum.photos/200/300', tags: ['metal', 'rock'], posses: ['noobs'], content: 'ay yall listen to this new track', username: 'crakatoa'}, 
-  {image: 'https://picsum.photos/200', tags: ['metal', 'rock'], posses: ['noobs'], content: 'ay yall listen to this new track', username: 'crakatoa'}, 
-  {image: 'https://picsum.photos/200/300', tags: ['metal', 'rock'], posses: ['noobs'], content: 'ay yall listen to this new track', username: 'crakatoa'}];
+import getUserProfile from '../utils/getUserProfile';
 
 // let likes= ['pop', 'metal', 'Ghost Stories Dubbed not Subbed', 'Jujutsu Kaisen', 'Attack on Titan', 'ReZero', 'Jojo Bizarre Adventure'];
 function TabPanel(data) {
@@ -38,24 +34,28 @@ function DashBoard() {
   };
 
   const updateFeed = () => {
-    getAllPosts()
-      .then(res => {
-        if (res.data) {
-          let newData = [];
-          for (const key in Object.keys(res.data.results)) {
-            res.data.results[key].image = 'https://picsum.photos/200/300';
-            newData.push(res.data.results[key]);
-          }
-          setPosts(newData);
-        }
+    getUserProfile()
+      .then(user => {
+        getAllPosts()
+          .then(res => {
+            console.log('updating feed');
+            if (res.data) {
+              let newData = [];
+              for (const key in Object.keys(res.data.results)) {
+                res.data.results[key].image = 'https://picsum.photos/200/300';
+                res.data.results[key].alreadyLiked = res.data.results[key].likes ? (res.data.results[key].likes.includes(user.data.username)) : false;
+                newData.push(res.data.results[key]);
+              }
+              setPosts(newData);
+            }
+          })
+          .catch(console.error);
       })
       .catch(console.error);
+    
   };
 
   useEffect(async () => {
-    if (posts.length === 0) {
-      setPosts(postsMock);
-    }
     updateFeed();
   }, []);
 

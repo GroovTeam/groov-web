@@ -1,0 +1,37 @@
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
+import { Badge, IconButton } from '@material-ui/core';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
+function LikeButton({likes, onLike, onUnLike, alreadyLiked, id}) {
+  const [isliked, setIsLiked] = useState(alreadyLiked);
+  const [numLikes, setnumLikes] = useState((likes <= 0) ? 0 : likes);
+
+  const handleLikeToggle = async () => {
+
+    if (!isliked) {
+      await onLike(id);
+      setnumLikes(numLikes + 1);
+    }
+    else {
+      await onUnLike(id);
+      setnumLikes(numLikes - 1);
+    }
+
+    setIsLiked(!isliked);
+  };
+
+  return (
+    <div>
+      <Badge badgeContent={numLikes} color='error'>
+        <div onClick={() => handleLikeToggle()} style={{color: 'red'}}>
+          {(isliked) ? <FavoriteIcon  /> : <FavoriteBorderIcon /> }
+        </div>
+      </Badge>
+      
+    </div>
+  );
+}
+
+export default LikeButton;
