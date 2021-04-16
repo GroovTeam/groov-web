@@ -1,4 +1,3 @@
-import firebase from './Firebase';
 import axios from 'axios';
 import ApiConfig from './ApiConfig';
 
@@ -18,11 +17,6 @@ const Register = async (email, password, username, firstName, lastName) => {
     userData
   ).then(result => {
     console.log(result);
-    if (result.data.token)
-      firebase.auth().signInWithEmailAndPassword(
-        email,
-        password
-      ).catch(console.error);
   }).catch((error) => {
     let errorCode = error.message;
     let errorMessage = error.response.data.message;
