@@ -8,9 +8,9 @@ const LoginComponent = () => {
   const [userData, setUserData] = useState({});
   
   const login = (event, userData) => {
-    event.preventDefault();
     const email = userData.email;
     const password = userData.password;
+    event.preventDefault();
     Login(email, password)
       .catch(console.error);
   };
