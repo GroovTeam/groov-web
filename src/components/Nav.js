@@ -5,7 +5,7 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -27,6 +27,7 @@ const navItems = [
   {name: 'Profile', icon: <PersonIcon />, path: '/profile'},
 ];
 const drawerWidth = 240;
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -90,7 +91,7 @@ export default function Nav() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  const history = useHistory();
   const handleNavOpen = () => {
     setOpen(true);
   };
@@ -127,7 +128,7 @@ export default function Nav() {
           <Link style={{textDecoration: 'none', color: 'white'}} to='/register'>
               Registration
           </Link>
-          <Button style={{textDecoration: 'none', color: 'white'}} onClick={() => Logout()}>
+          <Button style={{textDecoration: 'none', color: 'white'}} onClick={() => {Logout(); history.push('/');}}>
               Logout
           </Button>
           <Link style={{textDecoration: 'none', color: 'white'}} to='/'>
