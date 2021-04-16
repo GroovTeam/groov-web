@@ -41,7 +41,6 @@ const LoginComponent = () => {
     setUserData({ ...userData, [name]: value });
   };
 
-  // I want to return this if the user isn't signed in.
   if (!signedIn)
   {
     return (
@@ -84,14 +83,6 @@ const LoginComponent = () => {
     history.push('/dashboard');
     return(<div></div>);
   }
-
-
-  
-  
-  // If the user is signed in, then fuck that.
-  // If they're in but not verified, we'll render the verifyEmail component here.
-
-  // Once they're in, redirect.
 
 };
 

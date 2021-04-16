@@ -20,6 +20,7 @@ const Register = async (email, password, username, firstName, lastName) => {
   }).catch((error) => {
     let errorCode = error.message;
     let errorMessage = error.response.data.message;
+    console.log(error.response); 
     console.error(errorCode);
     console.error(errorMessage);});
   

@@ -14,7 +14,7 @@ const VerifyEmail = ( {setEmailVerified} ) =>
 
   return (
     <div>
-      <p>verify your emamil you butt.</p>
+      <p>verify your email please.</p>
     </div>);
 };
 
