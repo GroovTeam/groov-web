@@ -69,7 +69,32 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
             secondary={currComment.username}
           ></ListItemText>
           <ListItemText
-            primary={currComment.content}
+            primary={(
+              <div>
+                {currComment.content}
+                <Box>
+                  <Tooltip title='Like'>
+                    <IconButton onClick={() =>  handleLikeToggle()}>
+                      <div style={{color: thumbUpColor}}>
+                        <ThumbUpIcon></ThumbUpIcon>
+                      </div>
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title='Dislike'>
+                    <IconButton onClick={() =>  handleunLikeToggle()}>
+                      <div style={{color: thumbDownColor}}>
+                        <ThumbDownIcon ></ThumbDownIcon>
+                      </div>
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title='Reply'>
+                    <Button
+                      onClick={() => handleCommentModelOpen()}
+                    >Reply</Button>
+                  </Tooltip>
+                </Box>
+              </div>
+            )}
             secondary={(
               <div>
                 <span onClick={() => toggleRepliesOpen()}>
@@ -80,29 +105,10 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
             
             )}
           ></ListItemText>
+          
         </div>
         
-        <Box>
-          <Tooltip title='Like'>
-            <IconButton onClick={() =>  handleLikeToggle()}>
-              <div style={{color: thumbUpColor}}>
-                <ThumbUpIcon></ThumbUpIcon>
-              </div>
-            </IconButton>
-          </Tooltip>
-          <Tooltip title='Dislike'>
-            <IconButton onClick={() =>  handleunLikeToggle()}>
-              <div style={{color: thumbDownColor}}>
-                <ThumbDownIcon ></ThumbDownIcon>
-              </div>
-            </IconButton>
-          </Tooltip>
-          <Tooltip title='Reply'>
-            <Button
-              onClick={() => handleCommentModelOpen()}
-            >Reply</Button>
-          </Tooltip>
-        </Box>
+        
       </ListItem>
       <ReplyModel open={openModel} close={handleCommentModelClose} commentId={id} />
     </div>
