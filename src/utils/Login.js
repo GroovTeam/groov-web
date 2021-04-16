@@ -13,7 +13,7 @@ const Login = async (email, password) => {
 
   let res;
 
-  firebase.auth().signInUserWithEmailAndPassword(userData.email, userData.password)
+  firebase.auth().signInWithEmailAndPassword(userData.email, userData.password)
     .then(response => { 
       console.log(response); 
       res = response; 

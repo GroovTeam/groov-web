@@ -13,16 +13,14 @@ import DashBoard from './pages/DashBoard';
 import Register from './pages/Register';
 import Login from './pages/LoginPage';
 
-
 function App() {
-
-  
-
-
 
   return (
     <Router>
       <Switch>
+        <Route path="/dashboard">
+          <DashBoard />
+        </Route>
         <Route path="/explore">
           <Explore />
         </Route>
@@ -35,14 +33,11 @@ function App() {
         <Route path="/register">
           <Register />
         </Route>
-        <Route path="/login" >
-          <Login />
-        </Route>
         <Route path="/randoSug">
           <RandoSug />
         </Route>
-        <Route path="/">
-          <DashBoard />
+        <Route path="/" >
+          <Login />
         </Route>
       </Switch>
     </Router>

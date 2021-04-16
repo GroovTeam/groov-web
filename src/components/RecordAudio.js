@@ -24,7 +24,6 @@ const RecordAudio = () => {
   };
 
   const stopRecording = () => {
-    beat;
     recorder
       .stop()
       .getMp3().then(([buffer, blob]) => {

@@ -7,12 +7,9 @@ const LoginComponent = () => {
 
   const [userData, setUserData] = useState({});
   
-  const login = (event, userData) => {
-    const email = userData.email;
-    const password = userData.password;
+  const login = (event) => {
+    Login(userData.email, userData.password).catch(console.error);
     event.preventDefault();
-    Login(email, password)
-      .catch(console.error);
   };
   
   const handleChange = (event) => {
@@ -33,17 +30,18 @@ const LoginComponent = () => {
               <input type="text" className="textField" name="email" placeholder="email" onChange={handleChange}/>
               <label>Password</label>
               <input type="password" className="textField" name="password" placeholder="password" onChange={handleChange}/>
+              
+            </div>
+            <label style={{display: 'flex', flexDirection: 'column'}}>
               <Link style={{ textDecoration: 'underlined', color: 'black'}} to='/register'>
                   Forgot your password?
-              </Link> 
-            </div>
-            <label> 
+              </Link>  
               <Link style={{textDecoration: 'underlined', color: 'black'}} to='/register'>
                 Not a registered user?
               </Link>
             </label>
             <div>
-              <input type="Submit" className="buttonInput" value="Submit" readOnly={true} onClick={login}/>
+              <input type="Submit" className="buttonInput" value="Submit" readOnly={true}/>
             </div>
           </form>
         </div>

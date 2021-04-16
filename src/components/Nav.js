@@ -22,7 +22,7 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import Logout from '../utils/Logout';
 
 const navItems = [
-  {name: 'DashBoard', icon: <DashboardIcon />, path: '/'},
+  {name: 'DashBoard', icon: <DashboardIcon />, path: '/dashboard'},
   {name: 'Explore', icon: <ExploreIcon />, path: '/explore'},
   {name: 'Profile', icon: <PersonIcon />, path: '/profile'},
 ];
@@ -130,7 +130,7 @@ export default function Nav() {
           <Button style={{textDecoration: 'none', color: 'white'}} onClick={() => Logout()}>
               Logout
           </Button>
-          <Link style={{textDecoration: 'none', color: 'white'}} to='/login'>
+          <Link style={{textDecoration: 'none', color: 'white'}} to='/'>
               Login  
           </Link>
         </Toolbar>
