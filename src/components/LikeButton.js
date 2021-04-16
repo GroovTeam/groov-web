@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { Badge, IconButton } from '@material-ui/core';
+import { Badge, Tooltip } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
@@ -24,12 +23,13 @@ function LikeButton({likes, onLike, onUnLike, alreadyLiked, id}) {
 
   return (
     <div>
-      <Badge badgeContent={numLikes} color='error'>
-        <div onClick={() => handleLikeToggle()} style={{color: 'red'}}>
-          {(isliked) ? <FavoriteIcon  /> : <FavoriteBorderIcon /> }
-        </div>
-      </Badge>
-      
+      <Tooltip title='Like'>
+        <Badge badgeContent={numLikes} color='error'>
+          <div onClick={() => handleLikeToggle()} style={{color: 'red'}}>
+            {(isliked) ? <FavoriteIcon  /> : <FavoriteBorderIcon /> }
+          </div>
+        </Badge>
+      </Tooltip>
     </div>
   );
 }

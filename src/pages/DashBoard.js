@@ -6,7 +6,6 @@ import getAllPosts from '../utils/getAllPosts';
 import MakePost from '../components/MakePost';
 import getUserProfile from '../utils/getUserProfile';
 
-// let likes= ['pop', 'metal', 'Ghost Stories Dubbed not Subbed', 'Jujutsu Kaisen', 'Attack on Titan', 'ReZero', 'Jojo Bizarre Adventure'];
 function TabPanel(data) {
   const {children, value, index} = data;
   

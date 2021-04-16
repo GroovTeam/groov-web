@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
-import { Box, Button, IconButton, List, ListItem, ListItemText } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Box, Button, IconButton, List, ListItem, ListItemText, Tooltip } from '@material-ui/core';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -8,15 +7,19 @@ import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import likeComment from '../utils/likeComment';
 import unlikeComment from '../utils/unlikeComment';
 import ReplyModel from './ReplyModel';
+import RepliesList from './RepliesList';
 
-function CommentLists({currComment, id, likeComment, unLikeComment, updateComments}) {
-  const [thumbsUp, setThumbsUp] = useState(false);
+function CommentLists({currComment, id, likeComment, unLikeComment, updateComments, alreadyLiked}) {
+  const likeColor = '#4cc9f0';
+  const disLikeColor = '#a9abaa';
+  const [thumbsUp, setThumbsUp] = useState(alreadyLiked);
   const [thumbsDown, setThumbsDown] = useState(false);
-  const [thumbUpColor, setThumbUpColor] = useState('#a9abaa');
-  const [thumbDownColor, setThumbDownColor] = useState('#a9abaa');
-
+  const [thumbUpColor, setThumbUpColor] = useState(alreadyLiked ? likeColor : disLikeColor);
+  const [thumbDownColor, setThumbDownColor] = useState(disLikeColor);
+  const [openReplies, setOpenReplies] = useState(false);
+  const [openModel, setModelOpen] = useState(false);
+  const [showHide, setShowHide] = useState('Show');
   
-
   const handleLikeToggle = async () => {
 
     if (!thumbsUp) {
@@ -25,7 +28,7 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
     else {
       await unLikeComment(id);
     }
-    const color = thumbsUp ? '#a9abaa' : '#12e7ff';
+    const color = thumbsUp ? disLikeColor : likeColor;
     setThumbUpColor(color);
     setThumbsUp(!thumbsUp);
   };
@@ -38,12 +41,10 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
     else {
       await unLikeComment(id);
     }
-    const color = thumbsDown ? '#a9abaa' : '#12e7ff';
+    const color = thumbsDown ? disLikeColor : likeColor;
     setThumbDownColor(color);
     setThumbsDown(!thumbsDown);
   };
-
-  const [openModel, setModelOpen] = useState(false);
 
   const handleCommentModelOpen = () => {
     setModelOpen(true);
@@ -54,26 +55,53 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
     updateComments();
   };
 
+  const toggleRepliesOpen = () => {
+    const toggle = openReplies ? 'Show' : 'Hide';
+    setShowHide(toggle);
+    setOpenReplies(!openReplies);
+  };
+
   return (
     <div>
-      <ListItem divider>
-        <ListItemText
-          primary={currComment.content}
-        ></ListItemText>
-        <Box style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-          <IconButton onClick={() =>  handleLikeToggle()}>
-            <div style={{color: thumbUpColor}}>
-              <ThumbUpIcon></ThumbUpIcon>
-            </div>
-          </IconButton>
-          <IconButton onClick={() =>  handleunLikeToggle()}>
-            <div style={{color: thumbDownColor}}>
-              <ThumbDownIcon ></ThumbDownIcon>
-            </div>
-          </IconButton>
-          <Button
-            onClick={() => handleCommentModelOpen()}
-          >Reply</Button>
+      <ListItem style={{display: 'flex', justifyContent: 'space-between', borderLeft: '1px solid black'}}>
+        <div>
+          <ListItemText
+            secondary={currComment.username}
+          ></ListItemText>
+          <ListItemText
+            primary={currComment.content}
+            secondary={(
+              <div>
+                <span onClick={() => toggleRepliesOpen()}>
+                  {(openReplies) ? <ExpandLessIcon /> : <ExpandMoreIcon />} {showHide} replies
+                </span>
+                {openReplies ? <RepliesList replies={currComment.replies} /> : '' } 
+              </div>
+            
+            )}
+          ></ListItemText>
+        </div>
+        
+        <Box>
+          <Tooltip title='Like'>
+            <IconButton onClick={() =>  handleLikeToggle()}>
+              <div style={{color: thumbUpColor}}>
+                <ThumbUpIcon></ThumbUpIcon>
+              </div>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title='Dislike'>
+            <IconButton onClick={() =>  handleunLikeToggle()}>
+              <div style={{color: thumbDownColor}}>
+                <ThumbDownIcon ></ThumbDownIcon>
+              </div>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title='Reply'>
+            <Button
+              onClick={() => handleCommentModelOpen()}
+            >Reply</Button>
+          </Tooltip>
         </Box>
       </ListItem>
       <ReplyModel open={openModel} close={handleCommentModelClose} commentId={id} />
@@ -86,10 +114,13 @@ function Comments({comments, expand, update}) {
   return (
     <div>
       {(expand) ? (
-        <List>
+        <List >
           {(comments.length > 0 && comments !== undefined) ? (comments.map(comment => (
             <div key={comment}>
-              <CommentLists key={comment} currComment={comment} id={comment.commentID} likeComment={likeComment} unLikeComment={unlikeComment} updateComments={update} />
+              <CommentLists 
+                key={comment} currComment={comment} id={comment.commentID} likeComment={likeComment} 
+                unLikeComment={unlikeComment} updateComments={update} alreadyLiked={comment.alreadyLiked} 
+              />
             </div>
           ))) : ('Post has no comment sadly why not add some?')}
         </List>
