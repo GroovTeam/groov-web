@@ -18,12 +18,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import ExploreIcon from '@material-ui/icons/Explore';
 import Logout from '../utils/Logout';
 
 const navItems = [
   {name: 'DashBoard', icon: <DashboardIcon />, path: '/dashboard'},
-  {name: 'Explore', icon: <ExploreIcon />, path: '/explore'},
   {name: 'Profile', icon: <PersonIcon />, path: '/profile'},
 ];
 const drawerWidth = 240;
@@ -49,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   menuButton: {
-    marginRight: 36,
+    marginRight: 10,
   },
   hide: {
     display: 'none',
@@ -80,10 +78,15 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
+  },
+  toolbarItems: {
+    textDecoration: 'none', 
+    color: 'white',
+    marginRight: '1vh'
   }
 }));
 
@@ -122,10 +125,10 @@ export default function Nav() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-              Music App
+          <Typography className={classes.toolbarItems} variant="h6" noWrap>
+              Groove
           </Typography>
-          <Link style={{textDecoration: 'none', color: 'white'}} to='/register'>
+          <Link className={classes.toolbarItems} to='/register'>
               Registration
           </Link>
           <Button style={{textDecoration: 'none', color: 'white'}} onClick={() => {Logout(); history.push('/');}}>

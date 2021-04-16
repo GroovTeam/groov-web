@@ -23,6 +23,8 @@ export default function CreatePosses({visible, toggle}) {
     <Dialog
       open={visible}
       onClose={toggle}
+      maxWidth='sm'
+      fullWidth={true}
     >
       <DialogTitle>Create Posses</DialogTitle>
       <DialogContent>
@@ -33,6 +35,7 @@ export default function CreatePosses({visible, toggle}) {
           margin='dense'
           name='createPosse'
           onChange={(e) => handleChange(e)}
+          style={{width: '100%'}}
         />
       </DialogContent>
       <DialogActions>

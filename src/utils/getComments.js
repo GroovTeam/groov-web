@@ -2,16 +2,17 @@ import axios from 'axios';
 import ApiConfig from './ApiConfig';
 import firebase from './Firebase';
 
-async function getAllPosts() {
+async function getComments(postID) {
   return firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
-    
     const config = {
-      headers: { Authorization: `Bearer ${token}`},
+      headers: {Authorization: `Bearer ${token}`}
     };
-    
-    return axios.get(ApiConfig.feed, config)
+
+    const commentQuery = ApiConfig.comments + '/' + postID;
+
+    return axios.get(commentQuery, config)
       .catch(error => console.error('Error: ', error));
   }).catch(console.error);
 }
 
-export default getAllPosts;
+export default getComments;
