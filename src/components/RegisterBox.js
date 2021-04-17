@@ -7,7 +7,7 @@ const RegisterBox = () => {
 
   const registerUser = (event) => {
     console.log(userData);
-    setUserData({ ...userData, dateCreated: Date.now()});
+    setUserData({ ...userData});
     Register(userData.email, userData.password, userData.username, 
       userData.firstName, userData.lastName);
     event.preventDefault();
@@ -18,7 +18,6 @@ const RegisterBox = () => {
     const value = target.value;
     const name = target.name;
     setUserData({ ...userData, [name]: value });
-    console.log(userData);
   };
 
   return (

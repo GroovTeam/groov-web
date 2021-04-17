@@ -18,7 +18,7 @@ const Login = async (email, password) => {
       console.log(response); 
       res = response; 
     })
-    .catch(err => { throw Error(JSON.stringify(err)); });
+    .catch(err => { console.error(err.message); });
 
   console.log(userData);
 
