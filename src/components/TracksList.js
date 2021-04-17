@@ -1,12 +1,12 @@
 import React from 'react';
 import {List, ListItem, ListItemText} from '@material-ui/core';
 
-function LikesList({likes}) {
+function TracksList({posts}) {
 
   return (
     <div>
       <List>
-        {(likes !== undefined) ? (likes.map((value, index) => {
+        {(posts !== undefined) ? (posts.map((value, index) => {
           return (
             <ListItem key={index}>
               <ListItemText  primary={value.content} />
@@ -19,4 +19,4 @@ function LikesList({likes}) {
 
 }
 
-export default LikesList;
+export default TracksList;

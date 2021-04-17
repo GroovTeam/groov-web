@@ -7,12 +7,11 @@ const LoginComponent = () => {
 
   const [userData, setUserData] = useState({});
   
-  const login = (event, userData) => {
-    const email = userData.email;
-    const password = userData.password;
-    event.preventDefault();
-    Login(email, password)
+  const login = (event) => {
+    
+    Login(userData.email, userData.password)
       .catch(console.error);
+    event.preventDefault();
   };
   
   const handleChange = (event) => {

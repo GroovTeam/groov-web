@@ -4,9 +4,14 @@ import Nav from '../components/Nav';
 import  { Tabs, Tab, Paper, Avatar, Box, Button, Dialog, DialogContent, DialogTitle }  from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LikesList from '../components/LikesList';
+import TracksList from '../components/TracksList';
 import ListChips from '../components/ListChips';
 import SpongeBob from '../components/mockUser.json';
 import getProfile from '../utils/getProfile';
+import getLikes from '../utils/getLikes';
+import getUsersLikes from '../utils/getUsersLikes';
+import getPosts from '../utils/getUserPosts';
+import getOtherUsersPosts from '../utils/getOtherUsersPosts';
 import getUserProfile from '../utils/getUserProfile';
 import firebase from '../utils/Firebase';
 import EditForm from '../components/editProfile/EditForm';
@@ -50,8 +55,9 @@ function Profile({username}) {
   const [page, setPage] = useState(0);
   const [userInfo, setUserInfo] = useState({});
   const [open, setOpen] = useState(false);
-
-
+  const [likes, setLikes] = useState(false);
+  const [posts, setPosts] = useState(false);
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -77,7 +83,48 @@ function Profile({username}) {
     }
     else {
       getProfile(username)
-        .then(res => console.log(res.data))
+        .then(res => {
+          setUserInfo(res.data);
+          console.log(res.data);
+        }).catch(console.error);
+    }
+    console.log(userInfo);
+  };
+
+  const getUserLikes = async () => {
+    if (username === undefined) {
+      getLikes()
+        .then(res => {
+          setLikes(res.data.results);
+          console.log(res.data.results);
+        })
+        .catch(console.error);
+    }
+    else {
+      getUsersLikes(username)
+        .then(res => {
+          setLikes(res.data.results);
+          console.log(res.data.results);
+        }).catch(console.error);
+    }
+    console.log(userInfo);
+  };
+
+  const getUserPosts = async () => {
+    if (username === undefined) {
+      getPosts()
+        .then(res => {
+          setPosts(res.data.results);
+          console.log(res.data.results);
+        })
+        .catch(console.error);
+    }
+    else {
+      getOtherUsersPosts(username)
+        .then(res => {
+          setPosts(res.data.results);
+          console.log(res.data.results);
+        })
         .catch(console.error);
     }
     console.log(userInfo);
@@ -85,6 +132,8 @@ function Profile({username}) {
 
   useEffect(() => {
     getUserInfo();
+    getUserLikes();
+    getUserPosts();
     console.log(firebase.auth().currentUser);
   }, []);
 
@@ -138,11 +187,11 @@ function Profile({username}) {
                 <UserPosses />
               </TabPanel>
               <TabPanel value={page} index={1}>
-                <LikesList likes={SpongeBob.likes}/>
+                <LikesList likes={likes}/>
               </TabPanel>
               <TabPanel value={page} index={2}>
                   list of tracks
-                <LikesList likes={SpongeBob.likes}/>
+                <TracksList posts={posts}/>
               </TabPanel>
             </Paper>
           </div>

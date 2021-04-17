@@ -17,7 +17,7 @@ function ProfilePath({user}) {
 
   return (
     <div>
-      <Profile username={userRef} />
+      <Profile username={'romont'} />
     </div>
   );
 }
