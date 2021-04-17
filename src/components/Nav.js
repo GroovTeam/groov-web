@@ -77,8 +77,9 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    flexDirection:'row',
+    justifyContent: 'space-between',
+    
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
@@ -128,15 +129,9 @@ export default function Nav() {
           <Typography className={classes.toolbarItems} variant="h6" noWrap>
               Groove
           </Typography>
-          <Link className={classes.toolbarItems} to='/register'>
-              Registration
-          </Link>
           <Button className={classes.toolbarItems} onClick={() => {Logout(); history.push('/');}}>
               Logout
           </Button>
-          <Link className={classes.toolbarItems} to='/'>
-              Login  
-          </Link>
         </Toolbar>
       </AppBar>
       <Drawer
