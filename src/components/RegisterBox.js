@@ -9,7 +9,8 @@ const RegisterBox = () => {
     console.log(userData);
     setUserData({ ...userData});
     Register(userData.email, userData.password, userData.username, 
-      userData.firstName, userData.lastName);
+      userData.firstName, userData.lastName)
+      .catch((error) => {console.log(error.message);});
     event.preventDefault();
   };
 

@@ -7,18 +7,22 @@ const Login = async (email, password) => {
     password: password,
   };
 
-  const { errors, valid } = validateData(userData);
-  if (!valid)
-    throw Error(JSON.stringify(errors));
+  if (isEmpty(userData.email))
+  {
+    throw Error(JSON.stringify('Email field cannot be empty'));
+  }
+    
+  else if (isEmpty(userData.password))
+    throw Error(JSON.stringify('Password field cannot be empty'));
 
   let res;
 
   firebase.auth().signInWithEmailAndPassword(userData.email, userData.password)
-    .then(response => { 
+    .then(response => {
       console.log(response); 
-      res = response; 
+      res = response;
     })
-    .catch(err => { console.error(err.message); });
+    .catch(err => {console.error(err.message);});
 
   console.log(userData);
 
@@ -29,19 +33,5 @@ const isEmpty = (str) => {
   return (str === undefined || str === '');
 }; 
 
-// Data validation
-const validateData = (data) => {
-  let errors = {};
-
-  if (isEmpty(data.email))
-    errors.email = 'Cannot be empty';
-  if (isEmpty(data.password))
-    errors.password = 'Cannot be empty';
-
-  return {
-    errors,
-    valid: Object.keys(errors).length === 0 ? true : false
-  };
-};
 
 export default Login;

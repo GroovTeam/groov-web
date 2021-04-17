@@ -12,7 +12,7 @@ function LikesList({likes}) {
               <ListItemText  primary={value.content} />
             </ListItem>
           );
-        })) : <ListItemText  primary={'Create or Join some posses. It\'s feeling a little empty here.'} /> }
+        })) : <ListItemText  primary={'Like some posts. It\'s feeling a little empty here.'} /> }
       </List>
     </div>
   );

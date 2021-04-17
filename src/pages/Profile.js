@@ -5,6 +5,7 @@ import  { Tabs, Tab, Paper, Avatar, Box, Button, Dialog, DialogContent, DialogTi
 import { makeStyles } from '@material-ui/core/styles';
 import LikesList from '../components/LikesList';
 import TracksList from '../components/TracksList';
+import UserPosseList from '../components/UserPosseList';
 import ListChips from '../components/ListChips';
 import SpongeBob from '../components/mockUser.json';
 import getProfile from '../utils/getProfile';
@@ -184,7 +185,11 @@ function Profile({username}) {
 
               </Tabs>
               <TabPanel value={page} index={0}>
-                <UserPosses />
+                {(username === undefined) ?
+                  <UserPosses posses={userInfo.posses}/>
+                  :
+                  <UserPosseList posses={userInfo.posses}/>
+                }
               </TabPanel>
               <TabPanel value={page} index={1}>
                 <LikesList likes={likes}/>

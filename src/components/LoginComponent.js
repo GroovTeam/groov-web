@@ -9,9 +9,10 @@ const LoginComponent = () => {
 
   const [userData, setUserData] = useState({});
   const history = useHistory();
-  
+
   const login = (event) => {
-    Login(userData.email, userData.password);
+    Login(userData.email, userData.password)
+      .catch((error) => {console.log(error.message);});
     event.preventDefault();
   };
 
