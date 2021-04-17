@@ -6,6 +6,7 @@ const Login = async (email, password) => {
     email: email,
     password: password,
   };
+  let errorMessage = null;
 
   if (isEmpty(userData.email))
   {
@@ -15,18 +16,20 @@ const Login = async (email, password) => {
   else if (isEmpty(userData.password))
     throw Error(JSON.stringify('Password field cannot be empty'));
 
-  let res;
-
-  firebase.auth().signInWithEmailAndPassword(userData.email, userData.password)
+  await firebase.auth().signInWithEmailAndPassword(userData.email, userData.password)
     .then(response => {
-      console.log(response); 
-      res = response;
+      console.log(response);
     })
-    .catch(err => {console.error(err.message);});
+    .catch((error) => {
+      console.log(error);
+      errorMessage = error.code;});
+  if (!errorMessage)
+    return;
+  else if (errorMessage.normalize() === 'auth/user-not-found'.normalize())
+    throw Error(JSON.stringify('Username or password is invalid'));
+  else if (errorMessage.normalize() === 'auth/invalid-email'.normalize())
+    throw Error(JSON.stringify('The email address is badly formatted'));
 
-  console.log(userData);
-
-  return res;
 };
 
 const isEmpty = (str) => {

@@ -4,20 +4,36 @@ import './RegisterBox.css';
 import Login from '../utils/Login';
 import firebase from 'firebase';
 import VerifyEmail from './VerifyEmail';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const LoginComponent = () => {
 
   const [userData, setUserData] = useState({});
+  const [signedIn, setSignedIn] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [popup, setPopup] = useState ({severity: 'error', message:''});
   const history = useHistory();
 
   const login = (event) => {
     Login(userData.email, userData.password)
-      .catch((error) => {console.log(error.message);});
+      .catch((error) => {
+        setPopup({severity:'error', message: error.message});
+        openPopup();
+      });
     event.preventDefault();
   };
 
-  const [signedIn, setSignedIn] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
+  const openPopup = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
+
   
   const onAuthStateChanged = (user) => {
 
@@ -43,32 +59,40 @@ const LoginComponent = () => {
     setUserData({ ...userData, [name]: value });
   };
 
+  const Alert = (props) =>  {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  };
+
   if (!signedIn)
   {
     return (
       <div style = {{display: 'flex', justifyContent: 'center'}}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity={popup.severity}>
+            {popup.message}
+          </Alert>
+        </Snackbar>
         <div className='Base-Container'>
           <div className='Content'>
             <form onSubmit={login}>
-              <div className='form-group'>
-                <div className='Header'><h1>Login</h1></div>
+              <div className='Header'><h1>Login</h1></div>
+              <div className='form-group'>  
                 <label>Email </label>
                 <input type="text" className="textField" name="email" placeholder="email" onChange={handleChange}/>
+              </div>
+              <div className='form-group'>
                 <label>Password</label>
                 <input type="password" className="textField" name="password" placeholder="password" onChange={handleChange}/>
-                
               </div>
-              <label style={{display: 'flex', flexDirection: 'column'}}>
+              <label style={{display: 'flex', flexDirection: 'column', alignSelf:'center'}}>
                 <Link style={{ textDecoration: 'underlined', color: 'black'}} to='/register'>
-                    Forgot your password?
+                  Forgot your password?
                 </Link>  
                 <Link style={{textDecoration: 'underlined', color: 'black'}} to='/register'>
                   Not a registered user?
                 </Link>
               </label>
-              <div>
-                <input type="Submit" className="buttonInput" value="Submit" readOnly={true}/>
-              </div>
+              <input type="Submit" className="buttonInput" value="Login" readOnly={true}/>
             </form>
           </div>
         </div>
@@ -77,7 +101,7 @@ const LoginComponent = () => {
   }
   else if (!isVerified)
   {
-    return (<VerifyEmail setEmailVerified={setIsVerified}/>);
+    return (<div style={{height:'100%' }}><VerifyEmail setEmailVerified={setIsVerified}/></div>);
   }
 
   else
