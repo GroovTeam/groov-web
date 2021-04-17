@@ -1,4 +1,3 @@
-import firebase from './Firebase';
 import axios from 'axios';
 import ApiConfig from './ApiConfig';
 
@@ -10,19 +9,21 @@ const Register = async (email, password, username, firstName, lastName) => {
     username: username,
     firstName: firstName,
     lastName: lastName,
-    dateCreated: Date.now()
+    
   };
 
   axios.post(
     ApiConfig.register,
     userData
   ).then(result => {
-    if (result.data.token)
-      firebase.auth().signInWithEmailAndPassword(
-        email,
-        password
-      ).catch(console.error);
-  }).catch(console.error);
+    console.log(result);
+  }).catch((error) => {
+    let errorCode = error.message;
+    let errorMessage = error.response.data.message;
+    console.log(error.response); 
+    console.error(errorCode);
+    console.error(errorMessage);});
+  
 };
 
 export default Register;

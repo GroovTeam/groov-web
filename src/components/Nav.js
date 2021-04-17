@@ -5,7 +5,7 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -21,10 +21,11 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import Logout from '../utils/Logout';
 
 const navItems = [
-  {name: 'DashBoard', icon: <DashboardIcon />, path: '/'},
+  {name: 'DashBoard', icon: <DashboardIcon />, path: '/dashboard'},
   {name: 'Profile', icon: <PersonIcon />, path: '/profile'},
 ];
 const drawerWidth = 240;
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,7 +94,7 @@ export default function Nav() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  const history = useHistory();
   const handleNavOpen = () => {
     setOpen(true);
   };
@@ -130,10 +131,10 @@ export default function Nav() {
           <Link className={classes.toolbarItems} to='/register'>
               Registration
           </Link>
-          <Button className={classes.toolbarItems} onClick={() => Logout()}>
+          <Button className={classes.toolbarItems} onClick={() => {Logout(); history.push('/');}}>
               Logout
           </Button>
-          <Link className={classes.toolbarItems} to='/login'>
+          <Link className={classes.toolbarItems} to='/'>
               Login  
           </Link>
         </Toolbar>
