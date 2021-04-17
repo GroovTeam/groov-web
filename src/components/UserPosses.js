@@ -81,7 +81,7 @@ export default function UserPosses() {
       <List>
         {(posses !== undefined) ? (posses.map((value) => {
           return (
-            <ListItem key={value} onClick={handleRemovePosses(value)}>
+            <ListItem key={value}>
               <ListItemText  primary={value} />
               <Button style={{ color: 'red' }} onClick={handleRemovePosses(value)}>
                       Remove

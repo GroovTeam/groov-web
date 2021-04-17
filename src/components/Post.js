@@ -11,6 +11,8 @@ import unlikePost from '../utils/unlikePost';
 import LikeButton from './LikeButton';
 import CommentModel from './CommentModel';
 import getUserProfile from '../utils/getUserProfile';
+import AudioButtons from './AudioButtons';
+import getFile from '../utils/getFile';
 
 function Posts({post}) {
   const [comments, setComments] = useState([]);
@@ -18,7 +20,23 @@ function Posts({post}) {
   const [likes, setLikes] = useState((post.likes === undefined) ? 0 : post.likes.length);
   const [openModel, setModelOpen] = useState(false);
   const [show, setShow] = useState('Show');
+  const [beatURL, setBeatURL] = useState(null);
+  const [recordingURL, setRecordingURL] = useState(null);
   const id = post.postID;
+
+  useEffect(async () => {
+    getPostComments();
+
+    if (post.hasAudio) {
+      console.log('has Audio');
+      await getFile(post.beatFile)
+        .then(res => setBeatURL(res))
+        .catch(console.error);
+      await getFile(post.recordingFile)
+        .then(res => setRecordingURL(res))
+        .catch(console.error);
+    }
+  }, []);
 
   const getPostComments = async () => {
 
@@ -76,9 +94,7 @@ function Posts({post}) {
       .catch(error => {console.log(error); setLikes(likes + 1);});
   };
 
-  useEffect(() => {
-    getPostComments();
-  }, []);
+
 
   return (
     <div>
@@ -100,7 +116,7 @@ function Posts({post}) {
                   <AddCommentIcon></AddCommentIcon>
                 </IconButton>
               </Tooltip>
-              
+              <AudioButtons userAudio={recordingURL} userBeat={beatURL} />
             </Box>
             <div onClick={() => handleCommentToggle()}>
               {(expandComments) ? <ExpandLessIcon /> : <ExpandMoreIcon /> } {show} Comments
