@@ -111,12 +111,12 @@ function Posts({post}) {
             <h2 style={{alignSelf: 'center', fontWeight: 'normal'}}>{post.content}</h2>
             <Box style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
               <LikeButton id={post.postID} likes={likes} onLike={likePostCall} onUnLike={unlikePostCall} alreadyLiked={post.alreadyLiked} />
+              <AudioButtons userAudio={recordingURL} userBeat={beatURL} />
               <Tooltip title='Comment'>
                 <IconButton onClick={() => handleCommentModelOpen()}>
                   <AddCommentIcon></AddCommentIcon>
                 </IconButton>
               </Tooltip>
-              <AudioButtons userAudio={recordingURL} userBeat={beatURL} />
             </Box>
             <div onClick={() => handleCommentToggle()}>
               {(expandComments) ? <ExpandLessIcon /> : <ExpandMoreIcon /> } {show} Comments
