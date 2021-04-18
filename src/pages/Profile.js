@@ -51,14 +51,14 @@ function TabPanel(data) {
   );
 }
 
-function Profile({username}) {
+function Profile({username, setUser}) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [userInfo, setUserInfo] = useState({});
   const [open, setOpen] = useState(false);
   const [likes, setLikes] = useState(false);
   const [posts, setPosts] = useState(false);
-  
+  console.log('the profile belongs to ' + username);
   const handleClickOpen = () => {
     setOpen(true);
   };

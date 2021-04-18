@@ -24,7 +24,7 @@ function TabPanel(data) {
   );
 }
 
-function DashBoard() {
+function DashBoard({setUser}) {
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(0);
 
@@ -84,6 +84,7 @@ function DashBoard() {
               <TabPanel value={page} index={0}>
                 <DashboardPosts 
                   feed={posts} 
+                  setUser={setUser}
                 >
                 </DashboardPosts>
                 <MakePost   

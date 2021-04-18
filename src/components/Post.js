@@ -11,13 +11,14 @@ import unlikePost from '../utils/unlikePost';
 import LikeButton from './LikeButton';
 import CommentModel from './CommentModel';
 import getUserProfile from '../utils/getUserProfile';
-
-function Posts({post}) {
+import {useHistory} from 'react-router-dom';
+function Posts({post, setUser}) {
   const [comments, setComments] = useState([]);
   const [expandComments, setExpand] = useState(false);
   const [likes, setLikes] = useState((post.likes === undefined) ? 0 : post.likes.length);
   const [openModel, setModelOpen] = useState(false);
   const [show, setShow] = useState('Show');
+  const history = useHistory();
   const id = post.postID;
 
   const getPostComments = async () => {
@@ -80,6 +81,14 @@ function Posts({post}) {
     getPostComments();
   }, []);
 
+
+  const handleUsername = (event, username, setUser) => 
+  {
+    event.preventDefault();
+    setUser(username);  
+    history.push('/profile');
+  };
+
   return (
     <div>
       <Box  borderBottom={2}>
@@ -87,7 +96,7 @@ function Posts({post}) {
           <div style={{display: 'flex'}}>
             <Box  style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
               <Avatar style={{height: '5vh', margin: '.5vh', width: '5vh'}} src={post.image}></Avatar>
-              <h3>{post.username}</h3>
+              <h3 onClick={(event) => handleUsername(event, post.username, setUser)}>{post.username}</h3>
               <ListChips variant={'outlined'} size={'small'} chips={post.posses} />
             </Box>
           </div>
@@ -105,7 +114,7 @@ function Posts({post}) {
             <div onClick={() => handleCommentToggle()}>
               {(expandComments) ? <ExpandLessIcon /> : <ExpandMoreIcon /> } {show} Comments
             </div>
-            <Comments comments={comments} expand={expandComments} update={getPostComments} />
+            <Comments comments={comments} expand={expandComments} update={getPostComments} setUser={setUser} />
             <CommentModel open={openModel} close={handleCommentModelClose} postId={id} />
           </div>
         </div>

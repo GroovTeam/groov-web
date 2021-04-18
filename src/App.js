@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter as 
 Router, 
 Route, 
@@ -12,16 +12,18 @@ import DashBoard from './pages/DashBoard';
 import Register from './pages/Register';
 import Login from './pages/LoginPage';
 
-function App() {
+const App = () => {
+
+  const [user, setUser] = useState(undefined);
 
   return (
     <Router>
       <Switch>
         <Route path="/dashboard">
-          <DashBoard />
+          <DashBoard setUser={setUser}/>
         </Route>
         <Route path="/profile">
-          <ProfilePath />
+          <ProfilePath user={user} setUser={setUser}/>
         </Route>
         <Route path="/post">
           <Post />
@@ -38,7 +40,7 @@ function App() {
       </Switch>
     </Router>
   );
-}
+};
 
 
 export default App;
