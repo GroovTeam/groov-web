@@ -146,7 +146,7 @@ function Profile({username, setUser}) {
           <h2>Profile</h2>
 
           <div style={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
-            <Avatar className={classes.large} src={SpongeBob.profilePic} />
+            <Avatar className={classes.large} src={userInfo.picURL} />
             <h2>{(userInfo.firstName + ' ' + userInfo.lastName)}</h2>
             <h3 style={{maxWidth: 600}} >
               {(userInfo.bio === undefined) ? 'Add User Bio': userInfo.bio}
