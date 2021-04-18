@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import  { Accordion, AccordionSummary, AccordionDetails, Button, TextField } from '@material-ui/core';
 import EditTags from './EditTags';
 import UpdateProfile from '../../utils/UpdateProfile';
+import Avatar from '@material-ui/core/Avatar';
 
 function EditForm({userData, closeDialog}) {
   const [user, setUser] = useState(userData);
+  const [showPreview, setShowPreview] = useState(false);
 
   const updateUser = () => {
     console.log('userdata: ', userData);
@@ -15,10 +17,26 @@ function EditForm({userData, closeDialog}) {
       .catch(console.error);
   };
 
+  const togglePreview = () => {
+    setShowPreview(!showPreview);
+  };
+
   const handleChange = (e) => {
     const value = e.target.value;
     const key = e.target.name;
     setUser({...user, [key]: value});
+  };
+
+  const handleUpload = e => {
+    const pic = 'picURL';
+
+    if (e.target.files.length) {
+      console.log(e.target.files[0]);
+      console.log(URL.createObjectURL(e.target.files[0]));
+      setUser({
+        ...user, [pic]: URL.createObjectURL(e.target.files[0]),
+      });
+    }
   };
 
   const updateTags = (tags) => {
@@ -30,6 +48,11 @@ function EditForm({userData, closeDialog}) {
     <div>
       <form onSubmit={updateUser}>
         <div style={{display: 'flex', flexDirection: 'column', width: '60vh'}}>
+          {showPreview ? <Avatar src={user.picURL} style={{display: 'flex', alignSelf: 'center', height: '20vh', width: '20vh'}}/> : ''}
+          <input type='file' accept='image' onChange={handleUpload} style={{display: 'flex', alignSelf: 'center'}} />
+          <Button onClick={togglePreview}>
+            {showPreview ? 'hide preview' : 'show preview'}
+          </Button>
           <TextField 
             label='First Name'
             value={user.firstName}
