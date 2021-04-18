@@ -11,7 +11,9 @@ ApiConfig.profile = baseURL + ApiConfig.user + '/profile';
 
 ApiConfig.posts = '/posts';
 ApiConfig.post = baseURL + ApiConfig.posts;
+// Remove this one
 ApiConfig.feed = baseURL + ApiConfig.posts + '/feed';
+// getRecentFeed
 ApiConfig.allPosts  = baseURL + ApiConfig.posts + '/new';
 ApiConfig.likePost = ApiConfig.post + '/like';
 ApiConfig.unlikePost = ApiConfig.post + '/unlike';

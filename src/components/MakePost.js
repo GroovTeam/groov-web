@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import FormPost from './FormPost';
 import RecordAudio from '../components/RecordAudio';
 
+
 function MakePost({updateFeed}) {
   const [open, setOpen] = useState(false);
 
@@ -20,7 +21,7 @@ function MakePost({updateFeed}) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button color="primary" onClick={handleClickOpen}>
         Post
       </Button>
       <Dialog

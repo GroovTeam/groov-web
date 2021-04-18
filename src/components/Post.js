@@ -22,6 +22,9 @@ function Posts({post}) {
   const [show, setShow] = useState('Show');
   const [beatURL, setBeatURL] = useState(null);
   const [recordingURL, setRecordingURL] = useState(null);
+  const [showTags, setShowTags] = useState(true);
+  const [showPosses, setShowPosses] = useState(true);
+
   const id = post.postID;
 
   useEffect(async () => {
@@ -94,18 +97,27 @@ function Posts({post}) {
       .catch(error => {console.log(error); setLikes(likes + 1);});
   };
 
-
+  const toggleTagsShow = () => setShowTags(!showTags);
+  const togglePossesShow = () => setShowPosses(!showPosses);
 
   return (
     <div>
       <Box  borderBottom={2}>
         <div style={{margin: '1vh'}}>
-          <div style={{display: 'flex'}}>
+          <div style={{display: 'flex', flexDirection: 'column'}}>
             <Box  style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-              <Avatar style={{height: '5vh', margin: '.5vh', width: '5vh'}} src={post.image}></Avatar>
-              <h3>{post.username}</h3>
-              <ListChips variant={'outlined'} size={'small'} chips={post.posses} />
+              <Avatar style={{height: '8vh', margin: '.5vh', width: '8vh'}} src={post.image}></Avatar>
+              <h2>@{post.username}</h2>
             </Box>
+            <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
+              {showTags ? <ListChips variant={'outlined'} size={'small'} chips={post.tags} /> : ''}
+              <span onClick={toggleTagsShow}>{showTags ? 'Hide Tags' : 'Show Tags'}</span>
+              
+            </div>
+            <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
+              {showPosses ? <ListChips variant={'outlined'} size={'small'} chips={post.posses} /> : ''}
+              <span onClick={togglePossesShow}>{showPosses ? 'Hide Posses' : 'Show Posses'}</span>
+            </div>
           </div>
           <div style={{display: 'flex' , flexDirection: 'column'}}>
             <h2 style={{alignSelf: 'center', fontWeight: 'normal'}}>{post.content}</h2>

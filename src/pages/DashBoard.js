@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react';
 import Nav from '../components/Nav';
 import DashboardPosts from '../components/DashboardPosts';
-import  { Tabs, Tab, Paper, Box }  from '@material-ui/core';
+import  { Toolbar, Tabs, Tab, Select, List, ListSubheader, Paper, Button, Box, AppBar }  from '@material-ui/core';
 import getAllPosts from '../utils/getAllPosts';
 import MakePost from '../components/MakePost';
 import getUserProfile from '../utils/getUserProfile';
@@ -54,6 +55,13 @@ function DashBoard() {
     
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   useEffect(async () => {
     updateFeed();
   }, []);
@@ -61,44 +69,61 @@ function DashBoard() {
   return (
     <div>
       <Nav  />
-      <div style={{margin: '8vh'}}>
-        <div style={{display: 'flex', alignItems: 'center', flexDirection: 'row'}}>
+      <div style={{margin: '12vh'}}>
+        <div style={{display: 'flex', flexDirection: 'row'}}>
           <div >
             <Paper 
               variant={'outlined'}
             >
-              <Tabs
+              {/* <Tabs
                 indicatorColor='none'
                 textColor='primary'
                 centered
                 value={page}
                 onChange={handleChange}
+                style={{display: 'flex', alignItems: 'center', position: 'fixed',
+                  backgroundColor: 'grey', width: '100%', opacity: '100%'}}
               >
                 <Tab 
                   label='DashBoard'
                   disableRipple={true}
-                  disabled
+                  style={{backgroundColor: 'white'}}
                 />
-              </Tabs>
-              
-              <TabPanel value={page} index={0}>
+                <MakePost   
+                  updateFeed={updateFeed} 
+                />
+              </Tabs> */}
+              {/* <TabPanel label='Dashboard' value={page} index={0}>
+                
+                
+              </TabPanel> */}
+              <List subheader={<ListSubheader />}>
+                <ListSubheader 
+                  style={{backgroundColor: 'white', top: 60}}
+                >
+                  <div 
+                    style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}
+                  >
+                    <span onClick={() => scrollToTop()} >DashBoard</span>
+\                    <MakePost   
+                      updateFeed={updateFeed} 
+                    />
+                  </div>
+                </ListSubheader>
                 <DashboardPosts 
                   feed={posts} 
                 >
                 </DashboardPosts>
-                
-              </TabPanel>
+              </List>
+              
             </Paper>
           </div>
           
         </div>
-        <div style={{display: 'flex', alignItems: 'flex-end'}}>
-          <MakePost   
-            updateFeed={updateFeed} 
-          />
-        </div>
+        
         
       </div>
+      
     </div>
   );
 }
