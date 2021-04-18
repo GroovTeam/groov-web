@@ -8,6 +8,7 @@ async function createPosse(posse) {
       headers: {Authorization: `Bearer ${token}`}
     };
 
+    console.log(posse);
     return axios.post(ApiConfig.createPosse, posse, config)
       .catch(error => console.error('Error: ', error));
   }).catch(console.error);

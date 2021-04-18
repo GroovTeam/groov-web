@@ -6,7 +6,7 @@ import CreatePosse from './posses/CreatePosses';
 import JoinPosse from './posses/JoinPosse';
 import getPosses from '../utils/getPosses';
 
-export default function UserPosses() {
+export default function UserPosses({setPopup}) {
   const [posses, setPosses] = useState([]);
   const [openCreate, setOpenCreate] = useState(false);
   const [openJoin, setOpenJoin] = useState(false);
@@ -44,6 +44,7 @@ export default function UserPosses() {
     //     removeId = posse.posseID;
     //   }
     // });
+    console.log(value.name);
     const removeId = value.posseID;
 
     removePosses(removeId)
@@ -57,7 +58,7 @@ export default function UserPosses() {
     getUserProfile()
       .then(res => {
         data = res.data;
-        setPosses(data.posses);
+        setPosses(data.possesData);
         getAllPosses();
       })
       .catch(console.error);
@@ -82,8 +83,8 @@ export default function UserPosses() {
       <List>
         {(posses !== undefined) ? (posses.map((value) => {
           return (
-            <ListItem key={value.name}>
-              <ListItemText  primary={value} />
+            <ListItem key={value.posseID}>
+              <ListItemText  primary={value.name} />
               <Button style={{ color: 'red' }} onClick={handleRemovePosses(value)}>
                       Remove
               </Button>
@@ -98,7 +99,7 @@ export default function UserPosses() {
             Create Posse
       </Button>
 
-      <CreatePosse update={getAllPosses} visible={openCreate} toggle={handleCloseCreate} />
+      <CreatePosse update={getAllPosses} visible={openCreate} toggle={handleCloseCreate} setPopup={setPopup}/>
       <JoinPosse posses={allPosses} update={getUserPosses} visible={openJoin} toggle={handleCloseJoin} />
     </div>
   );
