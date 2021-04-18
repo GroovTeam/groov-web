@@ -1,36 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import Nav from '../components/Nav';
 import DashboardPosts from '../components/DashboardPosts';
-import  { Tabs, Tab, Paper, Box }  from '@material-ui/core';
+import  { List, ListSubheader, Paper }  from '@material-ui/core';
 import getAllPosts from '../utils/getAllPosts';
 import MakePost from '../components/MakePost';
 import getUserProfile from '../utils/getUserProfile';
 
-function TabPanel(data) {
-  const {children, value, index} = data;
-  
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-    >
-      {value === index && (
-        <Box p={3}>
-          <h4>{children}</h4>
-        </Box>
-      )}
-    </div>
-  );
-}
-
 function DashBoard() {
   const [posts, setPosts] = useState([]);
-  const [page, setPage] = useState(0);
-
-  const handleChange = (newVal) => {
-    setPage(newVal);
-  };
 
   const updateFeed = () => {
     getUserProfile()
@@ -54,6 +31,13 @@ function DashBoard() {
     
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   useEffect(async () => {
     updateFeed();
   }, []);
@@ -61,44 +45,39 @@ function DashBoard() {
   return (
     <div>
       <Nav  />
-      <div style={{margin: '8vh'}}>
-        <div style={{display: 'flex', alignItems: 'center', flexDirection: 'row'}}>
+      <div style={{margin: '12vh'}}>
+        <div style={{display: 'flex', flexDirection: 'row'}}>
           <div >
             <Paper 
               variant={'outlined'}
             >
-              <Tabs
-                indicatorColor='none'
-                textColor='primary'
-                centered
-                value={page}
-                onChange={handleChange}
-              >
-                <Tab 
-                  label='DashBoard'
-                  disableRipple={true}
-                  disabled
-                />
-              </Tabs>
-              
-              <TabPanel value={page} index={0}>
+              <List subheader={<ListSubheader />}>
+                <ListSubheader 
+                  style={{backgroundColor: 'white', top: 60}}
+                >
+                  <div 
+                    style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}
+                  >
+                    <span onClick={() => scrollToTop()} >DashBoard</span>
+                    <MakePost   
+                      updateFeed={updateFeed} 
+                    />
+                  </div>
+                </ListSubheader>
                 <DashboardPosts 
                   feed={posts} 
                 >
                 </DashboardPosts>
-                <MakePost   
-                  updateFeed={updateFeed} 
-                />
-              </TabPanel>
+              </List>
+              
             </Paper>
           </div>
           
         </div>
-        <div style={{display: 'flex', alignItems: 'flex-end'}}>
-          
-        </div>
+        
         
       </div>
+      
     </div>
   );
 }
