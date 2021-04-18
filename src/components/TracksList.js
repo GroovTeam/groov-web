@@ -1,22 +1,22 @@
 import React from 'react';
 import {List, ListItem, ListItemText} from '@material-ui/core';
 
-function LikesList({likes}) {
+function TracksList({posts}) {
 
   return (
     <div>
       <List>
-        {(likes !== undefined) ? (likes.map((value, index) => {
+        {(posts !== undefined) ? (posts.map((value, index) => {
           return (
             <ListItem key={index}>
               <ListItemText  primary={value.content} />
             </ListItem>
           );
-        })) : <ListItemText  primary={'Like some posts. It\'s feeling a little empty here.'} /> }
+        })) : <ListItemText  primary={'Create some tracks, It\'s feeling a little empty here.'} /> }
       </List>
     </div>
   );
 
 }
 
-export default LikesList;
+export default TracksList;

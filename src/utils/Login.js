@@ -6,42 +6,35 @@ const Login = async (email, password) => {
     email: email,
     password: password,
   };
+  let errorMessage = null;
 
-  const { errors, valid } = validateData(userData);
-  if (!valid)
-    throw Error(JSON.stringify(errors));
+  if (isEmpty(userData.email))
+  {
+    throw Error(JSON.stringify('Email field cannot be empty'));
+  }
+    
+  else if (isEmpty(userData.password))
+    throw Error(JSON.stringify('Password field cannot be empty'));
 
-  let res;
-
-  firebase.auth().signInWithEmailAndPassword(userData.email, userData.password)
-    .then(response => { 
-      console.log(response); 
-      res = response; 
+  await firebase.auth().signInWithEmailAndPassword(userData.email, userData.password)
+    .then(response => {
+      console.log(response);
     })
-    .catch(err => { console.error(err.message); });
+    .catch((error) => {
+      console.log(error);
+      errorMessage = error.code;});
+  if (!errorMessage)
+    return;
+  else if (errorMessage.normalize() === 'auth/user-not-found'.normalize())
+    throw Error(JSON.stringify('Username or password is invalid'));
+  else if (errorMessage.normalize() === 'auth/invalid-email'.normalize())
+    throw Error(JSON.stringify('The email address is badly formatted'));
 
-  console.log(userData);
-
-  return res;
 };
 
 const isEmpty = (str) => {
   return (str === undefined || str === '');
 }; 
 
-// Data validation
-const validateData = (data) => {
-  let errors = {};
-
-  if (isEmpty(data.email))
-    errors.email = 'Cannot be empty';
-  if (isEmpty(data.password))
-    errors.password = 'Cannot be empty';
-
-  return {
-    errors,
-    valid: Object.keys(errors).length === 0 ? true : false
-  };
-};
 
 export default Login;

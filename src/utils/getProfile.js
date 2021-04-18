@@ -2,7 +2,7 @@ import axios from 'axios';
 import ApiConfig from './ApiConfig';
 import firebase from './Firebase';
 
-async function getProfile({username}) {
+async function getProfile(username) {
   return firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
     const config = {
       headers: {Authorization: `Bearer ${token}`}
