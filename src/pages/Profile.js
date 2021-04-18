@@ -17,6 +17,8 @@ import getUserProfile from '../utils/getUserProfile';
 import firebase from '../utils/Firebase';
 import EditForm from '../components/editProfile/EditForm';
 import UserPosses from '../components/UserPosses';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -56,6 +58,7 @@ function Profile({username, setUser}) {
   const [page, setPage] = useState(0);
   const [userInfo, setUserInfo] = useState({});
   const [open, setOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
   const [likes, setLikes] = useState(false);
   const [posts, setPosts] = useState(false);
   console.log('the profile belongs to ' + username);
@@ -68,6 +71,10 @@ function Profile({username, setUser}) {
     getUserInfo();
   };
 
+  const handlePopupClose = () => {
+    setPopupOpen(false);
+    getUserInfo();
+  };
 
   const handleChange = (e, newVal) => {
     setPage(newVal);
@@ -131,6 +138,10 @@ function Profile({username, setUser}) {
     console.log(userInfo);
   };
 
+  const Alert = (props) =>  {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  };
+
   useEffect(() => {
     getUserInfo();
     getUserLikes();
@@ -140,6 +151,11 @@ function Profile({username, setUser}) {
 
   return (
     <div>
+      <Snackbar open={popupOpen} autoHideDuration={6000} onClose={handlePopupClose}>
+        <Alert onClose={handlePopupClose} severity={'success'}>
+          {'Posse successfully created'}
+        </Alert>
+      </Snackbar>
       <Nav />
       <div style={{display: 'flex', flexDirection: 'column'}}>
         <div>
@@ -186,7 +202,7 @@ function Profile({username, setUser}) {
               </Tabs>
               <TabPanel value={page} index={0}>
                 {(username === undefined) ?
-                  <UserPosses posses={userInfo.posses}/>
+                  <UserPosses setPopup={setPopupOpen}/>
                   :
                   <UserPosseList posses={userInfo.posses}/>
                 }

@@ -1,22 +1,31 @@
 import React, {useState} from 'react';
-import { Button, Dialog, DialogContent, DialogTitle, DialogActions, TextField }  from '@material-ui/core';
+import { Button, Dialog, DialogContent, DialogTitle, 
+  Accordion, AccordionSummary, AccordionDetails, DialogActions, TextField }  from '@material-ui/core';
 import createPosse from '../../utils/createPosse';
+import EditTags from '../editProfile/EditTags';
 
-export default function CreatePosses({visible, toggle}) {
-  const [posse, setPosse] = useState('');
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setPosse(value);
+export default function CreatePosses({visible, toggle, setPopup}) {
+  const [posse, setPosse] = useState({});
+
+  const handleChange = (event) => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    setPosse({ ...posse, [name]: value });
+  };
+
+  const updateTags = (tags) => {
+    const tagKey = 'tags';
+    setPosse({...posse, [tagKey]: tags });
   };
 
   const handleCreatingPosse = () => {
-    let possesObj = {};
-    possesObj.name = posse;
-    createPosse(possesObj)
+    createPosse(posse)
       .then(() => toggle())
       .catch(console.error);
     setPosse('');
+    setPopup(true);
   };
 
   return (
@@ -30,13 +39,36 @@ export default function CreatePosses({visible, toggle}) {
       <DialogContent>
         <TextField 
           label='Create Posse'
-          value={posse}
+          value={posse.name}
           variant='outlined'
           margin='dense'
-          name='createPosse'
+          name='name'
           onChange={(e) => handleChange(e)}
           style={{width: '100%'}}
         />
+        <TextField 
+          label='Bio'
+          id="standard-full-width"
+          value={posse.bio}
+          variant='outlined'
+          margin='normal'
+          multiline={true}
+          rows={4}
+          name='bio'
+          onChange={(e) => handleChange(e)}
+        />
+
+        <div style={{width: '60vh'}}>
+          <Accordion>
+            <AccordionSummary>Tags</AccordionSummary>
+            <AccordionDetails>
+              <EditTags 
+                currTags={posse.tags}
+                updateUserTags={updateTags}
+              />  
+            </AccordionDetails>
+          </Accordion>
+        </div>
       </DialogContent>
       <DialogActions>
         <Button onClick={() => handleCreatingPosse()}>
