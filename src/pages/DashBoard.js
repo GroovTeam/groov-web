@@ -86,16 +86,16 @@ function DashBoard() {
                   feed={posts} 
                 >
                 </DashboardPosts>
-                <MakePost   
-                  updateFeed={updateFeed} 
-                />
+                
               </TabPanel>
             </Paper>
           </div>
           
         </div>
         <div style={{display: 'flex', alignItems: 'flex-end'}}>
-          
+          <MakePost   
+            updateFeed={updateFeed} 
+          />
         </div>
         
       </div>
