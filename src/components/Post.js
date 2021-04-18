@@ -11,15 +11,17 @@ import unlikePost from '../utils/unlikePost';
 import LikeButton from './LikeButton';
 import CommentModel from './CommentModel';
 import getUserProfile from '../utils/getUserProfile';
+import {useHistory} from 'react-router-dom';
 import AudioButtons from './AudioButtons';
 import getFile from '../utils/getFile';
 
-function Posts({post}) {
+function Posts({post, setUser}) {
   const [comments, setComments] = useState([]);
   const [expandComments, setExpand] = useState(false);
   const [likes, setLikes] = useState((post.likes === undefined) ? 0 : post.likes.length);
   const [openModel, setModelOpen] = useState(false);
   const [show, setShow] = useState('Show');
+  const history = useHistory();
   const [beatURL, setBeatURL] = useState(null);
   const [recordingURL, setRecordingURL] = useState(null);
   const [showTags, setShowTags] = useState(true);
@@ -100,6 +102,13 @@ function Posts({post}) {
   const toggleTagsShow = () => setShowTags(!showTags);
   const togglePossesShow = () => setShowPosses(!showPosses);
 
+
+  const handleUsername = (event, username, setUser) => {
+    event.preventDefault();
+    setUser(username);  
+    history.push('/profile');
+  };
+
   return (
     <div>
       <Box  borderBottom={2}>
@@ -107,7 +116,7 @@ function Posts({post}) {
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <Box  style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
               <Avatar style={{height: '8vh', margin: '.5vh', width: '8vh'}} src={post.image}></Avatar>
-              <h2>@{post.username}</h2>
+              <h2 onClick={(event) => handleUsername(event, post.username, setUser)}>@{post.username}</h2>
             </Box>
             <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
               {showTags ? <ListChips variant={'outlined'} size={'small'} chips={post.tags} /> : ''}
@@ -133,7 +142,7 @@ function Posts({post}) {
             <div onClick={() => handleCommentToggle()}>
               {(expandComments) ? <ExpandLessIcon /> : <ExpandMoreIcon /> } {show} Comments
             </div>
-            <Comments comments={comments} expand={expandComments} update={getPostComments} />
+            <Comments comments={comments} expand={expandComments} update={getPostComments} setUser={setUser} />
             <CommentModel open={openModel} close={handleCommentModelClose} postId={id} />
           </div>
         </div>

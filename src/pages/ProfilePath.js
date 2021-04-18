@@ -1,23 +1,26 @@
 import Profile from '../pages/Profile';
-import {useState, useEffect} from 'react';
+import {useEffect} from 'react';
 
-function ProfilePath({user}) {
-  const [userRef, setUserRef] = useState(undefined);
+function ProfilePath({user, setUser}) {
+  const userRef = user? (user.toString()).toLowerCase() : undefined;
   
   const getUserInfo = () => {
-    if (user !== undefined)
-      setUserRef(user);
     
-    console.log('user ref is : ', userRef);
   };
-
+  
   useEffect(() => {
     getUserInfo();
+    return () =>
+    {
+      console.log('users ref is : ', userRef);
+      setUser(undefined);
+    };
   }, []);
+  
 
   return (
     <div>
-      <Profile username={userRef} />
+      <Profile username={userRef} setUser={setUser} />
     </div>
   );
 }

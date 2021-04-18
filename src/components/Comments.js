@@ -8,8 +8,9 @@ import likeComment from '../utils/likeComment';
 import unlikeComment from '../utils/unlikeComment';
 import ReplyModel from './ReplyModel';
 import RepliesList from './RepliesList';
+import {useHistory} from 'react-router-dom';
 
-function CommentLists({currComment, id, likeComment, unLikeComment, updateComments, alreadyLiked}) {
+function CommentLists({currComment, id, likeComment, unLikeComment, updateComments, alreadyLiked, setUser}) {
   const likeColor = '#4cc9f0';
   const disLikeColor = '#a9abaa';
   const [thumbsUp, setThumbsUp] = useState(alreadyLiked);
@@ -19,6 +20,7 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
   const [openReplies, setOpenReplies] = useState(false);
   const [openModel, setModelOpen] = useState(false);
   const [showHide, setShowHide] = useState('Show');
+  const history = useHistory();
   
   const handleLikeToggle = async () => {
 
@@ -61,11 +63,18 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
     setOpenReplies(!openReplies);
   };
 
+  const handleUsername = (event, username, setUser) => 
+  {
+    event.preventDefault();
+    setUser(username);  
+    history.push('/profile');
+  };
+
   return (
     <div>
       <ListItem style={{display: 'flex', justifyContent: 'space-between', borderLeft: '1px solid black'}}>
         <div>
-          <ListItemText
+          <ListItemText onClick={(event) => handleUsername(event, currComment.username, setUser)}
             secondary={currComment.username}
           ></ListItemText>
           <ListItemText
@@ -115,7 +124,7 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
   );
 }
 
-function Comments({comments, expand, update}) {
+function Comments({comments, expand, update, setUser}) {
 
   return (
     <div>
@@ -126,6 +135,7 @@ function Comments({comments, expand, update}) {
               <CommentLists 
                 key={comment} currComment={comment} id={comment.commentID} likeComment={likeComment} 
                 unLikeComment={unlikeComment} updateComments={update} alreadyLiked={comment.alreadyLiked} 
+                setUser={setUser}
               />
             </div>
           ))) : ('Post has no comment sadly why not add some?')}

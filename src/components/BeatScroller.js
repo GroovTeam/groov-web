@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import getBeats from '../utils/getBeats';
 import getBeat from '../utils/getBeat';
-import ListItem from '@material-ui/core/ListItem';
+import {Accordion, AccordionSummary, AccordionDetails, List, ListItem} from '@material-ui/core/';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,15 +18,24 @@ const BeatScroller = ({ updateBeat }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const classes = useStyles();
   const [DATA, setDATA] = useState([]);
+  const [accordionLabel, setAccordianLabel] = useState('beats');
+  const [expand, setExpand] = useState(false);
 
-  const handleClick = (index, link) => {
+  const handleClick = (index, link, displayName) => {
     setSelectedIndex(index);
     console.log('index is ' + index + ' selected index is ' + selectedIndex);
+    setAccordianLabel(displayName);
     selectBeat(link);
+    setExpand(false);
   };
 
   const selectBeat = async (link) => {
     getBeat(link).then(beat => updateBeat(beat));  
+  };
+
+  const handleExpansion = () => 
+  {
+    setExpand(!expand);
   };
 
   useEffect(() => getBeats()
@@ -50,11 +59,16 @@ const BeatScroller = ({ updateBeat }) => {
 
   return (
     <div className={classes.root}>
-      <ul>
-        {
-          DATA.map((beat) => (<ListItem button key={beat.index} selected={selectedIndex === beat.index} onClick={() => handleClick(beat.index, beat.link)}>{beat.displayName}</ListItem>))
-        }
-      </ul>
+      <Accordion expanded={expand} onChange={handleExpansion}>
+        <AccordionSummary>{accordionLabel}</AccordionSummary>
+        <AccordionDetails>    
+          <List>
+            {
+              DATA.map((beat) => (<ListItem button key={beat.index} selected={selectedIndex === beat.index} onClick={() => handleClick(beat.index, beat.link, beat.displayName)}>{beat.displayName}</ListItem>))
+            }
+          </List>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 };

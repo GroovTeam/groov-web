@@ -6,7 +6,8 @@ import getAllPosts from '../utils/getAllPosts';
 import MakePost from '../components/MakePost';
 import getUserProfile from '../utils/getUserProfile';
 
-function DashBoard() {
+function DashBoard({setUser}) {
+
   const [posts, setPosts] = useState([]);
 
   const updateFeed = () => {
@@ -66,6 +67,7 @@ function DashBoard() {
                 </ListSubheader>
                 <DashboardPosts 
                   feed={posts} 
+                  setUser={setUser}
                 >
                 </DashboardPosts>
               </List>
