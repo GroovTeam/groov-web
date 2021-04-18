@@ -12,6 +12,9 @@ import LikeButton from './LikeButton';
 import CommentModel from './CommentModel';
 import getUserProfile from '../utils/getUserProfile';
 import {useHistory} from 'react-router-dom';
+import AudioButtons from './AudioButtons';
+import getFile from '../utils/getFile';
+
 function Posts({post, setUser}) {
   const [comments, setComments] = useState([]);
   const [expandComments, setExpand] = useState(false);
@@ -19,7 +22,26 @@ function Posts({post, setUser}) {
   const [openModel, setModelOpen] = useState(false);
   const [show, setShow] = useState('Show');
   const history = useHistory();
+  const [beatURL, setBeatURL] = useState(null);
+  const [recordingURL, setRecordingURL] = useState(null);
+  const [showTags, setShowTags] = useState(true);
+  const [showPosses, setShowPosses] = useState(true);
+
   const id = post.postID;
+
+  useEffect(async () => {
+    getPostComments();
+
+    if (post.hasAudio) {
+      console.log('has Audio');
+      await getFile(post.beatFile)
+        .then(res => setBeatURL(res))
+        .catch(console.error);
+      await getFile(post.recordingFile)
+        .then(res => setRecordingURL(res))
+        .catch(console.error);
+    }
+  }, []);
 
   const getPostComments = async () => {
 
@@ -77,13 +99,11 @@ function Posts({post, setUser}) {
       .catch(error => {console.log(error); setLikes(likes + 1);});
   };
 
-  useEffect(() => {
-    getPostComments();
-  }, []);
+  const toggleTagsShow = () => setShowTags(!showTags);
+  const togglePossesShow = () => setShowPosses(!showPosses);
 
 
-  const handleUsername = (event, username, setUser) => 
-  {
+  const handleUsername = (event, username, setUser) => {
     event.preventDefault();
     setUser(username);  
     history.push('/profile');
@@ -93,23 +113,31 @@ function Posts({post, setUser}) {
     <div>
       <Box  borderBottom={2}>
         <div style={{margin: '1vh'}}>
-          <div style={{display: 'flex'}}>
+          <div style={{display: 'flex', flexDirection: 'column'}}>
             <Box  style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-              <Avatar style={{height: '5vh', margin: '.5vh', width: '5vh'}} src={post.image}></Avatar>
-              <h3 onClick={(event) => handleUsername(event, post.username, setUser)}>{post.username}</h3>
-              <ListChips variant={'outlined'} size={'small'} chips={post.posses} />
+              <Avatar style={{height: '8vh', margin: '.5vh', width: '8vh'}} src={post.image}></Avatar>
+              <h2 onClick={(event) => handleUsername(event, post.username, setUser)}>@{post.username}</h2>
             </Box>
+            <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
+              {showTags ? <ListChips variant={'outlined'} size={'small'} chips={post.tags} /> : ''}
+              <span onClick={toggleTagsShow}>{showTags ? 'Hide Tags' : 'Show Tags'}</span>
+              
+            </div>
+            <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
+              {showPosses ? <ListChips variant={'outlined'} size={'small'} chips={post.posses} /> : ''}
+              <span onClick={togglePossesShow}>{showPosses ? 'Hide Posses' : 'Show Posses'}</span>
+            </div>
           </div>
           <div style={{display: 'flex' , flexDirection: 'column'}}>
             <h2 style={{alignSelf: 'center', fontWeight: 'normal'}}>{post.content}</h2>
             <Box style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
               <LikeButton id={post.postID} likes={likes} onLike={likePostCall} onUnLike={unlikePostCall} alreadyLiked={post.alreadyLiked} />
+              <AudioButtons userAudio={recordingURL} userBeat={beatURL} />
               <Tooltip title='Comment'>
                 <IconButton onClick={() => handleCommentModelOpen()}>
                   <AddCommentIcon></AddCommentIcon>
                 </IconButton>
               </Tooltip>
-              
             </Box>
             <div onClick={() => handleCommentToggle()}>
               {(expandComments) ? <ExpandLessIcon /> : <ExpandMoreIcon /> } {show} Comments

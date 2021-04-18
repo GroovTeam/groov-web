@@ -24,7 +24,10 @@ function LikeButton({likes, onLike, onUnLike, alreadyLiked, id}) {
   return (
     <div>
       <Tooltip title='Like'>
-        <Badge badgeContent={numLikes} color='error'>
+        <Badge badgeContent={numLikes} anchorOrigin={{
+          horizontal: 'right',
+          vertical: 'bottom'
+        }}>
           <div onClick={() => handleLikeToggle()} style={{color: 'red'}}>
             {(isliked) ? <FavoriteIcon  /> : <FavoriteBorderIcon /> }
           </div>

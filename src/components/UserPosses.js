@@ -37,13 +37,14 @@ export default function UserPosses() {
       posseList.splice(posseIndex, 1);
     }
 
-    let removeId = '';
+    // let removeId = '';
 
-    allPosses.forEach(posse => {
-      if (posse.name.toLowerCase() === value.toLowerCase()) {
-        removeId = posse.posseID;
-      }
-    });
+    // allPosses.forEach(posse => {
+    //   if (posse.name.toLowerCase() === value.toLowerCase()) {
+    //     removeId = posse.posseID;
+    //   }
+    // });
+    const removeId = value.posseID;
 
     removePosses(removeId)
       .then(() => {getUserPosses(); 
@@ -81,7 +82,7 @@ export default function UserPosses() {
       <List>
         {(posses !== undefined) ? (posses.map((value) => {
           return (
-            <ListItem key={value} onClick={handleRemovePosses(value)}>
+            <ListItem key={value.name}>
               <ListItemText  primary={value} />
               <Button style={{ color: 'red' }} onClick={handleRemovePosses(value)}>
                       Remove
