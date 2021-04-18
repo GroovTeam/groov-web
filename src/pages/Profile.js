@@ -186,7 +186,7 @@ function Profile({username, setUser}) {
               </Tabs>
               <TabPanel value={page} index={0}>
                 {(username === undefined) ?
-                  <UserPosses posses={userInfo.posses}/>
+                  <UserPosses />
                   :
                   <UserPosseList posses={userInfo.posses}/>
                 }

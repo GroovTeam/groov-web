@@ -44,6 +44,7 @@ export default function UserPosses() {
     //     removeId = posse.posseID;
     //   }
     // });
+    console.log(value.name);
     const removeId = value.posseID;
 
     removePosses(removeId)
@@ -57,7 +58,7 @@ export default function UserPosses() {
     getUserProfile()
       .then(res => {
         data = res.data;
-        setPosses(data.posses);
+        setPosses(data.possesData);
         getAllPosses();
       })
       .catch(console.error);
@@ -82,8 +83,8 @@ export default function UserPosses() {
       <List>
         {(posses !== undefined) ? (posses.map((value) => {
           return (
-            <ListItem key={value.name}>
-              <ListItemText  primary={value} />
+            <ListItem key={value.posseID}>
+              <ListItemText  primary={value.name} />
               <Button style={{ color: 'red' }} onClick={handleRemovePosses(value)}>
                       Remove
               </Button>
