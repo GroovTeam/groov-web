@@ -5,7 +5,7 @@ import createPosse from '../../utils/createPosse';
 import EditTags from '../editProfile/EditTags';
 
 
-export default function CreatePosses({visible, toggle}) {
+export default function CreatePosses({visible, toggle, setPopup}) {
   const [posse, setPosse] = useState({});
 
   const handleChange = (event) => {
@@ -25,6 +25,7 @@ export default function CreatePosses({visible, toggle}) {
       .then(() => toggle())
       .catch(console.error);
     setPosse('');
+    setPopup(true);
   };
 
   return (

@@ -6,7 +6,7 @@ import CreatePosse from './posses/CreatePosses';
 import JoinPosse from './posses/JoinPosse';
 import getPosses from '../utils/getPosses';
 
-export default function UserPosses() {
+export default function UserPosses({setPopup}) {
   const [posses, setPosses] = useState([]);
   const [openCreate, setOpenCreate] = useState(false);
   const [openJoin, setOpenJoin] = useState(false);
@@ -99,7 +99,7 @@ export default function UserPosses() {
             Create Posse
       </Button>
 
-      <CreatePosse update={getAllPosses} visible={openCreate} toggle={handleCloseCreate} />
+      <CreatePosse update={getAllPosses} visible={openCreate} toggle={handleCloseCreate} setPopup={setPopup}/>
       <JoinPosse posses={allPosses} update={getUserPosses} visible={openJoin} toggle={handleCloseJoin} />
     </div>
   );
