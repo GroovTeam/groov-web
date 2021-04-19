@@ -30,7 +30,8 @@ const BeatScroller = ({ updateBeat, setBeatFile }) => {
   };
 
   const selectBeat = async (link) => {
-    getBeat(link).then(beat => {updateBeat(beat); setBeatFile(beat);});  
+    setBeatFile(link);
+    getBeat(link).then(beat => updateBeat(beat) );  
   };
 
   const handleExpansion = () => 

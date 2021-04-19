@@ -6,6 +6,8 @@ import FormButtons from './FormButtons';
 import Tags from '../utils/Tags';
 import Typography from '@material-ui/core/Typography';
 import getPosses from '../utils/getPosses';
+import firebase from 'firebase';
+import FirebaseConfig from '../utils/FirebaseConfig';
 
 function FormPost({dialogOpen, beat, recording}) {
   const [tags, setTags] = useState(Tags);
@@ -29,7 +31,7 @@ function FormPost({dialogOpen, beat, recording}) {
       .catch(console.error);
   });
 
-  const createPostBody = () => {
+  const createPostBody = async () => {
 
     const selectedPosses = [];
     const selectedTags = [];
@@ -51,17 +53,36 @@ function FormPost({dialogOpen, beat, recording}) {
     setTags(Tags);
     setPosses(globalPosse);
 
-    //"beatFile": "string",
-    // "recordingFile": "string"
     const postBody = {
       content: postTxt,
       tags: selectedTags,
       posses: selectedPosses,
-      beatFile: beat,
-      recordingFile: recording,
-      hasAudio: recording ? true : false
+      hasAudio: false
     };
 
+    if (recording)
+    {
+      const storageRef = firebase.storage().ref();
+
+      const postUUID = firebase.auth().currentUser.uid + '-' + Date.now();
+      const fileRef = storageRef.child('recordings/' + postUUID);
+
+      const response =  await fetch(recording);
+      const blob =  await response.blob();
+      await fileRef.put(blob)
+        .then(() => {
+
+          // Configure the new recording's path.
+          const recordingPath = 'gs://' + FirebaseConfig.storageBucket + '/recordings/' + postUUID;
+          console.log(recordingPath);
+          postBody.beatFile = beat;
+          postBody.recordingFile= recordingPath;
+          postBody.hasAudio = true;
+        })
+        .catch(console.error);
+    }
+
+    console.log(postBody);
     post(postBody)
       .then(() => dialogOpen())
       .catch(console.error);
