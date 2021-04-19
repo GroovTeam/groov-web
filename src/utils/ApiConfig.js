@@ -14,7 +14,8 @@ ApiConfig.post = baseURL + ApiConfig.posts;
 // Remove this one
 ApiConfig.feed = baseURL + ApiConfig.posts + '/feed';
 // getRecentFeed
-ApiConfig.allPosts  = baseURL + ApiConfig.posts + '/new';
+ApiConfig.allPosts = ApiConfig.post + '/new';
+ApiConfig.tags = ApiConfig.post + '/tags';
 ApiConfig.likePost = ApiConfig.post + '/like';
 ApiConfig.unlikePost = ApiConfig.post + '/unlike';
 

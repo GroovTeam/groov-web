@@ -2,14 +2,9 @@ import Profile from '../pages/Profile';
 import {useEffect} from 'react';
 
 function ProfilePath({user, setUser}) {
-  const userRef = user? (user.toString()).toLowerCase() : undefined;
-  
-  const getUserInfo = () => {
-    
-  };
+  const userRef = user? (user.toString()) : undefined;
   
   useEffect(() => {
-    getUserInfo();
     return () =>
     {
       console.log('users ref is : ', userRef);

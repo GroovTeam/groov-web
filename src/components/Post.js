@@ -25,7 +25,7 @@ function Posts({post, setUser}) {
   const [beatURL, setBeatURL] = useState(null);
   const [recordingURL, setRecordingURL] = useState(null);
   const [showTags, setShowTags] = useState(true);
-  const [showPosses, setShowPosses] = useState(true);
+  // const [showPosses, setShowPosses] = useState(true);
 
   const id = post.postID;
 
@@ -34,8 +34,6 @@ function Posts({post, setUser}) {
 
     if (post.hasAudio) {
       console.log('has Audio');
-      console.log(post.recordingFile);
-      console.log(post.beat);
       await getFile(post.beatFile)
         .then(res => setBeatURL(res))
         .catch(console.error);
@@ -102,7 +100,7 @@ function Posts({post, setUser}) {
   };
 
   const toggleTagsShow = () => setShowTags(!showTags);
-  const togglePossesShow = () => setShowPosses(!showPosses);
+  // const togglePossesShow = () => setShowPosses(!showPosses);
 
 
   const handleUsername = (event, username, setUser) => {
@@ -118,23 +116,26 @@ function Posts({post, setUser}) {
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <Box  style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
               <Avatar style={{height: '8vh', margin: '.5vh', width: '8vh'}} src={post.image}></Avatar>
-              <h2 onClick={(event) => handleUsername(event, post.username, setUser)}>@{post.username}</h2>
+              <div style={{display: 'flex', alignItems: 'center'}}>
+                <h2 onClick={(event) => handleUsername(event, post.username, setUser)}>@{post.username}</h2>
+                <ListChips variant={'outlined'} size={'small'} chips={post.posses} />
+              </div>
             </Box>
+            {/* <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
+              <ListChips variant={'outlined'} size={'small'} chips={post.posses} />
+              <span onClick={togglePossesShow}>{showPosses ? 'Hide Posses' : 'Show Posses'}</span>
+            </div> */}
+           
+          </div>
+          <div style={{display: 'flex' , flexDirection: 'column'}}>
+            <h2 style={{alignSelf: 'flex-start', fontWeight: 'normal'}}>{post.content}</h2>
             <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
               {showTags ? <ListChips variant={'outlined'} size={'small'} chips={post.tags} /> : ''}
               <span onClick={toggleTagsShow}>{showTags ? 'Hide Tags' : 'Show Tags'}</span>
-              
             </div>
-            <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
-              {showPosses ? <ListChips variant={'outlined'} size={'small'} chips={post.posses} /> : ''}
-              <span onClick={togglePossesShow}>{showPosses ? 'Hide Posses' : 'Show Posses'}</span>
-            </div>
-          </div>
-          <div style={{display: 'flex' , flexDirection: 'column'}}>
-            <h2 style={{alignSelf: 'center', fontWeight: 'normal'}}>{post.content}</h2>
             <Box style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
               <LikeButton id={post.postID} likes={likes} onLike={likePostCall} onUnLike={unlikePostCall} alreadyLiked={post.alreadyLiked} />
-              <AudioButtons userAudio={recordingURL} userBeat={beatURL} />
+              {post.hasAudio ? <AudioButtons userAudio={recordingURL} userBeat={beatURL} /> : ''}
               <Tooltip title='Comment'>
                 <IconButton onClick={() => handleCommentModelOpen()}>
                   <AddCommentIcon></AddCommentIcon>

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react';
 import Nav from '../components/Nav';
 import  { Tabs, Tab, Paper, Avatar, Box, Button, Dialog, DialogContent, DialogTitle, CircularProgress }  from '@material-ui/core';
@@ -17,6 +16,7 @@ import EditForm from '../components/editProfile/EditForm';
 import UserPosses from '../components/UserPosses';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import firebase from '../utils/Firebase';
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -51,7 +51,7 @@ function TabPanel(data) {
   );
 }
 
-function Profile({username, setUser}) {
+function Profile({username}) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [userInfo, setUserInfo] = useState({});
@@ -131,7 +131,15 @@ function Profile({username, setUser}) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   };
 
+  const onAuthStateChanged = (user) => {
+    // Check if the user has verified their email.
+    if (user) 
+      getUserData();
+  };
+
   useEffect(() => {
+    firebase.auth().onAuthStateChanged(onAuthStateChanged);
+    console.log(username);
     getUserData();
     console.log(userInfo);
   }, []);
@@ -173,7 +181,7 @@ function Profile({username, setUser}) {
               <ListChips size={'medium'} chips={userInfo.tagLikes} />
             </div>
             <div>
-              <Paper style={{display: 'flex', flexDirection: 'column', marginLeft: '12vh', marginRight: '12vh'}} >
+              <Paper style={{display: 'flex', flexDirection: 'column', marginLeft: '12vh', marginRight: '12vh', width: '150vh'}} >
                 <Tabs
                   indicatorColor='primary'
                   textColor='primary'
