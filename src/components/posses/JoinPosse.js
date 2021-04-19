@@ -26,7 +26,7 @@ function JoinPosse({posses ,visible, toggle, update}) {
       <DialogContent>
         <List style={{maxHeight: 400}} >
           {posses.map(posse => (
-            <ListItem key={posse.name}>
+            <ListItem divider key={posse.name}>
               <ListItemText primary={posse.name} />
               <Button style={{ color: 'green' }} onClick={() => addPosse(posse)}>
                 Join
