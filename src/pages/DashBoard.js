@@ -37,6 +37,7 @@ function DashBoard({setUser}) {
   };
 
   const handleGetAllPost = () => {
+    setLoading(true);
     getUserProfile()
       .then(user => {
         getAllPosts()
