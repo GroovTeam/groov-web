@@ -9,12 +9,11 @@ import getUserProfile from '../utils/getUserProfile';
 import getFeed from '../utils/getFeed';
 
 function DashBoard({setUser}) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   console.log(posts);
 
   const updateFeed = () => {
-    setLoading(true);
     getUserProfile()
       .then(user => {
         getFeed()
@@ -37,7 +36,6 @@ function DashBoard({setUser}) {
   };
 
   const handleGetAllPost = () => {
-    setLoading(true);
     getUserProfile()
       .then(user => {
         getAllPosts()

@@ -59,7 +59,7 @@ function Profile({username}) {
   const [popupOpen, setPopOpen] = useState({open: false, message:''});
   const [likes, setLikes] = useState(false);
   const [posts, setPosts] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -80,7 +80,6 @@ function Profile({username}) {
   };
 
   const getUserData = async () => {
-    setLoading(true);
     if (username === undefined) {
       getUserProfile()
         .then(res => {
@@ -167,10 +166,6 @@ function Profile({username}) {
                 <div>
                   <Button variant='outlined' onClick={handleClickOpen} >
                     Edit Profile
-                  </Button>
-
-                  <Button variant='outlined' >
-                    Logout
                   </Button>
                 </div>
               ) : (

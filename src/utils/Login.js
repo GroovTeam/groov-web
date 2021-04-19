@@ -29,7 +29,8 @@ const Login = async (email, password) => {
     throw Error(JSON.stringify('Username or password is invalid'));
   else if (errorMessage.normalize() === 'auth/invalid-email'.normalize())
     throw Error(JSON.stringify('The email address is badly formatted'));
-
+  else if (errorMessage.normalize() === 'auth/wrong-password'.normalize())
+    throw Error(JSON.stringify('The email or password is incorrect'));
 };
 
 const isEmpty = (str) => {
