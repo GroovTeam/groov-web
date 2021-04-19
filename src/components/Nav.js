@@ -21,8 +21,8 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import Logout from '../utils/Logout';
 
 const navItems = [
-  {name: 'DashBoard', icon: <DashboardIcon />, path: '/dashboard', key: uuid()},
-  {name: 'Profile', icon: <PersonIcon />, path: '/profile', key: uuid() },
+  {name: 'DashBoard', icon: <DashboardIcon />, path: '/dashboard'},
+  {name: 'Profile', icon: <PersonIcon />, path: '/profile'},
 ];
 const drawerWidth = 240;
 
@@ -154,7 +154,7 @@ export default function Nav() {
         </div>
         <List>
           {navItems.map(({name, icon, path}) => (
-            <Link style={{textDecoration: 'none', color: 'black'}} key={name} to={path} refresh='true'>
+            <Link style={{textDecoration: 'none', color: 'black'}} key={name} to={path}>
               <ListItem
                 button 
               >
