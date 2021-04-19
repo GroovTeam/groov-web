@@ -129,7 +129,7 @@ function Posts({post, setUser}) {
             </div>
           </div>
           <div style={{display: 'flex' , flexDirection: 'column'}}>
-            <h2 style={{alignSelf: 'center', fontWeight: 'normal'}}>{post.content}</h2>
+            <h2 style={{alignSelf: 'flex-start', fontWeight: 'normal'}}>{post.content}</h2>
             <Box style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
               <LikeButton id={post.postID} likes={likes} onLike={likePostCall} onUnLike={unlikePostCall} alreadyLiked={post.alreadyLiked} />
               <AudioButtons userAudio={recordingURL} userBeat={beatURL} />

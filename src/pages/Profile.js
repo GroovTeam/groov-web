@@ -1,24 +1,23 @@
 /* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react';
 import Nav from '../components/Nav';
-import  { Tabs, Tab, Paper, Avatar, Box, Button, Dialog, DialogContent, DialogTitle }  from '@material-ui/core';
+import  { Tabs, Tab, Paper, Avatar, Box, Button, Dialog, DialogContent, DialogTitle, CircularProgress }  from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LikesList from '../components/LikesList';
 import TracksList from '../components/TracksList';
 import UserPosseList from '../components/UserPosseList';
 import ListChips from '../components/ListChips';
-import SpongeBob from '../components/mockUser.json';
 import getProfile from '../utils/getProfile';
 import getLikes from '../utils/getLikes';
 import getUsersLikes from '../utils/getUsersLikes';
 import getPosts from '../utils/getUserPosts';
 import getOtherUsersPosts from '../utils/getOtherUsersPosts';
 import getUserProfile from '../utils/getUserProfile';
-import firebase from '../utils/Firebase';
 import EditForm from '../components/editProfile/EditForm';
 import UserPosses from '../components/UserPosses';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import firebase from '../utils/Firebase';
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -58,34 +57,36 @@ function Profile({username, setUser}) {
   const [page, setPage] = useState(0);
   const [userInfo, setUserInfo] = useState({});
   const [open, setOpen] = useState(false);
-  const [popupOpen, setPopupOpen] = useState(false);
+  const [createPopupOpen, setCreatePopupOpen] = useState(false);
   const [likes, setLikes] = useState(false);
   const [posts, setPosts] = useState(false);
-  console.log('the profile belongs to ' + username);
+  const [loading, setLoading] = useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    getUserInfo();
+    getUserData();
   };
 
   const handlePopupClose = () => {
-    setPopupOpen(false);
-    getUserInfo();
+    setCreatePopupOpen(false);
+    getUserData();
   };
 
   const handleChange = (e, newVal) => {
     setPage(newVal);
   };
 
-  const getUserInfo = async () => {
+  const getUserData = async () => {
+    setLoading(true);
     if (username === undefined) {
       getUserProfile()
         .then(res => {
           setUserInfo(res.data);
-          console.log(res.data);
+          setLoading(false);
         })
         .catch(console.error);
     }
@@ -93,18 +94,13 @@ function Profile({username, setUser}) {
       getProfile(username)
         .then(res => {
           setUserInfo(res.data);
-          console.log(res.data);
+          setLoading(false);
         }).catch(console.error);
     }
-    console.log(userInfo);
-  };
-
-  const getUserLikes = async () => {
     if (username === undefined) {
       getLikes()
         .then(res => {
           setLikes(res.data.results);
-          console.log(res.data.results);
         })
         .catch(console.error);
     }
@@ -112,18 +108,13 @@ function Profile({username, setUser}) {
       getUsersLikes(username)
         .then(res => {
           setLikes(res.data.results);
-          console.log(res.data.results);
         }).catch(console.error);
     }
-    console.log(userInfo);
-  };
 
-  const getUserPosts = async () => {
     if (username === undefined) {
       getPosts()
         .then(res => {
           setPosts(res.data.results);
-          console.log(res.data.results);
         })
         .catch(console.error);
     }
@@ -131,94 +122,95 @@ function Profile({username, setUser}) {
       getOtherUsersPosts(username)
         .then(res => {
           setPosts(res.data.results);
-          console.log(res.data.results);
         })
         .catch(console.error);
     }
-    console.log(userInfo);
+
   };
 
   const Alert = (props) =>  {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   };
 
+  const onAuthStateChanged = (user) => {
+    // Check if the user has verified their email.
+    if (user) 
+      getUserData();
+  };
+
   useEffect(() => {
-    getUserInfo();
-    getUserLikes();
-    getUserPosts();
-    console.log(firebase.auth().currentUser);
+    firebase.auth().onAuthStateChanged(onAuthStateChanged);
+    console.log(username);
+    getUserData();
+    console.log(userInfo);
   }, []);
 
   return (
     <div>
-      <Snackbar open={popupOpen} autoHideDuration={6000} onClose={handlePopupClose}>
+      <Snackbar open={createPopupOpen} autoHideDuration={6000} onClose={handlePopupClose}>
         <Alert onClose={handlePopupClose} severity={'success'}>
           {'Posse successfully created'}
         </Alert>
       </Snackbar>
       <Nav />
-      <div style={{display: 'flex', flexDirection: 'column'}}>
-        <div>
-          <h2>Profile</h2>
-
-          <div style={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
-            <Avatar className={classes.large} src={SpongeBob.profilePic} />
-            <h2>{(userInfo.firstName + ' ' + userInfo.lastName)}</h2>
-            <h3 style={{maxWidth: 600}} >
-              {(userInfo.bio === undefined) ? 'Add User Bio': userInfo.bio}
-            </h3>
-          </div>
-          <div style={{justifyContent: 'center', display: 'flex'}}>
-            {(username === undefined) ? (
-              <div>
-                <Button variant='outlined' onClick={handleClickOpen} >
+      <div style={{display: 'flex', flexDirection: 'column', margin: '12vh', alignItems: 'center'}}>
+        {loading ? <CircularProgress  /> : 
+          (<div>
+            <div style={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
+              <Avatar className={classes.large} src={userInfo.picURL} />
+              <h2>{(userInfo.firstName + ' ' + userInfo.lastName)}</h2>
+              <h3 style={{maxWidth: 600}} >
+                {(userInfo.bio === undefined) ? 'Add User Bio': userInfo.bio}
+              </h3>
+            </div>
+            <div style={{justifyContent: 'center', display: 'flex'}}>
+              {(username === undefined) ? (
+                <div>
+                  <Button variant='outlined' onClick={handleClickOpen} >
                     Edit Profile
-                </Button>
+                  </Button>
 
-                <Button variant='outlined' >
+                  <Button variant='outlined' >
                     Logout
-                </Button>
-              </div>
-            ) : (
-              <div></div>
-            )}
-          </div>
-          <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginLeft: '12vh', marginRight: '12vh', maxWidth: 600}}>
-            <ListChips size={'medium'} chips={userInfo.tagLikes} />
-          </div>
-          <div>
-            <Paper style={{display: 'flex', flexDirection: 'column', marginLeft: '12vh', marginRight: '12vh'}} >
-              <Tabs
-                indicatorColor='primary'
-                textColor='primary'
-                centered
-                value={page}
-                onChange={handleChange}
-              >
-                <Tab centered label='Posse' />
-                <Tab centered label='Likes' />
-                <Tab centered label='Tracks' />
+                  </Button>
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginLeft: '12vh', marginRight: '12vh', maxWidth: 600}}>
+              <ListChips size={'medium'} chips={userInfo.tagLikes} />
+            </div>
+            <div>
+              <Paper style={{display: 'flex', flexDirection: 'column', marginLeft: '12vh', marginRight: '12vh'}} >
+                <Tabs
+                  indicatorColor='primary'
+                  textColor='primary'
+                  centered
+                  value={page}
+                  onChange={handleChange}
+                >
+                  <Tab centered label='Posse' />
+                  <Tab centered label='Likes' />
+                  <Tab centered label='Tracks' />
 
-              </Tabs>
-              <TabPanel value={page} index={0}>
-                {(username === undefined) ?
-                  <UserPosses setPopup={setPopupOpen}/>
-                  :
-                  <UserPosseList posses={userInfo.posses}/>
-                }
-              </TabPanel>
-              <TabPanel value={page} index={1}>
-                <LikesList likes={likes}/>
-              </TabPanel>
-              <TabPanel value={page} index={2}>
-                  list of tracks
-                <TracksList posts={posts}/>
-              </TabPanel>
-            </Paper>
-          </div>
-        
-        </div>
-
+                </Tabs>
+                <TabPanel value={page} index={0}>
+                  {(username === undefined) ?
+                    <UserPosses setPopup={setCreatePopupOpen}/>
+                    :
+                    <UserPosseList posses={userInfo.posses}/>
+                  }
+                </TabPanel>
+                <TabPanel value={page} index={1}>
+                  <LikesList likes={likes}/>
+                </TabPanel>
+                <TabPanel value={page} index={2}>
+                  <TracksList posts={posts}/>
+                </TabPanel>
+              </Paper>
+            </div>
+          </div>)}
         <Dialog
           open={open}
           onClose={handleClose}
