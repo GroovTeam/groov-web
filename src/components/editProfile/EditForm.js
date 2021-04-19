@@ -31,10 +31,11 @@ function EditForm({userData, closeDialog}) {
     const pic = 'picURL';
 
     if (e.target.files.length) {
-      console.log(e.target.files[0]);
       console.log(URL.createObjectURL(e.target.files[0]));
+      const url = URL.createObjectURL(e.target.files[0]);
+      console.log(url);
       setUser({
-        ...user, [pic]: URL.createObjectURL(e.target.files[0]),
+        ...user, [pic]: url,
       });
     }
   };
