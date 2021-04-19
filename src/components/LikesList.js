@@ -6,7 +6,7 @@ function LikesList({likes}) {
   return (
     <div>
       <List>
-        {(likes !== undefined) ? (likes.map((value, index) => {
+        {(likes) ? (likes.map((value, index) => {
           return (
             <ListItem key={index}>
               <ListItemText  primary={value.content} />

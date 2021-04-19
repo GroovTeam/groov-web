@@ -8,7 +8,8 @@ let beatAudio = null;
 let recordingAudio = null;
 
 const RecordAudio = ({setBeatFile, setRecordingFile}) => {
-  const [recordButton, recordUpdate] = useState({ text: 'record', recording: false });
+  const [playback, setPlayback] = useState({ text: 'Playback Audio', playing: false });
+  const [beatPlayback, setBeatPlayback] = useState({ text: 'Play Beat', playing: false });
   const [playAndRecordButton, playAndRecordUpdate] = useState({ text: 'Play Beat And Record', recording: false });
   const [recording, setFile] = useState(null); 
   const [beat, setBeat] = useState(null);
@@ -17,6 +18,7 @@ const RecordAudio = ({setBeatFile, setRecordingFile}) => {
   const syncTrack = (time, audioToStop) => {
     setTimeout(() => {
       setPlayer(false);
+      setPlayback({ text: 'Playback Audio', playing: false });
       audioToStop.removeEventListener('loadedmetadata', (event) => {
         syncTrack(event.target.duration, event.target);      
       });
@@ -39,8 +41,6 @@ const RecordAudio = ({setBeatFile, setRecordingFile}) => {
         alert('We could not retrieve your recording');
         console.log(e);
       });
-
-    setPlayer(false);
   };
 
   useEffect(() => {
@@ -69,23 +69,7 @@ const RecordAudio = ({setBeatFile, setRecordingFile}) => {
     });
   };
 
-  const startRecording = () => {
-    recorder.start().then(() => {
-    }).catch((e) => {
-      console.error(e);
-    });
-  };
 
-  const playRecording = () => {
-    if (!recording || playing) return;
-    
-    recordingAudio = new Audio(URL.createObjectURL(recording));
-    recordingAudio.addEventListener('loadedmetadata', (event) => {
-      syncTrack(event.target.duration, event.target);
-    });
-    setPlayer(true);
-    recordingAudio.play();
-  };
   
   const playBeat = () => {
     if (!beat || playing) return;
@@ -119,37 +103,47 @@ const RecordAudio = ({setBeatFile, setRecordingFile}) => {
     setPlayer(false);
   };
 
-  const handleClick = () => {
-    if (!recordButton.recording) {
-      startRecording();
-      recordUpdate({ text: 'stop', recording: true });
-    }
-    else {
-      stopRecording();
-      recordUpdate({ text: 'record', recording: false });
-    }
-  };
-
   const handlePlayRecordClick = () => {
     if (!playAndRecordButton.recording) {
       playbackBeatAndRecord();
-      playAndRecordUpdate({ text: 'stop', recording: true });
+      playAndRecordUpdate({ text: 'Stop', recording: true });
     }
     else {
       stopRecording();
+      pauseAudio();
       playAndRecordUpdate({ text: 'Play Beat And Record', recording: false });
+    }
+  };
+
+  const handlePlayback = () => {
+    if (!playback.playing) {
+      playBeatAndRecording();
+      setPlayback({ text: 'Stop', playing: true });
+    }
+    else {
+      pauseAudio();
+      setPlayback({ text: 'Playback Audio', playing: false });
+    }
+  };
+
+
+  const handleBeatPlayback = () => {
+    if (!beatPlayback.playing) {
+      playBeat();
+      setBeatPlayback({ text: 'Stop', playing: true });
+    }
+    else {
+      pauseAudio();
+      setBeatPlayback({ text: 'Play Beat', playing: false });
     }
   };
 
   return (
     <div>
       <BeatScroller updateBeat={setBeat} setBeatFile={setBeatFile}/>
-      <Button color='primary' onClick={handleClick}>{recordButton.text}</Button>
+      <Button color='primary' onClick={handleBeatPlayback}>{beatPlayback.text}</Button>
       <Button color='primary' onClick={handlePlayRecordClick}>{playAndRecordButton.text}</Button>
-      <Button color='primary' onClick={playRecording}>play</Button>
-      <Button color='primary' onClick={playBeat}>play beat</Button>
-      <Button color='primary' onClick={playBeatAndRecording}>play beat + recording</Button>
-      <Button color='primary' onClick={pauseAudio}>pause beat</Button>
+      <Button color='primary' onClick={handlePlayback}>{playback.text}</Button>
     </div>
   );
 };
