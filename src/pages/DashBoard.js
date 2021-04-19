@@ -84,6 +84,8 @@ function DashBoard({setUser}) {
           {loading ? <CircularProgress /> : (
             <Paper 
               variant={'outlined'}
+
+              style={{width: '150vh'}}
             >
               <List subheader={<ListSubheader />}>
                 <ListSubheader 
