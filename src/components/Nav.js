@@ -19,7 +19,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import Logout from '../utils/Logout';
-import uuid from 'react-uuid';
 
 const navItems = [
   {name: 'DashBoard', icon: <DashboardIcon />, path: '/dashboard', key: uuid()},

@@ -9,7 +9,7 @@ async function post(post) {
     const config = {
       headers: {Authorization: `Bearer ${token}`}
     };
-
+    console.log(post);
     return axios.post(ApiConfig.post, post, config)
       .catch(error => console.error('Error: ', error));
   }).catch(console.error);

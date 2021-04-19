@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const BeatScroller = ({ updateBeat }) => {
+const BeatScroller = ({ updateBeat, setBeatFile }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const classes = useStyles();
   const [DATA, setDATA] = useState([]);
@@ -30,7 +30,8 @@ const BeatScroller = ({ updateBeat }) => {
   };
 
   const selectBeat = async (link) => {
-    getBeat(link).then(beat => updateBeat(beat));  
+    setBeatFile(link);
+    getBeat(link).then(beat => updateBeat(beat) );  
   };
 
   const handleExpansion = () => 

@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import './RegisterBox.css';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Logout from '../utils/Logout';
+import ResendVerification from '../utils/ResendVerification';
 import Button from '@material-ui/core/Button';
 
 
@@ -17,6 +18,11 @@ const VerifyEmail = ( {setEmailVerified} ) =>
     return () => clearInterval(refresher);
   }, []);
 
+  const resendVerification = () => {
+    ResendVerification()
+      .catch(console.error);
+  };
+
   return (
     <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
       <div className='Base-Container'>
@@ -26,6 +32,11 @@ const VerifyEmail = ( {setEmailVerified} ) =>
         <label>Or you could logout</label>
         <Button onClick={Logout}>
         Logout  
+        </Button>
+
+        <label>If the verification link expired, click below!</label>
+        <Button onClick={resendVerification}>
+        Resend Verification
         </Button>
 
       </div>

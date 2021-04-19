@@ -57,7 +57,7 @@ function Profile({username, setUser}) {
   const [page, setPage] = useState(0);
   const [userInfo, setUserInfo] = useState({});
   const [open, setOpen] = useState(false);
-  const [createPopupOpen, setCreatePopupOpen] = useState(false);
+  const [popupOpen, setPopOpen] = useState({open: false, message:''});
   const [likes, setLikes] = useState(false);
   const [posts, setPosts] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -72,7 +72,7 @@ function Profile({username, setUser}) {
   };
 
   const handlePopupClose = () => {
-    setCreatePopupOpen(false);
+    setPopOpen(false);
     getUserData();
   };
 
@@ -147,9 +147,9 @@ function Profile({username, setUser}) {
 
   return (
     <div>
-      <Snackbar open={createPopupOpen} autoHideDuration={6000} onClose={handlePopupClose}>
+      <Snackbar open={popupOpen.open} autoHideDuration={1500} onClose={handlePopupClose}>
         <Alert onClose={handlePopupClose} severity={'success'}>
-          {'Posse successfully created'}
+          {popupOpen.message}
         </Alert>
       </Snackbar>
       <Nav />
@@ -197,7 +197,7 @@ function Profile({username, setUser}) {
                 </Tabs>
                 <TabPanel value={page} index={0}>
                   {(username === undefined) ?
-                    <UserPosses setPopup={setCreatePopupOpen}/>
+                    <UserPosses setPopup={setPopOpen}/>
                     :
                     <UserPosseList posses={userInfo.posses}/>
                   }
