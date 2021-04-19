@@ -167,10 +167,6 @@ function Profile({username}) {
                   <Button variant='outlined' onClick={handleClickOpen} >
                     Edit Profile
                   </Button>
-
-                  <Button variant='outlined' >
-                    Logout
-                  </Button>
                 </div>
               ) : (
                 <div></div>
