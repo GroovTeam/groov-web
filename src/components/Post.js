@@ -113,14 +113,14 @@ function Posts({post, setUser}) {
     <div>
       <Box  borderBottom={2}>
         <div style={{margin: '1vh'}}>
-          <div style={{display: 'flex', flexDirection: 'column'}}>
-            <Box  style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-              <Avatar style={{height: '8vh', margin: '.5vh', width: '8vh'}} src={post.image}></Avatar>
-              <div style={{display: 'flex', alignItems: 'center'}}>
-                <h2 onClick={(event) => handleUsername(event, post.username, setUser)}>@{post.username}</h2>
+          <div>
+            <div  style={{display: 'flex', alignItems: 'center'}}>
+              <Avatar style={{height: '10vh', margin: '.5vh', width: '10vh'}} src={post.image}></Avatar>
+              <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                <h3 onClick={(event) => handleUsername(event, post.username, setUser)}>@{post.username}</h3>
                 <ListChips variant={'outlined'} size={'small'} chips={post.posses} />
               </div>
-            </Box>
+            </div>
             {/* <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
               <ListChips variant={'outlined'} size={'small'} chips={post.posses} />
               <span onClick={togglePossesShow}>{showPosses ? 'Hide Posses' : 'Show Posses'}</span>
@@ -129,7 +129,7 @@ function Posts({post, setUser}) {
           </div>
           <div style={{display: 'flex' , flexDirection: 'column'}}>
             <h2 style={{alignSelf: 'flex-start', fontWeight: 'normal'}}>{post.content}</h2>
-            <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
+            <div style={{display: 'flex', alignItems: 'center'}}>
               {showTags ? <ListChips variant={'outlined'} size={'small'} chips={post.tags} /> : ''}
               <span onClick={toggleTagsShow}>{showTags ? 'Hide Tags' : 'Show Tags'}</span>
             </div>

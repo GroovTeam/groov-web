@@ -41,7 +41,7 @@ function EditForm({userData, closeDialog}) {
   };
 
   const updateTags = (tags) => {
-    const tagKey = 'likes';
+    const tagKey = 'tagLikes';
     setUser({...user, [tagKey]: tags });
   };
 
