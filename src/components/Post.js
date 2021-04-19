@@ -34,12 +34,14 @@ function Posts({post, setUser}) {
 
     if (post.hasAudio) {
       console.log('has Audio');
+      console.log(post.beatFile);
+      console.log(post.recordingFile);
+      setRecordingURL(post.recordingFile);
+
       await getFile(post.beatFile)
         .then(res => setBeatURL(res))
         .catch(console.error);
-      await getFile(post.recordingFile)
-        .then(res => setRecordingURL(res))
-        .catch(console.error);
+  
     }
   }, []);
 

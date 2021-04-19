@@ -7,7 +7,7 @@ const recorder = new MicRecorder({ bitRate: 128 });
 let beatAudio = null;
 let recordingAudio = null;
 
-const RecordAudio = () => {
+const RecordAudio = ({setBeatFile, setRecordingFile}) => {
   const [recordButton, recordUpdate] = useState({ text: 'record', recording: false });
   const [playAndRecordButton, playAndRecordUpdate] = useState({ text: 'Play Beat And Record', recording: false });
   const [recording, setFile] = useState(null); 
@@ -31,6 +31,10 @@ const RecordAudio = () => {
           type: blob.type,
           lastModified: Date.now()
         }));
+        setRecordingFile(URL.createObjectURL(new File(buffer, 'myRecording.mp3', {
+          type: blob.type,
+          lastModified: Date.now()
+        })));
       }).catch((e) => {
         alert('We could not retrieve your recording');
         console.log(e);
@@ -139,7 +143,7 @@ const RecordAudio = () => {
 
   return (
     <div>
-      <BeatScroller updateBeat={setBeat}/>
+      <BeatScroller updateBeat={setBeat} setBeatFile={setBeatFile}/>
       <Button color='primary' onClick={handleClick}>{recordButton.text}</Button>
       <Button color='primary' onClick={handlePlayRecordClick}>{playAndRecordButton.text}</Button>
       <Button color='primary' onClick={playRecording}>play</Button>

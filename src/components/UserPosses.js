@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react';
 import { Button,  List, ListItem, ListItemText }  from '@material-ui/core';
 import getUserProfile from '../utils/getUserProfile';
@@ -11,6 +12,7 @@ export default function UserPosses({setPopup}) {
   const [openCreate, setOpenCreate] = useState(false);
   const [openJoin, setOpenJoin] = useState(false);
   const [allPosses, setAllPosses] = useState([]);
+  const [hoverColor, setHoverColor] = useState('#fafafa');
 
   const handleClickOpenCreate = () => {
     setOpenCreate(true);
@@ -37,13 +39,6 @@ export default function UserPosses({setPopup}) {
       posseList.splice(posseIndex, 1);
     }
 
-    // let removeId = '';
-
-    // allPosses.forEach(posse => {
-    //   if (posse.name.toLowerCase() === value.toLowerCase()) {
-    //     removeId = posse.posseID;
-    //   }
-    // });
     console.log(value.name);
     const removeId = value.posseID;
 
@@ -81,16 +76,14 @@ export default function UserPosses({setPopup}) {
   return (
     <div>
       <List>
-        {(posses !== undefined) ? (posses.map((value) => {
-          return (
-            <ListItem key={value.posseID}>
-              <ListItemText  primary={value.name} />
-              <Button style={{ color: 'red' }} onClick={handleRemovePosses(value)}>
-                      Remove
-              </Button>
-            </ListItem>
-          );
-        })) : <ListItemText  primary={'Create or Join some posses. It\'s feeling a little empty here.'} /> }
+        {(posses !== undefined) ? (posses.map((value) => 
+          (<ListItem divider key={value.posseID}>
+            <ListItemText primary={value.name} />
+            <Button style={{ color: 'red' }} onClick={handleRemovePosses(value)}>
+                  Remove
+            </Button>
+          </ListItem>)
+        )) : <ListItemText  primary={'Create or Join some posses. It\'s feeling a little empty here.'} /> }
       </List>
       <Button onClick={() => handleClickOpenJoin()}>
             Join Posses

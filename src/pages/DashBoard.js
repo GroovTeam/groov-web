@@ -1,16 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import Nav from '../components/Nav';
 import DashboardPosts from '../components/DashboardPosts';
-import  { List, ListSubheader, Paper }  from '@material-ui/core';
+import  { List, ListSubheader, Paper, CircularProgress }  from '@material-ui/core';
 import getAllPosts from '../utils/getAllPosts';
 import MakePost from '../components/MakePost';
 import getUserProfile from '../utils/getUserProfile';
 
 function DashBoard({setUser}) {
-
+  const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
 
   const updateFeed = () => {
+    setLoading(true);
     getUserProfile()
       .then(user => {
         getAllPosts()
@@ -25,6 +26,7 @@ function DashBoard({setUser}) {
               }
               setPosts(newData);
             }
+            setLoading(false);
           })
           .catch(console.error);
       })
@@ -47,8 +49,8 @@ function DashBoard({setUser}) {
     <div>
       <Nav  />
       <div style={{margin: '12vh'}}>
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-          <div >
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          {loading ? <CircularProgress /> : (
             <Paper 
               variant={'outlined'}
             >
@@ -71,13 +73,10 @@ function DashBoard({setUser}) {
                 >
                 </DashboardPosts>
               </List>
-              
+                
             </Paper>
-          </div>
-          
+          )}
         </div>
-        
-        
       </div>
       
     </div>

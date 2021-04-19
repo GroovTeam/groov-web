@@ -7,7 +7,7 @@ import Tags from '../utils/Tags';
 import Typography from '@material-ui/core/Typography';
 import getPosses from '../utils/getPosses';
 
-function FormPost({dialogOpen}) {
+function FormPost({dialogOpen, beat, recording}) {
   const [tags, setTags] = useState(Tags);
   const [posses, setPosses] = useState([]);
   const [postTxt, setPostTxt] = useState('');
@@ -51,10 +51,15 @@ function FormPost({dialogOpen}) {
     setTags(Tags);
     setPosses(globalPosse);
 
+    //"beatFile": "string",
+    // "recordingFile": "string"
     const postBody = {
       content: postTxt,
       tags: selectedTags,
       posses: selectedPosses,
+      beatFile: beat,
+      recordingFile: recording,
+      hasAudio: recording ? true : false
     };
 
     post(postBody)
