@@ -34,6 +34,8 @@ function Posts({post, setUser}) {
 
     if (post.hasAudio) {
       console.log('has Audio');
+      console.log(post.recordingFile);
+      console.log(post.beat);
       await getFile(post.beatFile)
         .then(res => setBeatURL(res))
         .catch(console.error);

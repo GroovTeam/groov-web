@@ -9,6 +9,8 @@ import RecordAudio from '../components/RecordAudio';
 
 function MakePost({updateFeed}) {
   const [open, setOpen] = useState(false);
+  const [beatFile, setBeatFile] = useState(false);
+  const [recordingFile, setRecordingFile] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,8 +34,8 @@ function MakePost({updateFeed}) {
       >
         <DialogTitle id="alert-dialog-title">Post</DialogTitle>
         <DialogContent>
-          <RecordAudio/>
-          <FormPost dialogOpen={handleClose} />
+          <RecordAudio setBeatFile={setBeatFile} setRecordingFile={setRecordingFile}/>
+          <FormPost dialogOpen={handleClose} beat={beatFile} recording={recordingFile} />
         </DialogContent>
       </Dialog>
     </div>
