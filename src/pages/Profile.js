@@ -58,7 +58,7 @@ function Profile({username, setUser}) {
   const [page, setPage] = useState(0);
   const [userInfo, setUserInfo] = useState({});
   const [open, setOpen] = useState(false);
-  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupOpen, setPopupOpen] = useState({open: false, message:''});
   const [likes, setLikes] = useState(false);
   const [posts, setPosts] = useState(false);
   console.log('the profile belongs to ' + username);
@@ -151,9 +151,9 @@ function Profile({username, setUser}) {
 
   return (
     <div>
-      <Snackbar open={popupOpen} autoHideDuration={6000} onClose={handlePopupClose}>
+      <Snackbar open={popupOpen.open} autoHideDuration={1500} onClose={handlePopupClose}>
         <Alert onClose={handlePopupClose} severity={'success'}>
-          {'Posse successfully created'}
+          {popupOpen.message}
         </Alert>
       </Snackbar>
       <Nav />

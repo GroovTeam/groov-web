@@ -25,7 +25,7 @@ export default function CreatePosses({visible, toggle, setPopup}) {
       .then(() => toggle())
       .catch(console.error);
     setPosse('');
-    setPopup(true);
+    setPopup({open: true, message:'Posse successfully created'});
   };
 
   return (

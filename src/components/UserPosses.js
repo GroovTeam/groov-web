@@ -100,7 +100,7 @@ export default function UserPosses({setPopup}) {
       </Button>
 
       <CreatePosse update={getAllPosses} visible={openCreate} toggle={handleCloseCreate} setPopup={setPopup}/>
-      <JoinPosse posses={allPosses} update={getUserPosses} visible={openJoin} toggle={handleCloseJoin} />
+      <JoinPosse posses={allPosses} update={getUserPosses} visible={openJoin} toggle={handleCloseJoin} setPopup={setPopup}/>
     </div>
   );
 }
