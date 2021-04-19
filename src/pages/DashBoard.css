@@ -1,0 +1,35 @@
+.OuterContainer {
+    margin: 12vh;
+}
+
+InnerContainer {
+    display: flex;
+    justify-content: center;
+}
+
+PaperContainer {
+    width: 150vh;
+}
+
+SubHeader {
+    background-color: white;
+    top: 60;
+}
+
+ButtonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 992px) {
+    PaperContainer {
+        width: 100vh;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    PaperContainer {
+        width: 60vh;
+    }
+}

@@ -7,8 +7,9 @@ import getAllPosts from '../utils/getAllPosts';
 import MakePost from '../components/MakePost';
 import getUserProfile from '../utils/getUserProfile';
 import getFeed from '../utils/getFeed';
+import './DashBoard.css';
 
-function DashBoard({setUser}) {
+function DashBoard({setUser, setPosse}) {
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   console.log(posts);
@@ -23,6 +24,8 @@ function DashBoard({setUser}) {
             if (res.data) {
               let newData = [];
               for (const key in Object.keys(res.data.results)) {
+                if (key > 2)
+                  break;
                 res.data.results[key].image = 'https://picsum.photos/200/300';
                 res.data.results[key].alreadyLiked = res.data.results[key].likes ? (res.data.results[key].likes.includes(user.data.username)) : false;
                 newData.push(res.data.results[key]);
@@ -46,6 +49,8 @@ function DashBoard({setUser}) {
             if (res.data) {
               let newData = [];
               for (const key in Object.keys(res.data.results)) {
+                if (key > 2)
+                  break;
                 res.data.results[key].image = 'https://picsum.photos/200/300';
                 res.data.results[key].alreadyLiked = res.data.results[key].likes ? (res.data.results[key].likes.includes(user.data.username)) : false;
                 newData.push(res.data.results[key]);
@@ -108,6 +113,7 @@ function DashBoard({setUser}) {
                 <DashboardPosts 
                   feed={posts} 
                   setUser={setUser}
+                  setPosse={setPosse}
                 >
                 </DashboardPosts>
               </List>

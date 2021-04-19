@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Avatar, Box, IconButton, Tooltip } from '@material-ui/core';
+import { Avatar, Box, Chip, IconButton, Tooltip } from '@material-ui/core';
 import ListChips from './ListChips';
 import getComments from '../utils/getComments';
 import Comments from './Comments';
@@ -26,7 +26,6 @@ function Posts({post, setUser}) {
   const [recordingURL, setRecordingURL] = useState(null);
   const [showTags, setShowTags] = useState(true);
   // const [showPosses, setShowPosses] = useState(true);
-
   const id = post.postID;
 
   useEffect(async () => {
@@ -109,6 +108,12 @@ function Posts({post, setUser}) {
     history.push('/profile');
   };
 
+  // const handlePosseClick = (event, posse, setPosse) => {
+  //   event.preventDefault();
+  //   setPosse(posse);
+  //   history.push('/posseProfile');
+  // };
+
   return (
     <div>
       <Box  borderBottom={2}>
@@ -118,14 +123,13 @@ function Posts({post, setUser}) {
               <Avatar style={{height: '10vh', margin: '.5vh', width: '10vh'}} src={post.image}></Avatar>
               <div style={{display: 'flex', flexWrap: 'wrap'}}>
                 <h3 onClick={(event) => handleUsername(event, post.username, setUser)}>@{post.username}</h3>
-                <ListChips variant={'outlined'} size={'small'} chips={post.posses} />
+                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', alignContent: 'center', flexWrap: 'wrap'}}>
+                  {(post.posses !== undefined) ? (post.posses.map((chip, index) => (
+                    <Chip variant='outlined' size='small' style={{margin: '.3vh'}} key={index} label={chip} />
+                  ))): 'This Post doesn\'t have any Posses'}
+                </div>
               </div>
             </div>
-            {/* <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center'}}>
-              <ListChips variant={'outlined'} size={'small'} chips={post.posses} />
-              <span onClick={togglePossesShow}>{showPosses ? 'Hide Posses' : 'Show Posses'}</span>
-            </div> */}
-           
           </div>
           <div style={{display: 'flex' , flexDirection: 'column'}}>
             <h2 style={{alignSelf: 'flex-start', fontWeight: 'normal'}}>{post.content}</h2>
