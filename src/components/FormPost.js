@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import FormButtons from './FormButtons';
 import Tags from '../utils/Tags';
 import Typography from '@material-ui/core/Typography';
-import getPosses from '../utils/getPosses';
+import getUserProfile from '../utils/getUserProfile';
 import firebase from 'firebase';
 import FirebaseConfig from '../utils/FirebaseConfig';
 
@@ -15,14 +15,14 @@ function FormPost({dialogOpen, beat, recording}) {
   const [postTxt, setPostTxt] = useState('');
   let globalPosse = {};
 
-  useState(() => {
-    getPosses()
+  useState(async () => {
+    getUserProfile()
       .then(res => {
         if (res.data) {
-          const tempPosses = res.data.results;
+          const tempPosses = res.data.posses;
           const possesObj = {};
           tempPosses.forEach(posse => {
-            possesObj[posse.name] = false;
+            possesObj[posse] = false;
           });
           setPosses(possesObj);
           globalPosse = possesObj;

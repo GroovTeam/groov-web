@@ -1,0 +1,140 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+
+.PageContainer {
+    display:flex;
+    flex-direction: row; 
+    height: 100vh
+}
+
+.Outer-Container{
+    display: flex;
+    justify-content: space-around; 
+    width: 100%; 
+    background: white
+}
+.Link {
+    text-decoration: underlined; 
+    color:  #aa66cc;
+}
+
+.Verify-Container{
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    height: 100%;
+    width: 100%; 
+    background: white 
+}
+
+.Verify-Box{
+    width: 100%;
+    display: flex;
+    flex-direction: column; 
+    align-items: center
+}
+
+.Verify-Header{
+    text-align: center;
+    white-space: no-wrap; 
+    overflow: hidden
+}
+
+.Forgot-Password{
+    display: flex; 
+    flex-direction: row; 
+    justify-content:space-between; 
+    width: 100%
+}
+
+.Image {
+    width: 45%
+}
+
+.Base-Container {
+    width: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:flex-end;
+    align-content:flex-end;
+    
+}
+
+.Header {
+    
+    margin-top: 1em;
+    text-align: flex-start;
+    font-family: 'Open Sans', sans-serif;
+    align-self: flex-start;
+    margin-bottom: .5em;
+}
+
+.Header h1 {
+    font-size: 24px;
+    color: #aa66cc;
+}
+
+.Content {
+    width: 80%;
+}
+
+form {
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    
+}
+
+label {
+    font-size: 17px;
+}
+
+.textField {
+    margin-top: 6px; 
+    height: 60px;
+    width: 97%;
+    padding: 0px 10px;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f3f3f3;
+    border: 0;
+    border-radius: 4px;
+    margin-bottom: 31px;
+    transition: all 250ms ease-in-out;
+
+}
+
+ .textField:focus
+ {
+    outline: none;
+    box-shadow: 0px 0px 12px 0.8px #0e81ce96;
+
+ }
+
+ .buttonInput  {
+    display:inline-block;
+    padding:0.7em 1.7em;
+    margin:0 0.3em 0.3em 0;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:400;
+    color:#FFFFFF;
+    background-color:#9933CC;
+    box-shadow:inset 0 -0.6em 1em -0.35em rgba(0,0,0,0.17),inset 0 0.6em 2em -0.3em rgba(255,255,255,0.15),inset 0 0 0em 0.05em rgba(255,255,255,0.12);
+    text-align:center;
+    font-size: 18px;
+    align-self: flex-start;
+    margin-bottom: 1.5em;
+    width: 100%;
+ }

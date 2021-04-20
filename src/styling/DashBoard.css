@@ -13,13 +13,18 @@
 
 .SubHeader {
     background-color: white;
-    top: 60;
+    top: 160;
 }
 
 .ButtonContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin: auto;
+}
+
+.ButtonGroup {
+    margin: 5px;
 }
 
 @media screen and (max-width: 992px) {

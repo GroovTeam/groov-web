@@ -7,11 +7,11 @@ function PosseList({data}) {
     <List>
       {(data !== undefined) ? (data.map((posse, index) => (
         <div 
-          style={{display: 'flex'}} 
+          className='Container'
           key={index}
         >
           <ListItem 
-            style={{display: 'flex'}} 
+            className='Container' 
             key={index} 
             alignItems='flex-start'
             divider={true} 
@@ -28,7 +28,9 @@ function PosseList({data}) {
             </ListItemText>
           </ListItem>
         </div>
-      ))) : 'add posses'}
+      ))) : (<ListItemText
+        primary={'You aren\'t following any posses. Go follow some.'}
+      ></ListItemText>) }
     </List>
   );
 
