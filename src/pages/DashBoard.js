@@ -9,13 +9,12 @@ import getUserProfile from '../utils/getUserProfile';
 import getFeed from '../utils/getFeed';
 import './DashBoard.css';
 
-function DashBoard({setUser, setPosse}) {
-  const [loading, setLoading] = useState(false);
+function DashBoard({setUser}) {
+  const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   console.log(posts);
 
   const updateFeed = () => {
-    setLoading(true);
     getUserProfile()
       .then(user => {
         getFeed()
@@ -40,7 +39,6 @@ function DashBoard({setUser, setPosse}) {
   };
 
   const handleGetAllPost = () => {
-    setLoading(true);
     getUserProfile()
       .then(user => {
         getAllPosts()
@@ -112,7 +110,6 @@ function DashBoard({setUser, setPosse}) {
                 <DashboardPosts 
                   feed={posts} 
                   setUser={setUser}
-                  setPosse={setPosse}
                 >
                 </DashboardPosts>
               </List>
