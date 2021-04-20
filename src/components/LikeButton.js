@@ -27,9 +27,7 @@ function LikeButton({likes, onLike, onUnLike, alreadyLiked, id}) {
         <Badge badgeContent={numLikes} showZero={true} anchorOrigin={{
           horizontal: 'right',
           vertical: 'bottom'
-        }}
-        
-        >
+        }} >
           <div onClick={() => handleLikeToggle()} style={{color: 'red'}}>
             {(isliked) ? <FavoriteIcon  /> : <FavoriteBorderIcon /> }
           </div>

@@ -2,19 +2,34 @@ import React, {useState, useEffect} from 'react';
 import Nav from '../components/Nav';
 import firebase from '../utils/Firebase';
 import DashboardPosts from '../components/DashboardPosts';
-import { List, ListSubheader, Paper, CircularProgress, ButtonGroup, Button}  from '@material-ui/core';
+import { List, ListSubheader, Paper, CircularProgress, Tooltip}  from '@material-ui/core';
 import getAllPosts from '../utils/getAllPosts';
 import MakePost from '../components/MakePost';
 import getUserProfile from '../utils/getUserProfile';
 import getFeed from '../utils/getFeed';
-import './DashBoard.css';
+import '../styling/DashBoard.css';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import NewReleasesIcon from '@material-ui/icons/NewReleases';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#192bc2'
+    }
+  }
+});
+
 
 function DashBoard({setUser}) {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
+  const [toggle, setToggle] = useState(true);
+  const [feedLoading, setFeedLoading] = useState(true);
   console.log(posts);
 
   const updateFeed = () => {
+    setFeedLoading(true);
     getUserProfile()
       .then(user => {
         getFeed()
@@ -23,8 +38,6 @@ function DashBoard({setUser}) {
             if (res.data) {
               let newData = [];
               for (const key in Object.keys(res.data.results)) {
-                if (key > 2)
-                  break;
                 res.data.results[key].image = 'https://picsum.photos/200/300';
                 res.data.results[key].alreadyLiked = res.data.results[key].likes ? (res.data.results[key].likes.includes(user.data.username)) : false;
                 newData.push(res.data.results[key]);
@@ -32,13 +45,16 @@ function DashBoard({setUser}) {
               setPosts(newData);
             }
             setLoading(false);
+            setFeedLoading(false);
           })
           .catch(console.error);
       })
       .catch(console.error);
+    setToggle(!toggle);
   };
 
   const handleGetAllPost = () => {
+    setFeedLoading(true);
     getUserProfile()
       .then(user => {
         getAllPosts()
@@ -47,8 +63,6 @@ function DashBoard({setUser}) {
             if (res.data) {
               let newData = [];
               for (const key in Object.keys(res.data.results)) {
-                if (key > 2)
-                  break;
                 res.data.results[key].image = 'https://picsum.photos/200/300';
                 res.data.results[key].alreadyLiked = res.data.results[key].likes ? (res.data.results[key].likes.includes(user.data.username)) : false;
                 newData.push(res.data.results[key]);
@@ -56,10 +70,13 @@ function DashBoard({setUser}) {
               setPosts(newData);
             }
             setLoading(false);
+            setFeedLoading(false);
           })
           .catch(console.error);
       })
       .catch(console.error);
+    setToggle(!toggle);
+
   };
 
   const scrollToTop = () => {
@@ -81,7 +98,7 @@ function DashBoard({setUser}) {
   },[]);
 
   return (
-    <div>
+    <div >
       <Nav  />
       <div className='OuterContainer' >
         <div className='InnerContainer'>
@@ -93,32 +110,54 @@ function DashBoard({setUser}) {
               <List subheader={<ListSubheader />}>
                 <ListSubheader 
                   className='SubHeader'
+                  style={{top: 60, backgroundColor: '#FFFFFF', borderBottom: '1px solid black'}}
                 >
                   <div 
                     className='ButtonContainer'
                   >
-                    <span onClick={() => scrollToTop()} >DashBoard</span>
-                    <ButtonGroup>
-                      <Button onClick={updateFeed}>Posses</Button>
-                      <Button onClick={handleGetAllPost}>All Posts</Button>
-                    </ButtonGroup>
+                    <ThemeProvider theme={theme} >
+                      {/* <ButtonGroup className='ButtonGroup' color='primary'>
+                        <Button onClick={updateFeed}>Posses</Button>
+                        <Button onClick={handleGetAllPost}>All Posts</Button>
+                      </ButtonGroup> */}
+                      <span style={{color: '#192bc2', fontSize: 20}}>
+                        {toggle ? (
+                          <div>
+                            <Tooltip title='Update dashboard with only followed posses'>
+                              <FavoriteIcon onClick={updateFeed} /> 
+                            </Tooltip>
+                          </div>
+                          
+                        ) : 
+                          (
+                            <div>
+                              <Tooltip title='Update dashboard with all of the most recent posts made'>
+                                <NewReleasesIcon onClick={handleGetAllPost} /> 
+                              </Tooltip>
+                            </div>
+                          )}
+                      </span>
+
+                    </ThemeProvider>
+                    <span style={{color: '#192bc2', fontSize: 20}} onClick={() => scrollToTop()} >DashBoard</span>
                     <MakePost   
                       updateFeed={updateFeed} 
                     />
+                    
                   </div>
                 </ListSubheader>
-                <DashboardPosts 
+                {feedLoading ? <CircularProgress style={{display: 'flex', justifyContent: 'center', width: '100%'}} /> : <DashboardPosts 
                   feed={posts} 
                   setUser={setUser}
                 >
-                </DashboardPosts>
+                </DashboardPosts>}
+                
               </List>
                 
             </Paper>
           )}
         </div>
       </div>
-      
     </div>
   );
 }

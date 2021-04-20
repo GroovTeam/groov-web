@@ -4,8 +4,6 @@ import ReplayIcon from '@material-ui/icons/Replay';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 
-
-
 const AudioButtons = ({userAudio, userBeat}) => {
   const [playing, setPlaying] = useState(false);
   const [audio1, setAudio1] = useState(undefined);
@@ -77,7 +75,7 @@ const AudioButtons = ({userAudio, userBeat}) => {
   };
 
   return (
-    <div>
+    <div style={{display: 'flex', alignItems: 'center'}}>
       <Tooltip title={playing ? 'Pause' : 'Play'}>
         <IconButton onClick={toggle}>
           {playing ? <PauseCircleOutlineIcon /> : <PlayCircleOutlineIcon /> }

@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
+    backgroundColor: '#9999ff'
   },
   drawerOpen: {
     width: drawerWidth,
@@ -63,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    backgroundColor: '#ffffff'
   },
   drawerClose: {
     transition: theme.transitions.create('width', {
@@ -74,11 +76,12 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(9) + 1,
     },
+    backgroundColor: '#ffffff'
+
   },
   toolbar: {
     display: 'flex',
     flexDirection:'row',
-    justifyContent: 'space-between',
     
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
@@ -87,7 +90,10 @@ const useStyles = makeStyles((theme) => ({
   toolbarItems: {
     textDecoration: 'none', 
     color: 'white',
-    marginRight: '1vh'
+    marginRight: '1vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   }
 }));
 
@@ -108,7 +114,7 @@ export default function Nav() {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar 
-        style={{ background: '#2b2929' }}
+        style={{ background: '#1E2749' }}
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
@@ -126,12 +132,15 @@ export default function Nav() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.toolbarItems} variant="h6" noWrap>
+          <div style={{display: 'flex', justifyContent: 'space-between',  width: '100%'}}>
+            <Typography className={classes.toolbarItems} variant="h6" noWrap>
               Groove
-          </Typography>
-          <Button className={classes.toolbarItems} onClick={() => {Logout(); history.push('/');}}>
+            </Typography>
+            <Button className={classes.toolbarItems} onClick={() => {Logout(); history.push('/');}}>
               Logout
-          </Button>
+            </Button>
+          </div>
+          
         </Toolbar>
       </AppBar>
       <Drawer

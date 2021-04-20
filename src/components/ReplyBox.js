@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Avatar, ListItem, ListItemText } from '@material-ui/core';
 import getProfile from '../utils/getProfile';
+import '../styling/Reply.css';
 
 function ReplyBox({reply}) {
   const [replyUser, setReplyUser] = useState({});
@@ -14,12 +15,13 @@ function ReplyBox({reply}) {
 
   useEffect(() => {
     getCommentUser();
-  });
+  }, []);
+  
   return (
-    <ListItem key={reply} style={{borderLeft: '1px solid black'}}>
-      <div style={{display: 'flex', alignItems: 'center'}}>
+    <ListItem key={reply} className='Item' >
+      <div style={{display: 'flex', alignItems: 'center'}} >
         <Avatar src={replyUser.image} ></Avatar>
-        <div style={{display: 'flex', flexDirection: 'column', marginLeft: '1vh'}}>
+        <div className='Text' style={{flexDirection: 'column', margin: '1vh'}} >
           <ListItemText
             secondary={'@' + reply.username}
           ></ListItemText>
