@@ -161,7 +161,7 @@ function Comments({comments, expand, update, setUser}) {
             </div>
           ))) : (
             <ListItemText 
-              primary={'Post has no comment sadly why not add some?'} 
+              primary={'Post has no comment, sadly, why not add some?'} 
               className='NoComment'
             >
             </ListItemText>
