@@ -4,106 +4,83 @@ import ReplayIcon from '@material-ui/icons/Replay';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 
-const useAudio = (dub, beat) => {
-  const [audio1, setAudio1] = useState(new Audio(beat));
-  const [audio2, setAudio2] = useState(new Audio(dub));
-  const [restart, setRestart] = useState(false);
+
+
+const AudioButtons = ({userAudio, userBeat}) => {
   const [playing, setPlaying] = useState(false);
+  const [audio1, setAudio1] = useState(undefined);
+  const [audio2, setAudio2] = useState(undefined);
+  const [restart, setRestart] = useState(false);
 
-  useEffect(() => {
-    setAudio1(new Audio(beat));
-    setAudio2(new Audio(dub));
-    audio1.addEventListener('ended', () => setPlaying(false));
-    audio2.addEventListener('ended', () => setPlaying(false));
-    return () => {
-      audio1.removeEventListener('ended', () => setPlaying(false));
-      audio2.removeEventListener('ended', () => setPlaying(false));
-    };
-  }, []);
-
+  
   const syncTrack = (time, audioToStop) => {
     setTimeout(() => {
       setPlaying(false);
       audioToStop.removeEventListener('loadedmetadata', (event) => {
-        syncTrack(event.target.duration, event.target);      
+        syncTrack(event.target.duration, event.target);
       });
     }, time * 1000);
   };
-  const toggle = () => setPlaying(!playing);
-
-  const stopAndRestart = () => {setRestart(true); setPlaying(false);};
   
-  useEffect( async () => {
+  useEffect(async () => {
+    console.log('playing is '+ playing);
     if (playing) {
-      let audio1Promise = audio1.play();
       // when the browser refreshes sometimes the audio.play() doesn't work so in order for it work better in that case 
       // im using this .then() .catch() code 
       // i want to find a way to better handle this but this the best for now
-      audio1Promise
-        .then(() => {
-          audio1.play();
-          
-        })
-        .catch(() => {
-          setAudio1(new Audio(beat));
-          setAudio2(new Audio(dub));
-          setPlaying(false);
-          setRestart(true);
+      if (!audio1) {
+        console.log('set audio 1!');
+        setAudio1(new Audio(userBeat));
+      }
+
+      if (!audio2) {
+        console.log('set audio 2!');
+        setAudio2(new Audio(userAudio));
+      }
+
+      if (audio1 && audio2)
+      {
+        console.log('play time :)');
+        audio1.play();
+        audio2.play();
+        audio2.addEventListener('loadedmetadata', (event) => {
+          syncTrack(event.target.duration, event.target);
         });
-      let audio2Promise = audio2.play();
-      audio2.addEventListener('loadedmetadata', (event) => {
-        syncTrack(event.target.duration, event.target);
-      });
-      audio2Promise
-        .then(() => audio2.play())
-        .catch(() => {
-          console.error();
-          setAudio1(new Audio(beat));
-          setAudio2(new Audio(dub));
-          setPlaying(false);
-          setRestart(true);
-        });
-      // audio1.play();
-      // audio2.addEventListener('loadedmetadata', (event) => {
-      //   syncTrack(event.target.duration, event.target);
-      // });
-      // audio2.play();
-    }
-    else if (restart) {
-      audio1.pause();
-      audio2.pause();
-      setAudio1(new Audio(beat));
-      setAudio2(new Audio(dub));
-      setRestart(false);
-      setPlaying(false);
+        setRestart(true);
+
+      }
+      
     }
     else {
+      if (audio1) {
+        audio1.pause();
+      }
+      if (audio2)
+        audio2.pause();
+    }
+  },
+  );
+
+  const toggle = () => setPlaying(!playing);
+
+  const stopAndRestart = () => {
+    if (restart)
+    {
       audio1.pause();
       audio2.pause();
-    }
-    audio1.addEventListener('ended', () => setPlaying(false));
-    audio2.addEventListener('ended', () => setPlaying(false));
-    return () => {
-      audio1.removeEventListener('ended', () => setPlaying(false));
-      audio2.removeEventListener('ended', () => setPlaying(false));
-    };
-  },
-  [playing]
-  );
-  
-  
-  
-  return [playing, toggle, stopAndRestart];
-};
+      setAudio1(new Audio(userBeat));
+      setAudio2(new Audio(userAudio));
+      setRestart(false);
+      setPlaying(false);
 
-const AudioButtons = ({userAudio, userBeat}) => {
-  const [musicPlaying, toggle, stopAndRestart] = useAudio(userAudio, userBeat);
+    }
+  };
 
   return (
     <div>
-      <Tooltip title={musicPlaying ? 'Pause' : 'Play'}>
+      <Tooltip title={playing ? 'Pause' : 'Play'}>
         <IconButton onClick={toggle}>
-          {musicPlaying ? <PauseCircleOutlineIcon /> : <PlayCircleOutlineIcon /> }
+          {playing ? <PauseCircleOutlineIcon /> : <PlayCircleOutlineIcon /> }
         </IconButton>
       </Tooltip>
       <Tooltip title='Playback Track'>
