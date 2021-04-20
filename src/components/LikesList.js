@@ -10,7 +10,7 @@ function LikesList({likes}) {
       <List>
         {(likes) ? (likes.map((value, index) => {
           return (
-            <Post key={index} post={value}  style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }} />
+            <Post key={index} post={value} setUser={console.log} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }} />
           );
         })) : <ListItemText  primary={'Like some posts. It\'s feeling a little empty here.'} /> }
       </List>
