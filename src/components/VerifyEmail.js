@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import firebase from 'firebase';
-import './RegisterBox.css';
+import './RegisterLogin.css';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Logout from '../utils/Logout';
 import ResendVerification from '../utils/ResendVerification';
@@ -24,22 +24,20 @@ const VerifyEmail = ( {setEmailVerified} ) =>
   };
 
   return (
-    <div style={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
-      <div className='Base-Container'>
-        <h2 style={{textAlign:'center', whiteSpace:'no-wrap', overflow:'hidden'}}>verify your email please :)</h2>
-        <CircularProgress />
-        
-        <label>Or you could logout</label>
-        <Button onClick={Logout}>
-        Logout  
-        </Button>
+    <div className='Verify-Box'>
+      <h2 className='Verify-Header'>verify your email please :)</h2>
+      <CircularProgress />
+      
+      <label>Or you could logout</label>
+      <Button onClick={Logout}>
+      Logout  
+      </Button>
 
-        <label>If the verification link expired, click below!</label>
-        <Button onClick={resendVerification}>
-        Resend Verification
-        </Button>
+      <label>If the verification link expired, click below!</label>
+      <Button onClick={resendVerification}>
+      Resend Verification
+      </Button>
 
-      </div>
     </div>);
 };
 

@@ -85,7 +85,6 @@ function Profile({username}) {
       getUserProfile()
         .then(res => {
           setUserInfo(res.data);
-          setLoading(false);
         })
         .catch(console.error);
     }
@@ -93,7 +92,6 @@ function Profile({username}) {
       getProfile(username)
         .then(res => {
           setUserInfo(res.data);
-          setLoading(false);
         }).catch(console.error);
     }
     if (username === undefined) {
@@ -114,6 +112,7 @@ function Profile({username}) {
       getPosts()
         .then(res => {
           setPosts(res.data.results);
+          setLoading(false);
         })
         .catch(console.error);
     }
@@ -121,6 +120,7 @@ function Profile({username}) {
       getOtherUsersPosts(username)
         .then(res => {
           setPosts(res.data.results);
+          setLoading(false);
         })
         .catch(console.error);
     }
