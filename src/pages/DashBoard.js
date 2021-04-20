@@ -20,11 +20,10 @@ const theme = createMuiTheme({
   }
 });
 
-
 function DashBoard({setUser}) {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(false);
   const [feedLoading, setFeedLoading] = useState(true);
   console.log(posts);
 
@@ -122,10 +121,6 @@ function DashBoard({setUser}) {
                     className='ButtonContainer'
                   >
                     <ThemeProvider theme={theme} >
-                      {/* <ButtonGroup className='ButtonGroup' color='primary'>
-                        <Button onClick={updateFeed}>Posses</Button>
-                        <Button onClick={handleGetAllPost}>All Posts</Button>
-                      </ButtonGroup> */}
                       <span style={{color: '#192bc2', fontSize: 20}}>
                         {toggle ? (
                           <div>

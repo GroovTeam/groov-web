@@ -35,7 +35,7 @@ function MakePost({updateFeed}) {
       <ThemeProvider theme={theme} >
         <Tooltip title={'Let\'s make some dope tracks'}>
           <Button variant='outlined' color="primary" onClick={handleClickOpen}>
-          Make a Post
+            Make a Post
           </Button>
         </Tooltip>
       </ThemeProvider>
