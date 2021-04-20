@@ -100,10 +100,6 @@ const RegisterBox = () => {
               <input type={passwordShown ? 'text' : 'password'} className='textField' name='password' placeholder='password' onChange={handleChange} />
             </div>
             <input type="Submit" className="buttonInput" value="Login" readOnly={true}/>
-      
-            <Link className='Link' >
-            Forgot your password?
-            </Link> 
           </form>
         </div>
       </div>
