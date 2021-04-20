@@ -38,7 +38,6 @@ function MakePost({updateFeed}) {
           Make a Post
           </Button>
         </Tooltip>
-        
       </ThemeProvider>
       <Dialog
         open={open}
