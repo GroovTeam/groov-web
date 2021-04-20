@@ -117,7 +117,7 @@ const LoginComponent = () => {
                   <div className='form-group'>
                     <div className='Forgot-Password'>
                       <label>Password</label>
-                      <Link className='Link' onClick={handleReset}>
+                      <Link className='Link' to='/'onClick={handleReset}>
                         Forgot your password?
                       </Link>
                     </div>
