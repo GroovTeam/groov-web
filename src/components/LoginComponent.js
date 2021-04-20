@@ -6,6 +6,10 @@ import firebase from 'firebase';
 import VerifyEmail from './VerifyEmail';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import { RemoveRedEye } from '@material-ui/icons';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import InputAdornment from '@material-ui/core/InputAdornment';
+
 
 const LoginComponent = () => {
 
@@ -13,6 +17,7 @@ const LoginComponent = () => {
   const [signedIn, setSignedIn] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [open, setOpen] = useState(false);
+  const [passwordShown, setPasswordShown] = useState(false);
   const [popup, setPopup] = useState ({severity: 'error', message:''});
   const history = useHistory();
 
@@ -33,7 +38,9 @@ const LoginComponent = () => {
     setOpen(false);
   };
   
-
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
   
   const onAuthStateChanged = (user) => {
 
@@ -80,9 +87,17 @@ const LoginComponent = () => {
                 <label>Email </label>
                 <input type="text" className="textField" name="email" placeholder="email" onChange={handleChange}/>
               </div>
-              <div className='form-group'>
-                <label>Password</label>
-                <input type="password" className="textField" name="password" placeholder="password" onChange={handleChange}/>
+              <div className='form-group' style={{display: 'flex'}}>
+                <label>
+                  Password
+                  <RemoveRedEye onClick={togglePasswordVisiblity} style={{display: 'flex', justifyContent: 'row-reverse'}}>Show/hide password</RemoveRedEye>
+                </label>
+                <input type={passwordShown ? 'text' : 'password'} className='textField' name='password' placeholder='password' onChange={handleChange} id="input-with-icon-adornment"
+                  startAdornment={
+                    <InputAdornment position="start" label="password">
+                      <AccountCircle />
+                    </InputAdornment>}
+                />
               </div>
               <label style={{display: 'flex', flexDirection: 'column', alignSelf:'center'}}>
                 <Link style={{ textDecoration: 'underlined', color: 'black'}} to='/register'>
