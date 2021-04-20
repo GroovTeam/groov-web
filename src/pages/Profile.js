@@ -167,7 +167,7 @@ function Profile({username}) {
             <div className='EditProfile'>
               {(username === undefined) ? (
                 <div>
-                  <Button style={{margin: '2vh'}} variant='outlined' onClick={handleClickOpen} >
+                  <Button style={{margin: '.5vh'}} variant='outlined' onClick={handleClickOpen} >
                     Edit Profile
                   </Button>
                 </div>

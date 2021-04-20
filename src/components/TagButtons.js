@@ -30,7 +30,7 @@ function TagButtons({text, color, toggle}) {
     <ThemeProvider theme={theme} >
       <Button 
         variant="contained"
-        style={{color: btnColor, margin: '.5vh'}}
+        style={{margin: '.5vh'}}
         onClick={select}
         color = {flag ? 'primary' : 'secondary'}
       >
