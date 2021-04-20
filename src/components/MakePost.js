@@ -5,6 +5,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import FormPost from './FormPost';
 import RecordAudio from '../components/RecordAudio';
+import Tooltip from '@material-ui/core/Tooltip';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -32,9 +33,12 @@ function MakePost({updateFeed}) {
   return (
     <div>
       <ThemeProvider theme={theme} >
-        <Button variant='outlined' color="primary" onClick={handleClickOpen}>
-        Post
-        </Button>
+        <Tooltip title={'Let\'s make some dope tracks'}>
+          <Button variant='outlined' color="primary" onClick={handleClickOpen}>
+          Post
+          </Button>
+        </Tooltip>
+        
       </ThemeProvider>
       <Dialog
         open={open}

@@ -85,7 +85,6 @@ function Profile({username}) {
       getUserProfile()
         .then(res => {
           setUserInfo(res.data);
-          setLoading(false);
         })
         .catch(console.error);
     }
@@ -93,7 +92,6 @@ function Profile({username}) {
       getProfile(username)
         .then(res => {
           setUserInfo(res.data);
-          setLoading(false);
         }).catch(console.error);
     }
     if (username === undefined) {
@@ -114,6 +112,7 @@ function Profile({username}) {
       getPosts()
         .then(res => {
           setPosts(res.data.results);
+          setLoading(false);
         })
         .catch(console.error);
     }
@@ -121,6 +120,7 @@ function Profile({username}) {
       getOtherUsersPosts(username)
         .then(res => {
           setPosts(res.data.results);
+          setLoading(false);
         })
         .catch(console.error);
     }
@@ -156,7 +156,7 @@ function Profile({username}) {
         {loading ? <CircularProgress  /> : 
           (<div>
             <div className='InfoContainer'>
-              <Avatar className={classes.large} src={userInfo.picURL} />
+              <Avatar className={classes.large} src={'https://picsum.photos/200/300'} />
               <h2>{(userInfo.firstName + ' ' + userInfo.lastName)}</h2>
               <h3 style={{maxWidth: 600}} >
                 {(userInfo.bio === undefined) ? 'Add User Bio': userInfo.bio}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Register from '../utils/Register';
-import '../styling/RegisterBox.css';
+import './RegisterLogin.css';
 import { Link, useHistory  } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -49,16 +49,18 @@ const RegisterBox = () => {
   };
 
   return (
-    <div style ={{display: 'flex', justifyContent: 'center'}}>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+    <div className='Outer-Container'>
+      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
         <Alert onClose={handleClose} severity={popup.severity}>
           {popup.message}
         </Alert>
       </Snackbar>
+      
       <div className='Base-Container'>
-        <div className='Header'><h1> Register </h1></div>
+        
         <div className='Content'>
           <form onSubmit={registerUser}>
+            <div className='Header'><h1> Register </h1></div>
             <div className='form-group'>
               <label >
                 First Name
@@ -90,16 +92,16 @@ const RegisterBox = () => {
               </label>
               <input type='text' className='textField' name='password' placeholder='password' onChange={handleChange} />
             </div>
-            <label>
-              <Link style={{textDecoration: 'underlined', color: 'black', alignSelf:'center'}} to='/'>
-                Already have an account?
-              </Link>
-            </label>
             
             <input type='Submit' className='buttonInput' value='Register' readOnly={true}/>
           </form>
         </div>
       </div>
+      <p>{'Already have an account? '}
+        <Link className='Link' to='/'>
+          Login!
+        </Link>
+      </p>
     </div>
   );
 };

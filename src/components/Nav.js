@@ -82,7 +82,6 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: 'flex',
     flexDirection:'row',
-    justifyContent: 'space-between',
     
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
@@ -91,7 +90,10 @@ const useStyles = makeStyles((theme) => ({
   toolbarItems: {
     textDecoration: 'none', 
     color: 'white',
-    marginRight: '1vh'
+    marginRight: '1vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   }
 }));
 
@@ -130,12 +132,15 @@ export default function Nav() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.toolbarItems} variant="h6" noWrap>
+          <div style={{display: 'flex', justifyContent: 'space-between',  width: '100%'}}>
+            <Typography className={classes.toolbarItems} variant="h6" noWrap>
               Groove
-          </Typography>
-          <Button className={classes.toolbarItems} onClick={() => {Logout(); history.push('/');}}>
+            </Typography>
+            <Button className={classes.toolbarItems} onClick={() => {Logout(); history.push('/');}}>
               Logout
-          </Button>
+            </Button>
+          </div>
+          
         </Toolbar>
       </AppBar>
       <Drawer

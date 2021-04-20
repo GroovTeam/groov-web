@@ -4,82 +4,81 @@ import ReplayIcon from '@material-ui/icons/Replay';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 
-const useAudio = (dub, beat) => {
+const AudioButtons = ({userAudio, userBeat}) => {
+  const [playing, setPlaying] = useState(false);
   const [audio1, setAudio1] = useState(undefined);
   const [audio2, setAudio2] = useState(undefined);
   const [restart, setRestart] = useState(false);
-  const [playing, setPlaying] = useState(false);
 
-  useEffect(async () => {
-    if (audio1 === undefined && audio2 === undefined) {
-      setAudio1(new Audio(beat));
-      setAudio2(new Audio(dub));
-    }
-
-    if (audio1 !== undefined && audio2 !== undefined) {
-      audio1.addEventListener('ended', () => setPlaying(false));
-      audio2.addEventListener('ended', () => setPlaying(false));
-      return () => {
-        audio1.removeEventListener('ended', () => setPlaying(false));
-        audio2.removeEventListener('ended', () => setPlaying(false));
-      };
-    }
-  }, []);
-
+  
   const syncTrack = (time, audioToStop) => {
     setTimeout(() => {
       setPlaying(false);
       audioToStop.removeEventListener('loadedmetadata', (event) => {
-        syncTrack(event.target.duration, event.target);      
+        syncTrack(event.target.duration, event.target);
       });
     }, time * 1000);
   };
-  const toggle = () => setPlaying(!playing);
-
-  const stopAndRestart = () => {setRestart(true); setPlaying(false);};
   
-  useEffect( async () => {
-    if (audio1 === undefined && audio2 === undefined) {
-      setAudio1(new Audio(beat));
-      setAudio2(new Audio(dub));
+  useEffect(async () => {
+    console.log('playing is '+ playing);
+    if (playing) {
+      // when the browser refreshes sometimes the audio.play() doesn't work so in order for it work better in that case 
+      // im using this .then() .catch() code 
+      // i want to find a way to better handle this but this the best for now
+      if (!audio1) {
+        console.log('set audio 1!');
+        setAudio1(new Audio(userBeat));
+      }
+
+      if (!audio2) {
+        console.log('set audio 2!');
+        setAudio2(new Audio(userAudio));
+      }
+
+      if (audio1 && audio2)
+      {
+        console.log('play time :)');
+        audio1.play();
+        audio2.play();
+        audio2.addEventListener('loadedmetadata', (event) => {
+          syncTrack(event.target.duration, event.target);
+        });
+        setRestart(true);
+
+      }
+      
     }
-    
-    if (playing && audio1 !== undefined && audio2 !== undefined) {
-      await audio1.play();
-      await audio2.addEventListener('loadedmetadata', (event) => {
-        syncTrack(event.target.duration, event.target);
-      });
-      await audio2.play();
-    }
-    else if (restart && audio1 !== undefined && audio2 !== undefined) {
-      audio1.pause();
-      audio2.pause();
-      audio1.start(0, 0);
-      audio1.start(0, 0);
-      setRestart(false);
-      setPlaying(false);
-    }
-    else if (!playing && audio1 !== undefined && audio2 !== undefined) {
-      await audio1.pause();
-      await audio2.pause();
+    else {
+      if (audio1) {
+        audio1.pause();
+      }
+      if (audio2)
+        audio2.pause();
     }
   },
-  [playing]
   );
-  
-  
-  
-  return [playing, toggle, stopAndRestart];
-};
 
-const AudioButtons = ({userAudio, userBeat}) => {
-  const [musicPlaying, toggle, stopAndRestart] = useAudio(userAudio, userBeat);
+  const toggle = () => setPlaying(!playing);
+
+  const stopAndRestart = () => {
+    if (restart)
+    {
+      audio1.pause();
+      audio2.pause();
+      setAudio1(new Audio(userBeat));
+      setAudio2(new Audio(userAudio));
+      setRestart(false);
+      setPlaying(false);
+
+    }
+  };
 
   return (
-    <div>
-      <Tooltip title={musicPlaying ? 'Pause' : 'Play'}>
+    <div style={{display: 'flex', alignItems: 'center'}}>
+      <Tooltip title={playing ? 'Pause' : 'Play'}>
         <IconButton onClick={toggle}>
-          {musicPlaying ? <PauseCircleOutlineIcon /> : <PlayCircleOutlineIcon /> }
+          {playing ? <PauseCircleOutlineIcon /> : <PlayCircleOutlineIcon /> }
         </IconButton>
       </Tooltip>
       <Tooltip title='Playback Track'>
