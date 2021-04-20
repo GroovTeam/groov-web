@@ -130,7 +130,7 @@ function Posts({post, setUser}) {
         <div style={{margin: '2vh'}}>
           <div>
             <div className='UserInfoContainer' >
-              <Avatar className='UserImage' src={post.image}></Avatar>
+              <Avatar className='UserImage' src={'https://picsum.photos/200/300'}></Avatar>
               <div className='TagsUserName' >
                 <h3 onClick={(event) => handleUsername(event, post.username, setUser)}>@{post.username}</h3>
                 <div className='PosseChips' >

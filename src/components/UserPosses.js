@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, {useState, useEffect} from 'react';
-import { Button,  List, ListItem, ListItemText }  from '@material-ui/core';
+import { Avatar, Button,  List, ListItem, ListItemText }  from '@material-ui/core';
 import getUserProfile from '../utils/getUserProfile';
 import removePosses from '../utils/removePosses';
 import CreatePosse from './posses/CreatePosses';
@@ -78,7 +78,8 @@ export default function UserPosses({setPopup}) {
       <List>
         {(posses !== undefined) ? (posses.map((value) => 
           (<ListItem divider key={value.posseID}>
-            <ListItemText primary={value.name} />
+            <Avatar variant="square" src='https://picsum.photos/200/300'></Avatar>
+            <ListItemText style={{marginLeft: '1vh'}} primary={value.name} />
             <Button style={{ color: 'red' }} onClick={handleRemovePosses(value)}>
                   Remove
             </Button>
