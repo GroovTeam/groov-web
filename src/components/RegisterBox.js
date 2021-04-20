@@ -93,7 +93,7 @@ const RegisterBox = () => {
             </div>
             
             <div className='form-group'>
-              <div className='Forgot-Password'>
+              <div className='\-Password'>
                 <label>Password</label>     
                 <RemoveRedEye onClick={togglePasswordVisiblity} />
               </div>
