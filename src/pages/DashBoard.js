@@ -85,20 +85,19 @@ function DashBoard({setUser, setPosse}) {
   return (
     <div>
       <Nav  />
-      <div style={{margin: '12vh'}}>
-        <div style={{display: 'flex', justifyContent: 'center'}}>
+      <div className='OuterContainer' >
+        <div className='InnerContainer'>
           {loading ? <CircularProgress /> : (
             <Paper 
               variant={'outlined'}
-
-              style={{width: '150vh'}}
+              className='PaperContainer'
             >
               <List subheader={<ListSubheader />}>
                 <ListSubheader 
-                  style={{backgroundColor: 'white', top: 60}}
+                  className='SubHeader'
                 >
                   <div 
-                    style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}
+                    className='ButtonContainer'
                   >
                     <span onClick={() => scrollToTop()} >DashBoard</span>
                     <ButtonGroup>
