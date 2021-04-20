@@ -5,7 +5,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import FormPost from './FormPost';
 import RecordAudio from '../components/RecordAudio';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#192bc2'
+    }
+  }
+});
 
 function MakePost({updateFeed}) {
   const [open, setOpen] = useState(false);
@@ -23,9 +31,11 @@ function MakePost({updateFeed}) {
 
   return (
     <div>
-      <Button color="primary" onClick={handleClickOpen}>
+      <ThemeProvider theme={theme} >
+        <Button variant='outlined' color="primary" onClick={handleClickOpen}>
         Post
-      </Button>
+        </Button>
+      </ThemeProvider>
       <Dialog
         open={open}
         onClose={handleClose}

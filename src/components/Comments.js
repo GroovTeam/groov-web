@@ -10,6 +10,7 @@ import ReplyModel from './ReplyModel';
 import RepliesList from './RepliesList';
 import {useHistory} from 'react-router-dom';
 import getProfile from '../utils/getProfile';
+import '../styling/Comment.css';
 
 function CommentLists({currComment, id, likeComment, unLikeComment, updateComments, alreadyLiked, setUser}) {
   const likeColor = '#4cc9f0';
@@ -33,7 +34,7 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
 
   useEffect(() => {
     getCommentUser();
-  });
+  }, []);
   
   const handleLikeToggle = async () => {
 
@@ -85,11 +86,11 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
 
   return (
     <div>
-      <ListItem style={{display: 'flex', justifyContent: 'space-between', borderLeft: '1px solid black'}}>
+      <ListItem className='Item' >
         <div>
-          <div style={{display: 'flex', alignItems: 'center'}}>
+          <div className='UserDataArea' >
             <Avatar src={commentUser.image} ></Avatar>
-            <div style={{display: 'flex', flexDirection: 'column', marginLeft: '1vh'}}>
+            <div className='NameContent' >
               <ListItemText onClick={(event) => handleUsername(event, currComment.username, setUser)}
                 secondary={'@' + currComment.username}
               ></ListItemText>
@@ -158,7 +159,13 @@ function Comments({comments, expand, update, setUser}) {
                 setUser={setUser}
               />
             </div>
-          ))) : ('Post has no comment sadly why not add some?')}
+          ))) : (
+            <ListItemText 
+              primary={'Post has no comment sadly why not add some?'} 
+              className='NoComment'
+            >
+            </ListItemText>
+          )}
         </List>
       ) : ''}
 

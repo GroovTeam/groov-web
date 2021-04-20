@@ -30,5 +30,30 @@
     flex-direction: column;
     margin-left: 12vh;
     margin-right: 12vh;
-    width: 150vh;
+    width: 120vh;
+}
+
+@media screen and (max-width: 2000px) {
+    .Paper {
+        width: 100vh;
+    }
+}
+
+@media screen and (max-width: 1700px) {
+    .Paper {
+        width: 70vh;
+    }
+}
+
+
+@media screen and (max-width: 1200px) {
+    .Paper {
+        width: 46vh;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .Paper {
+        width: 26vh;
+    }
 }

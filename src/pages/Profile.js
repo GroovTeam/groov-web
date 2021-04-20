@@ -17,7 +17,7 @@ import UserPosses from '../components/UserPosses';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import firebase from '../utils/Firebase';
-import './Profile.css';
+import '../styling/Profile.css';
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -174,7 +174,7 @@ function Profile({username}) {
               )}
             </div>
             <div className='Chips' >
-              <ListChips size={'medium'} chips={userInfo.tagLikes} />
+              <ListChips variant={'outlined'} size={'medium'} chips={userInfo.tagLikes} />
             </div>
             <div>
               <Paper className='Paper' >

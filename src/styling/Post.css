@@ -1,0 +1,49 @@
+.UserInfoContainer {
+    display: flex;
+    align-items: center;
+}
+
+body {
+
+}
+
+.UserImage {
+    height: 10vh;
+    margin: .5vh;
+    width: 10vh;
+}
+
+.TagsUserName {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.PosseChips {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.PostContentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start
+}
+
+.Content {
+    font-weight: normal;
+}
+
+.Tags {
+    display: flex;
+    align-items: center;
+}
+
+.Intereactions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}

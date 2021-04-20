@@ -7,7 +7,17 @@ import getAllPosts from '../utils/getAllPosts';
 import MakePost from '../components/MakePost';
 import getUserProfile from '../utils/getUserProfile';
 import getFeed from '../utils/getFeed';
-import './DashBoard.css';
+import '../styling/DashBoard.css';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#192bc2'
+    }
+  }
+});
+
 
 function DashBoard({setUser}) {
   const [loading, setLoading] = useState(true);
@@ -81,7 +91,7 @@ function DashBoard({setUser}) {
   },[]);
 
   return (
-    <div>
+    <div >
       <Nav  />
       <div className='OuterContainer' >
         <div className='InnerContainer'>
@@ -90,18 +100,21 @@ function DashBoard({setUser}) {
               variant={'outlined'}
               className='PaperContainer'
             >
-              <List subheader={<ListSubheader />}>
+              <List style={{backgroundColor: '#FAFAFF'}} subheader={<ListSubheader />}>
                 <ListSubheader 
                   className='SubHeader'
+                  style={{top: 60, backgroundColor: '#FAFAFF', borderBottom: '1px solid black'}}
                 >
                   <div 
                     className='ButtonContainer'
                   >
-                    <span onClick={() => scrollToTop()} >DashBoard</span>
-                    <ButtonGroup>
-                      <Button onClick={updateFeed}>Posses</Button>
-                      <Button onClick={handleGetAllPost}>All Posts</Button>
-                    </ButtonGroup>
+                    <span style={{color: '#192bc2', fontSize: 20}} onClick={() => scrollToTop()} >DashBoard</span>
+                    <ThemeProvider theme={theme} >
+                      <ButtonGroup className='ButtonGroup' color='primary'>
+                        <Button onClick={updateFeed}>Posses</Button>
+                        <Button onClick={handleGetAllPost}>All Posts</Button>
+                      </ButtonGroup>
+                    </ThemeProvider>
                     <MakePost   
                       updateFeed={updateFeed} 
                     />
@@ -118,7 +131,6 @@ function DashBoard({setUser}) {
           )}
         </div>
       </div>
-      
     </div>
   );
 }

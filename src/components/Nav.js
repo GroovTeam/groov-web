@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
+    backgroundColor: '#9999ff'
   },
   drawerOpen: {
     width: drawerWidth,
@@ -63,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    backgroundColor: '#ffffff'
   },
   drawerClose: {
     transition: theme.transitions.create('width', {
@@ -74,6 +76,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing(9) + 1,
     },
+    backgroundColor: '#ffffff'
+
   },
   toolbar: {
     display: 'flex',
@@ -108,7 +112,7 @@ export default function Nav() {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar 
-        style={{ background: '#2b2929' }}
+        style={{ background: '#1E2749' }}
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}

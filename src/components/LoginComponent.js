@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory  } from 'react-router-dom';
-import './RegisterBox.css';
+import '../styling/RegisterBox.css';
 import Login from '../utils/Login';
 import firebase from 'firebase';
 import VerifyEmail from './VerifyEmail';

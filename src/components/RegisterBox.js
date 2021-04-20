@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Register from '../utils/Register';
-import './RegisterBox.css';
+import '../styling/RegisterBox.css';
 import { Link, useHistory  } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';

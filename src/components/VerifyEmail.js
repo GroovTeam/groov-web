@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import firebase from 'firebase';
-import './RegisterBox.css';
+import '../styling/RegisterBox.css';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Logout from '../utils/Logout';
 import ResendVerification from '../utils/ResendVerification';

@@ -14,6 +14,16 @@ import getUserProfile from '../utils/getUserProfile';
 import {useHistory} from 'react-router-dom';
 import AudioButtons from './AudioButtons';
 import getFile from '../utils/getFile';
+import '../styling/Post.css';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#192bc2'
+    }
+  }
+});
 
 function Posts({post, setUser}) {
   const [comments, setComments] = useState([]);
@@ -117,27 +127,31 @@ function Posts({post, setUser}) {
   return (
     <div>
       <Box  borderBottom={2}>
-        <div style={{margin: '1vh'}}>
+        <div style={{margin: '2vh'}}>
           <div>
-            <div  style={{display: 'flex', alignItems: 'center'}}>
-              <Avatar style={{height: '10vh', margin: '.5vh', width: '10vh'}} src={post.image}></Avatar>
-              <div style={{display: 'flex', flexWrap: 'wrap'}}>
+            <div className='UserInfoContainer' >
+              <Avatar className='UserImage' src={post.image}></Avatar>
+              <div className='TagsUserName' >
                 <h3 onClick={(event) => handleUsername(event, post.username, setUser)}>@{post.username}</h3>
-                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', alignContent: 'center', flexWrap: 'wrap'}}>
-                  {(post.posses !== undefined) ? (post.posses.map((chip, index) => (
-                    <Chip variant='outlined' size='small' style={{margin: '.3vh'}} key={index} label={chip} />
-                  ))): 'This Post doesn\'t have any Posses'}
+                <div className='PosseChips' >
+                  <ThemeProvider theme={theme} >
+                    {(post.posses !== undefined) ? (post.posses.map((chip, index) => (
+                      <Chip color='primary' button variant='outlined' size='small' style={{margin: '.3vh'}} key={index} label={chip} />
+                    ))): 'This Post doesn\'t have any Posses'}
+                  </ThemeProvider>
                 </div>
               </div>
             </div>
           </div>
-          <div style={{display: 'flex' , flexDirection: 'column'}}>
-            <h2 style={{alignSelf: 'flex-start', fontWeight: 'normal'}}>{post.content}</h2>
-            <div style={{display: 'flex', alignItems: 'center'}}>
-              {showTags ? <ListChips variant={'outlined'} size={'small'} chips={post.tags} /> : ''}
-              <span onClick={toggleTagsShow}>{showTags ? 'Hide Tags' : 'Show Tags'}</span>
+          <div className='PostContentContainer' >
+            <h2 className='Content' >{post.content}</h2>
+            <div className='Tags' >
+              <ThemeProvider theme={theme} >
+                {showTags ? <ListChips variant={'outlined'} size={'small'} chips={post.tags} /> : ''}
+                <span onClick={toggleTagsShow}>{showTags ? 'Hide Tags' : 'Show Tags'}</span>
+              </ThemeProvider>
             </div>
-            <Box style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+            <Box className='Intereactions' >
               <LikeButton id={post.postID} likes={likes} onLike={likePostCall} onUnLike={unlikePostCall} alreadyLiked={post.alreadyLiked} />
               {post.hasAudio ? <AudioButtons userAudio={recordingURL} userBeat={beatURL} /> : ''}
               <Tooltip title='Comment'>

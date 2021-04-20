@@ -1,0 +1,21 @@
+.Item {
+    display: 'flex';
+    justify-content: space-between;
+    border-left: 1px solid black;
+}
+
+.UserDataArea {
+    display: flex;
+    align-items: center;
+}
+
+.NameContent {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1vh;
+}
+
+.NoComments {
+    padding: auto;
+    margin-left: 2vh;
+}
