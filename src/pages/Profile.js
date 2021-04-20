@@ -17,6 +17,7 @@ import UserPosses from '../components/UserPosses';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import firebase from '../utils/Firebase';
+import './Profile.css';
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -151,17 +152,17 @@ function Profile({username}) {
         </Alert>
       </Snackbar>
       <Nav />
-      <div style={{display: 'flex', flexDirection: 'column', margin: '12vh', alignItems: 'center'}}>
+      <div className='Container'>
         {loading ? <CircularProgress  /> : 
           (<div>
-            <div style={{alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
+            <div className='InfoContainer'>
               <Avatar className={classes.large} src={userInfo.picURL} />
               <h2>{(userInfo.firstName + ' ' + userInfo.lastName)}</h2>
               <h3 style={{maxWidth: 600}} >
                 {(userInfo.bio === undefined) ? 'Add User Bio': userInfo.bio}
               </h3>
             </div>
-            <div style={{justifyContent: 'center', display: 'flex'}}>
+            <div className='EditProfile'>
               {(username === undefined) ? (
                 <div>
                   <Button variant='outlined' onClick={handleClickOpen} >
@@ -172,11 +173,11 @@ function Profile({username}) {
                 <div></div>
               )}
             </div>
-            <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginLeft: '12vh', marginRight: '12vh', maxWidth: 600}}>
+            <div className='Chips' >
               <ListChips size={'medium'} chips={userInfo.tagLikes} />
             </div>
             <div>
-              <Paper style={{display: 'flex', flexDirection: 'column', marginLeft: '12vh', marginRight: '12vh', width: '150vh'}} >
+              <Paper className='Paper' >
                 <Tabs
                   indicatorColor='primary'
                   textColor='primary'

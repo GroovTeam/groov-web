@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Button, IconButton, List, ListItem, ListItemText, Tooltip } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import {Avatar, Box, Button, IconButton, List, ListItem, ListItemText, Tooltip } from '@material-ui/core';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -9,6 +9,7 @@ import unlikeComment from '../utils/unlikeComment';
 import ReplyModel from './ReplyModel';
 import RepliesList from './RepliesList';
 import {useHistory} from 'react-router-dom';
+import getProfile from '../utils/getProfile';
 
 function CommentLists({currComment, id, likeComment, unLikeComment, updateComments, alreadyLiked, setUser}) {
   const likeColor = '#4cc9f0';
@@ -21,6 +22,18 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
   const [openModel, setModelOpen] = useState(false);
   const [showHide, setShowHide] = useState('Show');
   const history = useHistory();
+  const [commentUser, setCommentUser] = useState({});
+
+  const getCommentUser = () => {
+    getProfile(currComment.username)
+      .then(res => {
+        setCommentUser(res.data);
+      }).catch(console.error);
+  };
+
+  useEffect(() => {
+    getCommentUser();
+  });
   
   const handleLikeToggle = async () => {
 
@@ -74,13 +87,20 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
     <div>
       <ListItem style={{display: 'flex', justifyContent: 'space-between', borderLeft: '1px solid black'}}>
         <div>
-          <ListItemText onClick={(event) => handleUsername(event, currComment.username, setUser)}
-            secondary={currComment.username}
-          ></ListItemText>
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            <Avatar src={commentUser.image} ></Avatar>
+            <div style={{display: 'flex', flexDirection: 'column', marginLeft: '1vh'}}>
+              <ListItemText onClick={(event) => handleUsername(event, currComment.username, setUser)}
+                secondary={'@' + currComment.username}
+              ></ListItemText>
+              <ListItemText
+                primary={currComment.content}
+              ></ListItemText>
+            </div>
+          </div>
           <ListItemText
             primary={(
               <div>
-                {currComment.content}
                 <Box>
                   <Tooltip title='Like'>
                     <IconButton onClick={() =>  handleLikeToggle()}>

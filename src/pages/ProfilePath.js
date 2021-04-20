@@ -12,7 +12,6 @@ function ProfilePath({user, setUser}) {
     };
   }, []);
   
-
   return (
     <div>
       <Profile username={userRef} setUser={setUser} />

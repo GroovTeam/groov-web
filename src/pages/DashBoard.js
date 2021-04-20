@@ -7,6 +7,7 @@ import getAllPosts from '../utils/getAllPosts';
 import MakePost from '../components/MakePost';
 import getUserProfile from '../utils/getUserProfile';
 import getFeed from '../utils/getFeed';
+import './DashBoard.css';
 
 function DashBoard({setUser}) {
   const [loading, setLoading] = useState(true);
@@ -22,6 +23,8 @@ function DashBoard({setUser}) {
             if (res.data) {
               let newData = [];
               for (const key in Object.keys(res.data.results)) {
+                if (key > 2)
+                  break;
                 res.data.results[key].image = 'https://picsum.photos/200/300';
                 res.data.results[key].alreadyLiked = res.data.results[key].likes ? (res.data.results[key].likes.includes(user.data.username)) : false;
                 newData.push(res.data.results[key]);
@@ -44,6 +47,8 @@ function DashBoard({setUser}) {
             if (res.data) {
               let newData = [];
               for (const key in Object.keys(res.data.results)) {
+                if (key > 2)
+                  break;
                 res.data.results[key].image = 'https://picsum.photos/200/300';
                 res.data.results[key].alreadyLiked = res.data.results[key].likes ? (res.data.results[key].likes.includes(user.data.username)) : false;
                 newData.push(res.data.results[key]);
@@ -78,20 +83,19 @@ function DashBoard({setUser}) {
   return (
     <div>
       <Nav  />
-      <div style={{margin: '12vh'}}>
-        <div style={{display: 'flex', justifyContent: 'center'}}>
+      <div className='OuterContainer' >
+        <div className='InnerContainer'>
           {loading ? <CircularProgress /> : (
             <Paper 
               variant={'outlined'}
-
-              style={{width: '150vh'}}
+              className='PaperContainer'
             >
               <List subheader={<ListSubheader />}>
                 <ListSubheader 
-                  style={{backgroundColor: 'white', top: 60}}
+                  className='SubHeader'
                 >
                   <div 
-                    style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}
+                    className='ButtonContainer'
                   >
                     <span onClick={() => scrollToTop()} >DashBoard</span>
                     <ButtonGroup>

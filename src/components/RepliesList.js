@@ -1,22 +1,14 @@
-import React, {  } from 'react';
-import { Box, List, ListItem, ListItemText } from '@material-ui/core';
+import React from 'react';
+import { List } from '@material-ui/core';
+import ReplyBox from './ReplyBox';
 
 function RepliesList({replies}) {
-  console.log(replies);
+
   return (
     <List>
       {(replies !== undefined && replies.length > 0) ? (
         replies.map(reply => (
-          <ListItem key={reply} style={{borderLeft: '1px solid black'}}>
-            <Box>
-              <ListItemText
-                secondary={reply.username}
-              ></ListItemText>
-              <ListItemText
-                primary={reply.content}
-              ></ListItemText>
-            </Box>
-          </ListItem>
+          <ReplyBox key={reply} reply={reply} />
         ))
       ) : 'comment has no replies'}
     </List>
