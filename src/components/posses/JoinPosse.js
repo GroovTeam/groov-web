@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
-import { Button,  List, ListItem, ListItemText, Dialog, DialogContent, DialogTitle, DialogActions  }  from '@material-ui/core';
+import { Button, IconButton, List, ListItem, ListItemText, Dialog, DialogContent, DialogTitle, DialogActions, Tooltip  }  from '@material-ui/core';
 import joinPosses from '../../utils/joinPosse';
+import CheckIcon from '@material-ui/icons/Check';
 
 function JoinPosse({posses ,visible, toggle, update, setPopup}) {
 
@@ -29,9 +30,12 @@ function JoinPosse({posses ,visible, toggle, update, setPopup}) {
           {posses.map(posse => (
             <ListItem divider key={posse.name}>
               <ListItemText primary={posse.name} />
-              <Button style={{ color: 'green' }} onClick={() => addPosse(posse)}>
-                Join
-              </Button>
+              <Tooltip title='Join Posse'>
+                <IconButton style={{ color: 'green' }} onClick={() => addPosse(posse)} >
+                  <CheckIcon></CheckIcon>
+                </IconButton>
+              </Tooltip>
+              
             </ListItem>
           ))}
         </List>

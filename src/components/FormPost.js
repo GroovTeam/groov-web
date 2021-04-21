@@ -112,7 +112,7 @@ function FormPost({dialogOpen, beat, recording}) {
         color={'#192bc2'}
         updateButtons={updatePosses}
       />
-      <Accordion> 
+      <Accordion style={{marginTop: '1vh', marginBottom: '1vh'}}> 
         <AccordionSummary>
           Tags
         </AccordionSummary>
