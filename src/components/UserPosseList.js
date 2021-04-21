@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, ListItem, ListItemText} from '@material-ui/core';
+import {Avatar, List, ListItem, ListItemText} from '@material-ui/core';
 
 function UserPosseList({posses}) {
 
@@ -9,7 +9,8 @@ function UserPosseList({posses}) {
         {(posses !== undefined) ? (posses.map((value, index) => {
           return (
             <ListItem key={index}>
-              <ListItemText  primary={value} />
+              <Avatar variant="square" src='https://picsum.photos/200/300'></Avatar>
+              <ListItemText style={{marginLeft: '1vh'}} primary={value} />
             </ListItem>
           );
         })) : <ListItemText  primary={'Create or Join some posses. It\'s feeling a little empty here.'} /> }

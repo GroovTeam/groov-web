@@ -35,23 +35,23 @@ function MakePost({updateFeed}) {
       <ThemeProvider theme={theme} >
         <Tooltip title={'Let\'s make some dope tracks'}>
           <Button variant='outlined' color="primary" onClick={handleClickOpen}>
-          Post
+            Make a Post
           </Button>
         </Tooltip>
         
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          maxWidth='lg'
+          fullWidth={true}
+        >
+          <DialogTitle id="alert-dialog-title">Post</DialogTitle>
+          <DialogContent>
+            <RecordAudio setBeatFile={setBeatFile} setRecordingFile={setRecordingFile}/>
+            <FormPost dialogOpen={handleClose} beat={beatFile} recording={recordingFile} />
+          </DialogContent>
+        </Dialog>
       </ThemeProvider>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        maxWidth='lg'
-        fullWidth={true}
-      >
-        <DialogTitle id="alert-dialog-title">Post</DialogTitle>
-        <DialogContent>
-          <RecordAudio setBeatFile={setBeatFile} setRecordingFile={setRecordingFile}/>
-          <FormPost dialogOpen={handleClose} beat={beatFile} recording={recordingFile} />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

@@ -61,6 +61,8 @@ function Profile({username}) {
   const [likes, setLikes] = useState(false);
   const [posts, setPosts] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [counter, setCounter] = useState(0);
+  console.log('counter: ', counter);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -85,6 +87,7 @@ function Profile({username}) {
       getUserProfile()
         .then(res => {
           setUserInfo(res.data);
+          setCounter((counter + 1));
         })
         .catch(console.error);
     }
@@ -92,27 +95,54 @@ function Profile({username}) {
       getProfile(username)
         .then(res => {
           setUserInfo(res.data);
+          setCounter((counter + 1));
         }).catch(console.error);
     }
     if (username === undefined) {
       getLikes()
         .then(res => {
-          setLikes(res.data.results);
+          let data = [];
+          res.data.results.forEach((comment, index) => {
+            res.data.results[index].alreadyLiked = true;
+            data.push(res.data.results[index]);
+          });
+          setLikes(data);
+          setCounter((counter + 1));
         })
         .catch(console.error);
     }
     else {
       getUsersLikes(username)
         .then(res => {
-          setLikes(res.data.results);
+          let data = [];
+          res.data.results.forEach((comment, index) => {
+            res.data.results[index].alreadyLiked = true;
+            data.push(res.data.results[index]);
+          });
+          setLikes(data);
+          setCounter((counter + 1));
         }).catch(console.error);
     }
 
     if (username === undefined) {
-      getPosts()
-        .then(res => {
-          setPosts(res.data.results);
-          setLoading(false);
+      getUserProfile()
+        .then(user => {
+          getPosts()
+            .then(res => {
+              console.log('updating feed');
+              if (res.data) {
+                let newData = [];
+                for (const key in Object.keys(res.data.results)) {
+                  res.data.results[key].image = 'https://picsum.photos/200/300';
+                  res.data.results[key].alreadyLiked = res.data.results[key].likes ? (res.data.results[key].likes.includes(user.data.username)) : false;
+                  newData.push(res.data.results[key]);
+                }
+                setPosts(newData);
+                setCounter((counter + 1));
+                setLoading(false);
+              }
+            })
+            .catch(console.error);
         })
         .catch(console.error);
     }
@@ -121,10 +151,11 @@ function Profile({username}) {
         .then(res => {
           setPosts(res.data.results);
           setLoading(false);
+          setCounter((counter + 1));
         })
         .catch(console.error);
     }
-
+    console.log(counter);
   };
 
   const Alert = (props) =>  {
@@ -153,19 +184,21 @@ function Profile({username}) {
       </Snackbar>
       <Nav />
       <div className='Container'>
-        {loading ? <CircularProgress  /> : 
+        {(loading && counter < 2) ? <CircularProgress  /> : 
           (<div>
             <div className='InfoContainer'>
               <Avatar className={classes.large} src={'https://picsum.photos/200/300'} />
               <h2>{(userInfo.firstName + ' ' + userInfo.lastName)}</h2>
               <h3 style={{maxWidth: 600}} >
-                {(userInfo.bio === undefined) ? 'Add User Bio': userInfo.bio}
+                {(userInfo.bio === undefined) ? (
+                  <span>You currently do not have a bio. Why not add one 😀</span>
+                ) : userInfo.bio}
               </h3>
             </div>
             <div className='EditProfile'>
               {(username === undefined) ? (
                 <div>
-                  <Button variant='outlined' onClick={handleClickOpen} >
+                  <Button style={{margin: '.5vh'}} variant='outlined' onClick={handleClickOpen} >
                     Edit Profile
                   </Button>
                 </div>
@@ -201,7 +234,7 @@ function Profile({username}) {
                   <LikesList likes={likes}/>
                 </TabPanel>
                 <TabPanel value={page} index={2}>
-                  <TracksList posts={posts}/>
+                  <TracksList posts={posts} user={username} updateFeed={getUserData}/>
                 </TabPanel>
               </Paper>
             </div>

@@ -30,7 +30,7 @@ export default function EditTags({currTags, updateUserTags}) {
   
   return (
     <div>
-      <Paper style={{maxHeight: 400, maxWidth: 700, overflow: 'auto'}}>
+      <Paper style={{maxHeight: 400, overflow: 'auto'}}>
         <List >
           {tags.map((value) => {
             return (

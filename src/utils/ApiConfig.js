@@ -18,6 +18,7 @@ ApiConfig.allPosts = ApiConfig.post + '/new';
 ApiConfig.tags = ApiConfig.post + '/tags';
 ApiConfig.likePost = ApiConfig.post + '/like';
 ApiConfig.unlikePost = ApiConfig.post + '/unlike';
+ApiConfig.deletePost = ApiConfig.post + '/delete';
 
 ApiConfig.posses = baseURL + '/posses';
 ApiConfig.joinPosse = ApiConfig.posses + '/join/';

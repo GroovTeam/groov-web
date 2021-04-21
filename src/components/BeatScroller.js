@@ -8,7 +8,6 @@ import {Accordion, AccordionSummary, AccordionDetails, List, ListItem} from '@ma
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   },
 }));
@@ -60,12 +59,19 @@ const BeatScroller = ({ updateBeat, setBeatFile }) => {
 
   return (
     <div className={classes.root}>
-      <Accordion expanded={expand} onChange={handleExpansion}>
+      <Accordion style={{width: '100%'}} expanded={expand} onChange={handleExpansion}>
         <AccordionSummary>{accordionLabel}</AccordionSummary>
         <AccordionDetails>    
           <List>
             {
-              DATA.map((beat) => (<ListItem button key={beat.index} selected={selectedIndex === beat.index} onClick={() => handleClick(beat.index, beat.link, beat.displayName)}>{beat.displayName}</ListItem>))
+              DATA.map((beat) => (
+                <ListItem 
+                  button key={beat.index} 
+                  selected={selectedIndex === beat.index} 
+                  onClick={() => handleClick(beat.index, beat.link, beat.displayName)}
+                  style={{width: '100%'}}>
+                  {beat.displayName}
+                </ListItem>))
             }
           </List>
         </AccordionDetails>

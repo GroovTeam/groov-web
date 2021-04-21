@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Avatar, Button, Dialog, DialogContent, DialogTitle, 
+import {Button, Dialog, DialogContent, DialogTitle, 
   Accordion, AccordionSummary, AccordionDetails, DialogActions, TextField }  from '@material-ui/core';
 import createPosse from '../../utils/createPosse';
 import EditTags from '../editProfile/EditTags';
@@ -7,7 +7,7 @@ import EditTags from '../editProfile/EditTags';
 
 export default function CreatePosses({visible, toggle, setPopup}) {
   const [posse, setPosse] = useState({});
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
 
   const handleChange = (event) => {
     const target = event.target;
@@ -29,33 +29,33 @@ export default function CreatePosses({visible, toggle, setPopup}) {
     setPopup({open: true, message:'Posse successfully created'});
   };
 
-  const toggleShow = () => setShow(!show);
+  // const toggleShow = () => setShow(!show);
 
-  const handleUpload = e => {
-    const pic = 'picURL';
+  // const handleUpload = e => {
+  //   const pic = 'picURL';
 
-    if (e.target.files.length) {
-      console.log(URL.createObjectURL(e.target.files[0]));
-      setPosse({
-        ...posse, [pic]: URL.createObjectURL(e.target.files[0]),
-      });
-    }
-  };
+  //   if (e.target.files.length) {
+  //     console.log(URL.createObjectURL(e.target.files[0]));
+  //     setPosse({
+  //       ...posse, [pic]: URL.createObjectURL(e.target.files[0]),
+  //     });
+  //   }
+  // };
 
   return (
     <Dialog
       open={visible}
       onClose={toggle}
-      maxWidth='sm'
+      maxWidth='md'
       fullWidth={true}
     >
       <DialogTitle>Create Posses</DialogTitle>
       <DialogContent>
-        {show ? <Avatar src={posse.picURL} style={{display: 'flex', alignSelf: 'center', height: '20vh', width: '20vh'}}/> : ''}
+        {/* {show ? <Avatar src={posse.picURL} style={{display: 'flex', alignSelf: 'center', height: '20vh', width: '20vh'}}/> : ''}
         <input type='file' accept='image' onChange={handleUpload} style={{display: 'flex', alignSelf: 'center'}} />
         <Button onClick={toggleShow}>
           {show ? 'hide preview' : 'show preview'}
-        </Button>
+        </Button> */}
         <TextField 
           label='Create Posse'
           value={posse.name}
@@ -75,9 +75,10 @@ export default function CreatePosses({visible, toggle, setPopup}) {
           rows={4}
           name='bio'
           onChange={(e) => handleChange(e)}
+          style={{width: '100%'}}
         />
 
-        <div style={{width: '60vh'}}>
+        <div style={{width: '100%'}}>
           <Accordion>
             <AccordionSummary>Tags</AccordionSummary>
             <AccordionDetails>

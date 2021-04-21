@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import  { Accordion, AccordionSummary, AccordionDetails, Button, TextField } from '@material-ui/core';
 import EditTags from './EditTags';
 import UpdateProfile from '../../utils/UpdateProfile';
-import Avatar from '@material-ui/core/Avatar';
+// import Avatar from '@material-ui/core/Avatar';
+
+// since we don't support image I'm commenting it out for right now 
+// hopefully soon we can support it. 
 
 function EditForm({userData, closeDialog}) {
   const [user, setUser] = useState(userData);
-  const [showPreview, setShowPreview] = useState(false);
+  // const [showPreview, setShowPreview] = useState(false);
 
   const updateUser = () => {
     console.log('userdata: ', userData);
@@ -17,9 +20,9 @@ function EditForm({userData, closeDialog}) {
       .catch(console.error);
   };
 
-  const togglePreview = () => {
-    setShowPreview(!showPreview);
-  };
+  // const togglePreview = () => {
+  //   setShowPreview(!showPreview);
+  // };
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -27,18 +30,18 @@ function EditForm({userData, closeDialog}) {
     setUser({...user, [key]: value});
   };
 
-  const handleUpload = e => {
-    const pic = 'picURL';
+  // const handleUpload = e => {
+  //   const pic = 'picURL';
 
-    if (e.target.files.length) {
-      console.log(URL.createObjectURL(e.target.files[0]));
-      const url = URL.createObjectURL(e.target.files[0]);
-      console.log(url);
-      setUser({
-        ...user, [pic]: url,
-      });
-    }
-  };
+  //   if (e.target.files.length) {
+  //     console.log(URL.createObjectURL(e.target.files[0]));
+  //     const url = URL.createObjectURL(e.target.files[0]);
+  //     console.log(url);
+  //     setUser({
+  //       ...user, [pic]: url,
+  //     });
+  //   }
+  // };
 
   const updateTags = (tags) => {
     const tagKey = 'tagLikes';
@@ -49,11 +52,11 @@ function EditForm({userData, closeDialog}) {
     <div>
       <form onSubmit={updateUser}>
         <div style={{display: 'flex', flexDirection: 'column', width: '60vh'}}>
-          {showPreview ? <Avatar src={user.picURL} style={{display: 'flex', alignSelf: 'center', height: '20vh', width: '20vh'}}/> : ''}
+          {/* {showPreview ? <Avatar src={user.picURL} style={{display: 'flex', alignSelf: 'center', height: '20vh', width: '20vh'}}/> : ''}
           <input type='file' accept='image' onChange={handleUpload} style={{display: 'flex', alignSelf: 'center'}} />
           <Button onClick={togglePreview}>
             {showPreview ? 'hide preview' : 'show preview'}
-          </Button>
+          </Button> */}
           <TextField 
             label='First Name'
             value={user.firstName}

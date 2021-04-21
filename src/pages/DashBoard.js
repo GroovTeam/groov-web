@@ -20,11 +20,10 @@ const theme = createMuiTheme({
   }
 });
 
-
 function DashBoard({setUser}) {
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(false);
   const [feedLoading, setFeedLoading] = useState(true);
   console.log(posts);
 
@@ -50,7 +49,6 @@ function DashBoard({setUser}) {
           .catch(console.error);
       })
       .catch(console.error);
-    setToggle(!toggle);
   };
 
   const handleGetAllPost = () => {
@@ -75,8 +73,15 @@ function DashBoard({setUser}) {
           .catch(console.error);
       })
       .catch(console.error);
-    setToggle(!toggle);
 
+  };
+
+  const toggleUpdate = () => {
+    setToggle(!toggle);
+    if (toggle)
+      updateFeed();
+    else
+      handleGetAllPost();
   };
 
   const scrollToTop = () => {
@@ -116,15 +121,11 @@ function DashBoard({setUser}) {
                     className='ButtonContainer'
                   >
                     <ThemeProvider theme={theme} >
-                      {/* <ButtonGroup className='ButtonGroup' color='primary'>
-                        <Button onClick={updateFeed}>Posses</Button>
-                        <Button onClick={handleGetAllPost}>All Posts</Button>
-                      </ButtonGroup> */}
                       <span style={{color: '#192bc2', fontSize: 20}}>
                         {toggle ? (
                           <div>
                             <Tooltip title='Update dashboard with only followed posses'>
-                              <FavoriteIcon onClick={updateFeed} /> 
+                              <FavoriteIcon onClick={toggleUpdate} /> 
                             </Tooltip>
                           </div>
                           
@@ -132,7 +133,7 @@ function DashBoard({setUser}) {
                           (
                             <div>
                               <Tooltip title='Update dashboard with all of the most recent posts made'>
-                                <NewReleasesIcon onClick={handleGetAllPost} /> 
+                                <NewReleasesIcon onClick={toggleUpdate} /> 
                               </Tooltip>
                             </div>
                           )}
@@ -141,9 +142,8 @@ function DashBoard({setUser}) {
                     </ThemeProvider>
                     <span style={{color: '#192bc2', fontSize: 20}} onClick={() => scrollToTop()} >DashBoard</span>
                     <MakePost   
-                      updateFeed={updateFeed} 
+                      updateFeed={toggle ? handleGetAllPost : updateFeed} 
                     />
-                    
                   </div>
                 </ListSubheader>
                 {feedLoading ? <CircularProgress style={{display: 'flex', justifyContent: 'center', width: '100%'}} /> : <DashboardPosts 
@@ -151,9 +151,7 @@ function DashBoard({setUser}) {
                   setUser={setUser}
                 >
                 </DashboardPosts>}
-                
               </List>
-                
             </Paper>
           )}
         </div>
