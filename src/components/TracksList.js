@@ -11,7 +11,7 @@ function TracksList({posts, user, updateFeed}) {
   return (
     <div>
       <List>
-        {(posts !== undefined) ? ( posts.map((value, index) => (
+        {(posts !== undefined && posts.length) ? ( posts.map((value, index) => (
           <div key={index}>
             <Post key={index} post={value} canBeDeleted={canBeDeleted} setUser={console.log} updateTracks={updateFeed} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }} />
           </div>

@@ -112,7 +112,7 @@ function FormPost({dialogOpen, beat, recording}) {
         color={'#192bc2'}
         updateButtons={updatePosses}
       />
-      <Accordion>
+      <Accordion> 
         <AccordionSummary>
           Tags
         </AccordionSummary>

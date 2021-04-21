@@ -62,6 +62,7 @@ function Profile({username}) {
   const [posts, setPosts] = useState(false);
   const [loading, setLoading] = useState(true);
   const [counter, setCounter] = useState(0);
+  console.log('counter: ', counter);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -154,7 +155,7 @@ function Profile({username}) {
         })
         .catch(console.error);
     }
-
+    console.log(counter);
   };
 
   const Alert = (props) =>  {
@@ -183,7 +184,7 @@ function Profile({username}) {
       </Snackbar>
       <Nav />
       <div className='Container'>
-        {(loading && counter < 3) ? <CircularProgress  /> : 
+        {(loading && counter < 2) ? <CircularProgress  /> : 
           (<div>
             <div className='InfoContainer'>
               <Avatar className={classes.large} src={'https://picsum.photos/200/300'} />

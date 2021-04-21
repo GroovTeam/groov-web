@@ -76,7 +76,7 @@ export default function UserPosses({setPopup}) {
   return (
     <div>
       <List>
-        {(posses !== undefined) ? (posses.map((value) => 
+        {(posses !== undefined && posses.length) ? (posses.map((value) => 
           (<ListItem divider key={value.posseID}>
             <Avatar variant="square" src='https://picsum.photos/200/300'></Avatar>
             <ListItemText style={{marginLeft: '1vh'}} primary={value.name} />
