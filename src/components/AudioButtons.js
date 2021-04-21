@@ -70,6 +70,9 @@ const AudioButtons = ({userAudio, userBeat}) => {
         audio1.pause();
       if (audio2)
         audio2.pause();
+      
+      setAudio1(new Audio(userBeat));
+      setAudio2(new Audio(userAudio));
       setRestart(false);
       setPlaying(false);
 
