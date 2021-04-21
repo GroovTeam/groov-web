@@ -78,8 +78,8 @@ export default function CreatePosses({visible, toggle, setPopup}) {
           style={{width: '100%'}}
         />
 
-        <div style={{width: '100%'}}>
-          <Accordion>
+        <div style={{display: 'flex', justifyContent: 'center'}} >
+          <Accordion style={{width: '50%'}}>
             <AccordionSummary>Tags</AccordionSummary>
             <AccordionDetails>
               <EditTags 
