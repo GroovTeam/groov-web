@@ -14,10 +14,10 @@ const LoginComponent = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [open, setOpen] = useState(false);
   const [popup, setPopup] = useState({severity: 'error', message:''});
+  const [passwordShown, setPasswordShown] = useState(false);
   const [emailReset, setEmailReset] = useState(false);
   const [emailForReset, setEmailForReset] = useState('');
   const history = useHistory();
-  const [passwordShown, setPasswordShown] = useState(false);
 
   const login = (event) => {
     Login(userData.email, userData.password)
