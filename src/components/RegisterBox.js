@@ -94,13 +94,13 @@ const RegisterBox = () => {
             </div>
             
             <div className='form-group'>
-              <div className='\-Password'>
+              <div className='Forgot-Password'>
                 <label>Password</label>     
                 <RemoveRedEye onClick={togglePasswordVisiblity} />
               </div>
               <input type={passwordShown ? 'text' : 'password'} className='textField' name='password' placeholder='password' onChange={handleChange} />
             </div>
-            <input type="Submit" className="buttonInput" value="Login" readOnly={true}/>
+            <input type="Submit" className="buttonInput" value="Register" readOnly={true}/>
           </form>
         </div>
       </div>
