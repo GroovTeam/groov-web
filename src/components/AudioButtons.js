@@ -87,8 +87,8 @@ const AudioButtons = ({userAudio, userBeat}) => {
       }
         
       
-      setAudio1(new Audio(userBeat));
-      setAudio2(new Audio(userAudio));
+      setAudio1(undefined);
+      setAudio2(undefined);
       setRestart(false);
       setPlaying(false);
 
