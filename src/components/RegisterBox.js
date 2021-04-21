@@ -36,7 +36,8 @@ const RegisterBox = () => {
 
   const handleClose = () => {
     setOpen(false);
-    history.push('/');
+    if (popup.severity.normalize() === 'success'.normalize())
+      history.push('/');
   };
   
   const handleChange = (event) => {

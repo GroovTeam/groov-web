@@ -14,6 +14,8 @@ const AudioButtons = ({userAudio, userBeat}) => {
   const syncTrack = (time, audioToStop) => {
     setTimeout(() => {
       setPlaying(false);
+      setAudio1(undefined);
+      setAudio2(undefined);
       audioToStop.removeEventListener('loadedmetadata', (event) => {
         syncTrack(event.target.duration, event.target);
       });
@@ -64,10 +66,10 @@ const AudioButtons = ({userAudio, userBeat}) => {
   const stopAndRestart = () => {
     if (restart)
     {
-      audio1.pause();
-      audio2.pause();
-      setAudio1(new Audio(userBeat));
-      setAudio2(new Audio(userAudio));
+      if (audio1)
+        audio1.pause();
+      if (audio2)
+        audio2.pause();
       setRestart(false);
       setPlaying(false);
 
