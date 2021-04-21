@@ -106,12 +106,12 @@ function FormPost({dialogOpen, beat, recording}) {
     <form onSubmit={createPostBody}>
       <FormButtons 
         data={posses}
-        color={'#007BFF44'}
+        color={'#192bc2'}
         updateButtons={updatePosses}
       />
       <FormButtons 
         data={tags}
-        color={'#007BFF44'}
+        color={'#192bc2'}
         updateButtons={updateTags}
       />
       <TextField

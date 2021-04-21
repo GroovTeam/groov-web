@@ -116,10 +116,6 @@ function DashBoard({setUser}) {
                     className='ButtonContainer'
                   >
                     <ThemeProvider theme={theme} >
-                      {/* <ButtonGroup className='ButtonGroup' color='primary'>
-                        <Button onClick={updateFeed}>Posses</Button>
-                        <Button onClick={handleGetAllPost}>All Posts</Button>
-                      </ButtonGroup> */}
                       <span style={{color: '#192bc2', fontSize: 20}}>
                         {toggle ? (
                           <div>
