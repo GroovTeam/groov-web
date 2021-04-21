@@ -10,6 +10,7 @@ function ReplyBox({reply}) {
     getProfile(reply.username)
       .then(res => {
         setReplyUser(res.data);
+        console.log(replyUser);
       }).catch(console.error);
   };
 
@@ -20,7 +21,7 @@ function ReplyBox({reply}) {
   return (
     <ListItem key={reply} className='Item' >
       <div style={{display: 'flex', alignItems: 'center'}} >
-        <Avatar src={replyUser.image} ></Avatar>
+        <Avatar src={'https://picsum.photos/200/300'} ></Avatar>
         <div className='Text' style={{flexDirection: 'column', margin: '1vh'}} >
           <ListItemText
             secondary={'@' + reply.username}

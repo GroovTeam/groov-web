@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {Avatar, Box, Button, IconButton, List, ListItem, ListItemText, Tooltip } from '@material-ui/core';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -9,7 +9,6 @@ import unlikeComment from '../utils/unlikeComment';
 import ReplyModel from './ReplyModel';
 import RepliesList from './RepliesList';
 import {useHistory} from 'react-router-dom';
-import getProfile from '../utils/getProfile';
 import '../styling/Comment.css';
 
 function CommentLists({currComment, id, likeComment, unLikeComment, updateComments, alreadyLiked, setUser}) {
@@ -23,18 +22,6 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
   const [openModel, setModelOpen] = useState(false);
   const [showHide, setShowHide] = useState('Show');
   const history = useHistory();
-  const [commentUser, setCommentUser] = useState({});
-
-  const getCommentUser = () => {
-    getProfile(currComment.username)
-      .then(res => {
-        setCommentUser(res.data);
-      }).catch(console.error);
-  };
-
-  useEffect(() => {
-    getCommentUser();
-  }, []);
   
   const handleLikeToggle = async () => {
 
@@ -89,7 +76,7 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
       <ListItem className='Item' >
         <div>
           <div className='UserDataArea' >
-            <Avatar src={commentUser.image} ></Avatar>
+            <Avatar src={'https://picsum.photos/200/300'} ></Avatar>
             <div className='NameContent' >
               <ListItemText onClick={(event) => handleUsername(event, currComment.username, setUser)}
                 secondary={'@' + currComment.username}

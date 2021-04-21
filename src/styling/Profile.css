@@ -36,25 +36,25 @@
 
 @media screen and (max-width: 2000px) {
     .Paper {
-        width: 120vh;
+        width: 140vh;
     }
 }
 
 @media screen and (max-width: 1700px) {
     .Paper {
-        width: 100vh;
+        width: 120vh;
     }
 }
 
 
 @media screen and (max-width: 1200px) {
     .Paper {
-        width: 46vh;
+        width: 106vh;
     }
 }
 
 @media screen and (max-width: 800px) {
     .Paper {
-        width: 26vh;
+        width: 76vh;
     }
 }

@@ -8,6 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import getUserProfile from '../utils/getUserProfile';
 import firebase from 'firebase';
 import FirebaseConfig from '../utils/FirebaseConfig';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 
 function FormPost({dialogOpen, beat, recording}) {
   const [tags, setTags] = useState(Tags);
@@ -109,11 +112,20 @@ function FormPost({dialogOpen, beat, recording}) {
         color={'#007BFF44'}
         updateButtons={updatePosses}
       />
-      <FormButtons 
-        data={tags}
-        color={'#007BFF44'}
-        updateButtons={updateTags}
-      />
+      <Accordion>
+        <AccordionSummary>
+          Tags
+        </AccordionSummary>
+        <AccordionDetails>
+          <FormButtons 
+            data={tags}
+            color={'#007BFF44'}
+            updateButtons={updateTags}
+          /> 
+        </AccordionDetails>
+        
+      </Accordion>
+      
       <TextField
         id="outlined-multiline-static"
         label="Post"

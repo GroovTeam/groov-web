@@ -159,13 +159,15 @@ function Profile({username}) {
               <Avatar className={classes.large} src={'https://picsum.photos/200/300'} />
               <h2>{(userInfo.firstName + ' ' + userInfo.lastName)}</h2>
               <h3 style={{maxWidth: 600}} >
-                {(userInfo.bio === undefined) ? 'Add User Bio': userInfo.bio}
+                {(userInfo.bio === undefined) ? (
+                  <span>You currently do not have a bio. Why not add one 😀</span>
+                ) : userInfo.bio}
               </h3>
             </div>
             <div className='EditProfile'>
               {(username === undefined) ? (
                 <div>
-                  <Button variant='outlined' onClick={handleClickOpen} >
+                  <Button style={{margin: '.5vh'}} variant='outlined' onClick={handleClickOpen} >
                     Edit Profile
                   </Button>
                 </div>
