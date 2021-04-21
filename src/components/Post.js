@@ -120,13 +120,14 @@ function Posts({post, setUser, canBeDeleted, updateTracks, isLiked}) {
       <Box  borderBottom={2}>
         <div style={{margin: '2vh'}}>
           <div style={{display: 'flex', alignItems: 'center'}}>
-            <div style={{display: 'flex'}} >
+            <div style={{display: 'flex', flexDirection: 'center'}} >
               <Avatar className='UserImage' src={'https://picsum.photos/200/300'}></Avatar>
-              <div style={{display: 'flex'}} >
+              <div style={{display: 'flex', flexDirection: 'row', alignContent: 'center'}} >
                 <h3 
                   style={{marginLeft: '.2vh'}}
-                  onClick={(event) => handleUsername(event, post.username, setUser)}>@{post.username}</h3>
-                <div className='PosseChips' >
+                  onClick={(event) => handleUsername(event, post.username, setUser)}>
+                    @{post.username}</h3>
+                <div  style={{display: 'flex', flexDirection: 'row', alignContent: 'center'}}>
                   <ThemeProvider theme={theme} >
                     {(post.posses !== undefined) ? (post.posses.map((chip, index) => (
                       <Chip color='primary' button variant='outlined' size='small' style={{margin: '.3vh'}} key={index} label={chip} />
