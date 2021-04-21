@@ -151,9 +151,7 @@ function DashBoard({setUser}) {
                   setUser={setUser}
                 >
                 </DashboardPosts>}
-                
               </List>
-                
             </Paper>
           )}
         </div>

@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {Avatar, Box, Button, IconButton, List, ListItem, ListItemText, Tooltip } from '@material-ui/core';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {Avatar, Box, Button, IconButton, ListItem, ListItemText, Tooltip } from '@material-ui/core';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import likeComment from '../utils/likeComment';
@@ -10,6 +8,7 @@ import ReplyModel from './ReplyModel';
 import RepliesList from './RepliesList';
 import {useHistory} from 'react-router-dom';
 import '../styling/Comment.css';
+import Tree from './commentTree/Tree';
 
 function CommentLists({currComment, id, likeComment, unLikeComment, updateComments, alreadyLiked, setUser}) {
   const likeColor = '#4cc9f0';
@@ -18,9 +17,7 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
   const [thumbsDown, setThumbsDown] = useState(false);
   const [thumbUpColor, setThumbUpColor] = useState(alreadyLiked ? likeColor : disLikeColor);
   const [thumbDownColor, setThumbDownColor] = useState(disLikeColor);
-  const [openReplies, setOpenReplies] = useState(false);
   const [openModel, setModelOpen] = useState(false);
-  const [showHide, setShowHide] = useState('Show');
   const history = useHistory();
   
   const handleLikeToggle = async () => {
@@ -57,13 +54,7 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
     setModelOpen(false);
     updateComments();
   };
-
-  const toggleRepliesOpen = () => {
-    const toggle = openReplies ? 'Show' : 'Hide';
-    setShowHide(toggle);
-    setOpenReplies(!openReplies);
-  };
-
+  
   const handleUsername = (event, username, setUser) => 
   {
     event.preventDefault();
@@ -114,12 +105,10 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
             )}
             secondary={(
               <div>
-                <span onClick={() => toggleRepliesOpen()}>
-                  {(openReplies) ? <ExpandLessIcon /> : <ExpandMoreIcon />} {showHide} replies
-                </span>
-                {openReplies ? <RepliesList replies={currComment.replies} /> : '' } 
+                <Tree name='Comment Replies' >
+                  <RepliesList replies={currComment.replies} />
+                </Tree> 
               </div>
-            
             )}
           ></ListItemText>
           
@@ -132,31 +121,22 @@ function CommentLists({currComment, id, likeComment, unLikeComment, updateCommen
   );
 }
 
-function Comments({comments, expand, update, setUser}) {
+function Comments({comments, update, setUser}) {
 
   return (
     <div>
-      {(expand) ? (
-        <List >
-          {(comments.length > 0 && comments !== undefined) ? (comments.map(comment => (
-            <div key={comment}>
-              <CommentLists 
-                key={comment} currComment={comment} id={comment.commentID} likeComment={likeComment} 
-                unLikeComment={unlikeComment} updateComments={update} alreadyLiked={comment.alreadyLiked} 
-                setUser={setUser}
-              />
-            </div>
-          ))) : (
-            <ListItemText 
-              primary={'Post has no comment sadly why not add some?'} 
-              className='NoComment'
-            >
-            </ListItemText>
-          )}
-        </List>
-      ) : ''}
-
-      
+      <Tree name='Post Comments' >
+        {(comments !== undefined && comments.length > 0) ? comments.map(comment => (
+          <div key={comment.commentID}>
+            <CommentLists 
+              currComment={comment} id={comment.commentID} likeComment={likeComment} 
+              unLikeComment={unlikeComment} updateComments={update} alreadyLiked={comment.alreadyLiked} 
+              setUser={setUser}
+            />
+          </div>)) : (
+          <ListItemText primary={'Post has no Comments.'}></ListItemText>
+        ) } 
+      </Tree>
     </div>
   );
 }

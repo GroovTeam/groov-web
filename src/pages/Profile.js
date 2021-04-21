@@ -61,6 +61,7 @@ function Profile({username}) {
   const [likes, setLikes] = useState(false);
   const [posts, setPosts] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [counter, setCounter] = useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -85,6 +86,7 @@ function Profile({username}) {
       getUserProfile()
         .then(res => {
           setUserInfo(res.data);
+          setCounter((counter + 1));
         })
         .catch(console.error);
     }
@@ -92,27 +94,54 @@ function Profile({username}) {
       getProfile(username)
         .then(res => {
           setUserInfo(res.data);
+          setCounter((counter + 1));
         }).catch(console.error);
     }
     if (username === undefined) {
       getLikes()
         .then(res => {
-          setLikes(res.data.results);
+          let data = [];
+          res.data.results.forEach((comment, index) => {
+            res.data.results[index].alreadyLiked = true;
+            data.push(res.data.results[index]);
+          });
+          setLikes(data);
+          setCounter((counter + 1));
         })
         .catch(console.error);
     }
     else {
       getUsersLikes(username)
         .then(res => {
-          setLikes(res.data.results);
+          let data = [];
+          res.data.results.forEach((comment, index) => {
+            res.data.results[index].alreadyLiked = true;
+            data.push(res.data.results[index]);
+          });
+          setLikes(data);
+          setCounter((counter + 1));
         }).catch(console.error);
     }
 
     if (username === undefined) {
-      getPosts()
-        .then(res => {
-          setPosts(res.data.results);
-          setLoading(false);
+      getUserProfile()
+        .then(user => {
+          getPosts()
+            .then(res => {
+              console.log('updating feed');
+              if (res.data) {
+                let newData = [];
+                for (const key in Object.keys(res.data.results)) {
+                  res.data.results[key].image = 'https://picsum.photos/200/300';
+                  res.data.results[key].alreadyLiked = res.data.results[key].likes ? (res.data.results[key].likes.includes(user.data.username)) : false;
+                  newData.push(res.data.results[key]);
+                }
+                setPosts(newData);
+                setCounter((counter + 1));
+                setLoading(false);
+              }
+            })
+            .catch(console.error);
         })
         .catch(console.error);
     }
@@ -121,6 +150,7 @@ function Profile({username}) {
         .then(res => {
           setPosts(res.data.results);
           setLoading(false);
+          setCounter((counter + 1));
         })
         .catch(console.error);
     }
@@ -153,7 +183,7 @@ function Profile({username}) {
       </Snackbar>
       <Nav />
       <div className='Container'>
-        {loading ? <CircularProgress  /> : 
+        {(loading && counter < 3) ? <CircularProgress  /> : 
           (<div>
             <div className='InfoContainer'>
               <Avatar className={classes.large} src={'https://picsum.photos/200/300'} />
@@ -203,7 +233,7 @@ function Profile({username}) {
                   <LikesList likes={likes}/>
                 </TabPanel>
                 <TabPanel value={page} index={2}>
-                  <TracksList posts={posts}/>
+                  <TracksList posts={posts} user={username} updateFeed={getUserData}/>
                 </TabPanel>
               </Paper>
             </div>

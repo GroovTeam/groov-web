@@ -1,5 +1,5 @@
 import React from 'react';
-import { List } from '@material-ui/core';
+import { List, ListItemText } from '@material-ui/core';
 import ReplyBox from './ReplyBox';
 
 function RepliesList({replies}) {
@@ -7,10 +7,10 @@ function RepliesList({replies}) {
   return (
     <List>
       {(replies !== undefined && replies.length > 0) ? (
-        replies.map(reply => (
-          <ReplyBox key={reply} reply={reply} />
+        replies.map((reply, index) => (
+          <ReplyBox key={index} reply={reply} />
         ))
-      ) : 'comment has no replies'}
+      ) : (<ListItemText primary={'This comment has no replies'} ></ListItemText>)}
     </List>
   );
 }

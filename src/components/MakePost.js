@@ -38,19 +38,20 @@ function MakePost({updateFeed}) {
             Make a Post
           </Button>
         </Tooltip>
+        
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          maxWidth='lg'
+          fullWidth={true}
+        >
+          <DialogTitle id="alert-dialog-title">Post</DialogTitle>
+          <DialogContent>
+            <RecordAudio setBeatFile={setBeatFile} setRecordingFile={setRecordingFile}/>
+            <FormPost dialogOpen={handleClose} beat={beatFile} recording={recordingFile} />
+          </DialogContent>
+        </Dialog>
       </ThemeProvider>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        maxWidth='lg'
-        fullWidth={true}
-      >
-        <DialogTitle id="alert-dialog-title">Post</DialogTitle>
-        <DialogContent>
-          <RecordAudio setBeatFile={setBeatFile} setRecordingFile={setRecordingFile}/>
-          <FormPost dialogOpen={handleClose} beat={beatFile} recording={recordingFile} />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

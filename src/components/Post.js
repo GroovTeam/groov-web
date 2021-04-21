@@ -3,8 +3,6 @@ import { Avatar, Box, Chip, IconButton, Tooltip } from '@material-ui/core';
 import ListChips from './ListChips';
 import getComments from '../utils/getComments';
 import Comments from './Comments';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddCommentIcon from '@material-ui/icons/AddComment';
 import likePost from '../utils/likePost';
 import unlikePost from '../utils/unlikePost';
@@ -15,7 +13,9 @@ import {useHistory} from 'react-router-dom';
 import AudioButtons from './AudioButtons';
 import getFile from '../utils/getFile';
 import '../styling/Post.css';
+import deletePost from '../utils/deletePost';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const theme = createMuiTheme({
   palette: {
@@ -25,18 +25,16 @@ const theme = createMuiTheme({
   }
 });
 
-function Posts({post, setUser}) {
+function Posts({post, setUser, canBeDeleted, updateTracks, isLiked}) {
   const [comments, setComments] = useState([]);
-  const [expandComments, setExpand] = useState(false);
   const [likes, setLikes] = useState((post.likes === undefined) ? 0 : post.likes.length);
   const [openModel, setModelOpen] = useState(false);
-  const [show, setShow] = useState('Show');
   const history = useHistory();
   const [beatURL, setBeatURL] = useState(null);
   const [recordingURL, setRecordingURL] = useState(null);
   const [showTags, setShowTags] = useState(true);
-  // const [showPosses, setShowPosses] = useState(true);
   const id = post.postID;
+  console.log(canBeDeleted);
 
   useEffect(async () => {
     getPostComments();
@@ -84,13 +82,6 @@ function Posts({post, setUser}) {
     getPostComments();
   };
 
-
-  const handleCommentToggle = () => {
-    const val = (expandComments) ? 'Show' : 'Hide';
-    setShow(val);
-    setExpand(!expandComments);
-  };
-  
   const likePostCall = async (id) => {
     console.log('postid: ', id);
     console.log('liking post');
@@ -98,6 +89,14 @@ function Posts({post, setUser}) {
     likePost(id)
       .then(() => console.log('liking post: ', post.content, ' post id is: ', id))
       .catch(error => {console.log(error); setLikes(likes - 1);});
+  };
+
+  const update = () => updateTracks();
+
+  const deletePostCall = async () => {
+    deletePost(id)
+      .then(() => update())
+      .catch(console.error);
   };
 
   const unlikePostCall = async (id) => {
@@ -109,8 +108,6 @@ function Posts({post, setUser}) {
   };
 
   const toggleTagsShow = () => setShowTags(!showTags);
-  // const togglePossesShow = () => setShowPosses(!showPosses);
-
 
   const handleUsername = (event, username, setUser) => {
     event.preventDefault();
@@ -118,21 +115,17 @@ function Posts({post, setUser}) {
     history.push('/profile');
   };
 
-  // const handlePosseClick = (event, posse, setPosse) => {
-  //   event.preventDefault();
-  //   setPosse(posse);
-  //   history.push('/posseProfile');
-  // };
-
   return (
     <div>
       <Box  borderBottom={2}>
         <div style={{margin: '2vh'}}>
-          <div>
-            <div className='UserInfoContainer' >
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            <div style={{display: 'flex'}} >
               <Avatar className='UserImage' src={'https://picsum.photos/200/300'}></Avatar>
-              <div className='TagsUserName' >
-                <h3 onClick={(event) => handleUsername(event, post.username, setUser)}>@{post.username}</h3>
+              <div style={{display: 'flex'}} >
+                <h3 
+                  style={{marginLeft: '.2vh'}}
+                  onClick={(event) => handleUsername(event, post.username, setUser)}>@{post.username}</h3>
                 <div className='PosseChips' >
                   <ThemeProvider theme={theme} >
                     {(post.posses !== undefined) ? (post.posses.map((chip, index) => (
@@ -141,6 +134,15 @@ function Posts({post, setUser}) {
                   </ThemeProvider>
                 </div>
               </div>
+            </div>
+            <div style={{display: 'flex', width: '100%', justifyContent: 'flex-end'}}>
+              {canBeDeleted ? (
+                <Tooltip title='Delete Post'>
+                  <IconButton onClick={() => deletePostCall()}>
+                    <DeleteIcon></DeleteIcon>
+                  </IconButton>
+                </Tooltip>
+              ) : ''}
             </div>
           </div>
           <div className='PostContentContainer' >
@@ -152,7 +154,7 @@ function Posts({post, setUser}) {
               </ThemeProvider>
             </div>
             <Box className='Intereactions' >
-              <LikeButton id={post.postID} likes={likes} onLike={likePostCall} onUnLike={unlikePostCall} alreadyLiked={post.alreadyLiked} />
+              <LikeButton id={post.postID} likes={likes} onLike={likePostCall} onUnLike={unlikePostCall} alreadyLiked={(post.alreadyLiked || isLiked) ? true : false} />
               {post.hasAudio ? <AudioButtons userAudio={recordingURL} userBeat={beatURL} /> : ''}
               <Tooltip title='Comment'>
                 <IconButton onClick={() => handleCommentModelOpen()}>
@@ -160,10 +162,7 @@ function Posts({post, setUser}) {
                 </IconButton>
               </Tooltip>
             </Box>
-            <div onClick={() => handleCommentToggle()}>
-              {(expandComments) ? <ExpandLessIcon /> : <ExpandMoreIcon /> } {show} Comments
-            </div>
-            <Comments comments={comments} expand={expandComments} update={getPostComments} setUser={setUser} />
+            <Comments comments={comments} update={getPostComments} setUser={setUser} />
             <CommentModel open={openModel} close={handleCommentModelClose} postId={id} />
           </div>
         </div>
