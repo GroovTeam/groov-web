@@ -17,8 +17,10 @@ const Tree = memo(({ children, name, style, defaultOpen = false }) => {
   const Icon = Icons[`${children ? (isOpen ? 'Minus' : 'Plus') : 'Close'}SquareO`];
   return (
     <Frame style={{color: 'black'}}>
-      <Icon style={{ ...toggle, opacity: children ? 1 : 0.3 }} onClick={() => setOpen(!isOpen)} />
-      <Title style={style}>{name}</Title>
+      <div onClick={() => setOpen(!isOpen)} >
+        <Icon style={{ ...toggle, opacity: children ? 1 : 0.3 }}  />
+        <Title style={style}>{name}</Title>
+      </div>
       <Content style={{ opacity, height: isOpen && previous === isOpen ? 'auto' : height }}>
         <a.div style={{ transform }} {...bind} children={ children } />
       </Content>

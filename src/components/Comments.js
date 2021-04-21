@@ -125,11 +125,11 @@ function Comments({comments, update, setUser}) {
 
   return (
     <div>
-      <Tree  name='Post Comments' >
+      <Tree name='Post Comments' >
         {(comments !== undefined && comments.length > 0) ? comments.map(comment => (
-          <div key={comment}>
+          <div key={comment.commentID}>
             <CommentLists 
-              key={comment} currComment={comment} id={comment.commentID} likeComment={likeComment} 
+              currComment={comment} id={comment.commentID} likeComment={likeComment} 
               unLikeComment={unlikeComment} updateComments={update} alreadyLiked={comment.alreadyLiked} 
               setUser={setUser}
             />
