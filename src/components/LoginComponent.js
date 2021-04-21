@@ -6,7 +6,7 @@ import firebase from 'firebase';
 import VerifyEmail from './VerifyEmail';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
+import { RemoveRedEye } from '@material-ui/icons';
 const LoginComponent = () => {
 
   const [userData, setUserData] = useState({});
@@ -14,6 +14,7 @@ const LoginComponent = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [open, setOpen] = useState(false);
   const [popup, setPopup] = useState({severity: 'error', message:''});
+  const [passwordShown, setPasswordShown] = useState(false);
   const [emailReset, setEmailReset] = useState(false);
   const [emailForReset, setEmailForReset] = useState('');
   const history = useHistory();
@@ -35,7 +36,9 @@ const LoginComponent = () => {
     setOpen(false);
   };
   
-
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
   
   const onAuthStateChanged = (user) => {
 
@@ -116,14 +119,16 @@ const LoginComponent = () => {
                   </div>
                   <div className='form-group'>
                     <div className='Forgot-Password'>
-                      <label>Password</label>
-                      <Link className='Link' to='/'onClick={handleReset}>
-                        Forgot your password?
-                      </Link>
+                      <label>Password</label>     
+                      <RemoveRedEye onClick={togglePasswordVisiblity} />
                     </div>
-                    <input type="password" className="textField" name="password" placeholder="password" onChange={handleChange}/>
+                    <input type={passwordShown ? 'text' : 'password'} className='textField' name='password' placeholder='password' onChange={handleChange} />
                   </div>
                   <input type="Submit" className="buttonInput" value="Login" readOnly={true}/>
+      
+                  <Link className='Link' to='/'onClick={handleReset} >
+                    Forgot your password?
+                  </Link>  
                 </form>
               ) :
                 (
@@ -138,9 +143,9 @@ const LoginComponent = () => {
             }
           </div>
         </div>
-        <p>{'Not registered? '}   
+        <p>{'Not a registered user? '}   
           <Link className='Link' to='/register'>
-             Register here!
+             Click here!
           </Link>
         </p>
       </div>

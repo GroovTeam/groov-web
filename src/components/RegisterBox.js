@@ -4,12 +4,14 @@ import './RegisterLogin.css';
 import { Link, useHistory  } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import { RemoveRedEye } from '@material-ui/icons';
 
 const RegisterBox = () => {
   const [userData, setUserData] = useState({});
   const [open, setOpen] = useState(false);
   const [popup, setPopup] = useState ({severity: 'error', message:''});
   const history = useHistory();
+  const [passwordShown, setPasswordShown] = useState(false);
 
   const registerUser = (event) => {
     console.log(userData);
@@ -43,6 +45,10 @@ const RegisterBox = () => {
     const value = target.value;
     const name = target.name;
     setUserData({ ...userData, [name]: value });
+  };
+
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
   };
 
   const Alert = (props) =>  {
@@ -88,19 +94,19 @@ const RegisterBox = () => {
             </div>
             
             <div className='form-group'>
-              <label >
-                Password
-              </label>
-              <input type='text' className='textField' name='password' placeholder='password' onChange={handleChange} />
+              <div className='\-Password'>
+                <label>Password</label>     
+                <RemoveRedEye onClick={togglePasswordVisiblity} />
+              </div>
+              <input type={passwordShown ? 'text' : 'password'} className='textField' name='password' placeholder='password' onChange={handleChange} />
             </div>
-            
-            <input type='Submit' className='buttonInput' value='Register' readOnly={true}/>
+            <input type="Submit" className="buttonInput" value="Login" readOnly={true}/>
           </form>
         </div>
       </div>
       <p>{'Already have an account? '}
         <Link className='Link' to='/'>
-          Login!
+          Click here to login!
         </Link>
       </p>
     </div>
