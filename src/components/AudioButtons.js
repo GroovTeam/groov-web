@@ -10,9 +10,10 @@ const AudioButtons = ({userAudio, userBeat}) => {
   const [audio2, setAudio2] = useState(undefined);
   const [restart, setRestart] = useState(false);
 
+  let thing = null;
   
   const syncTrack = (time, audioToStop) => {
-    setTimeout(() => {
+    thing = setTimeout(() => {
       setPlaying(false);
       setAudio1(undefined);
       setAudio2(undefined);
@@ -25,9 +26,6 @@ const AudioButtons = ({userAudio, userBeat}) => {
   useEffect(async () => {
     console.log('playing is '+ playing);
     if (playing) {
-      // when the browser refreshes sometimes the audio.play() doesn't work so in order for it work better in that case 
-      // im using this .then() .catch() code 
-      // i want to find a way to better handle this but this the best for now
       if (!audio1) {
         console.log('set audio 1!');
         setAudio1(new Audio(userBeat));
@@ -56,7 +54,15 @@ const AudioButtons = ({userAudio, userBeat}) => {
         audio1.pause();
       }
       if (audio2)
+      {
         audio2.pause();
+        if (thing)
+        {
+          clearTimeout(thing);
+          thing = null;
+        }
+          
+      }
     }
   },
   );
@@ -69,7 +75,17 @@ const AudioButtons = ({userAudio, userBeat}) => {
       if (audio1)
         audio1.pause();
       if (audio2)
+      {
         audio2.pause();
+        console.log(thing);
+        if (thing)
+        {
+          clearTimeout(thing);
+          thing = null;
+        }
+          
+      }
+        
       
       setAudio1(new Audio(userBeat));
       setAudio2(new Audio(userAudio));
